@@ -1,2 +1,2 @@
-# UltraFactions
-Rich Ultra Factions plugin for Minecraft: Pocket Edition
+# UltraFaction
+Rich Ultra Faction plugin for Minecraft: Pocket Edition
