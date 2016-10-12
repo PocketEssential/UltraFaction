@@ -15,7 +15,7 @@ Create your Faction, Claim your Land, Fight your Enemies!
 
 ```php
 // First you"ll need this
-$UltraFaction = $this->getServer()->getPluginManager()->get("UltraFaction");
+$UltraFaction = $this->getServer()->getPluginManager()->getPlugin("UltraFaction");
 ```
 
 #### Checking if the player belongs to a faction
