@@ -89,7 +89,7 @@ class UltraFaction extends PluginBase implements Listener
        }
 
         /*
-         *  Simple API to be used by (U - S )
+         *  Simple API to be used by (U-S )
          */
        public function getLanguageText($string){
 
