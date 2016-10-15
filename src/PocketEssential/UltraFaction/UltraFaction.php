@@ -158,6 +158,12 @@ class UltraFaction extends PluginBase implements Listener
         if ($string == "No_Permission_To_Promote") {
             return $this->lang->get("No_Permission_To_Promote");
         }
+        if ($string == "No_Faction") {
+            return $this->lang->get("No_Faction");
+        }
+        if ($string == "No_Faction_To_Set_Description") {
+            return $this->lang->get("No_Faction_To_Set_Description");
+        }
     }
 
     public function getDataProvider()
