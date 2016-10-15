@@ -52,6 +52,10 @@ class UltraFaction extends PluginBase implements Listener{
         $this->saveFile();
     }
 
+    public function IsPlayerInFaction($player){
+        //todo- ill do it
+    }
+
     /*
      *  For easy access, for saving configs / resources.
      */
