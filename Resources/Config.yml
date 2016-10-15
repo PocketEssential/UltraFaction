@@ -26,6 +26,17 @@
 # Available: english (You can also create your own!)
 Language: english
 
+# Set default data type provider for UltraFaction
+# - mysql, sqlite, yaml
+
+data-provider: sqlite
+
+# If your using MySQL : Enter the details before!
+MySql:
+    Host: localhost
+    Username: root
+    Password: 12345678
+    Database: UltraFaction
 
 # Max members a faction can have: They can bypass it with the  correct permission
 Max_Member: 10
