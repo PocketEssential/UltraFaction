@@ -36,19 +36,22 @@ use pocketmine\utils\TextFormat;
 use pocketmine\utils\Config;
 use pocketmine\command\ConsoleCommandSender;
 
-class UltraFaction extends PluginBase implements Listener{
+class UltraFaction extends PluginBase implements Listener
+{
 
     /*
      * Registering the PREFIX!
      */
-    const PREFIX = TextFormat::YELLOW."[".TextFormat::AQUA."Faction".TextFormat::YELLOW."]";
+    const PREFIX = TextFormat::YELLOW . "[" . TextFormat::AQUA . "Faction" . TextFormat::YELLOW . "]";
+    public $lang = [];
 
-
-    public function onEnable(){
+    public function onEnable()
+    {
         $this->config = new Config($this->getDataFolder() . "Config.yml", Config::YAML);
     }
 
-    public function onDisable(){
+    public function onDisable()
+    {
         $this->saveFile();
     }
 
@@ -56,9 +59,94 @@ class UltraFaction extends PluginBase implements Listener{
      *  For easy access, for saving configs / resources.
      */
 
-    public function saveFile(){
-        $this->getLogger()->info(TextFormat::YELLOW."|| Saving all files ||");
+    public function saveFile()
+    {
+        $this->getLogger()->info(TextFormat::YELLOW . "|| Saving all files ||");
         $this->getConfig->save();
-        $this->getLogger()->info(TextFormat::DARK_BLUE."All config / files has been saved!");
+        $this->getLogger()->info(TextFormat::DARK_BLUE . "All config / files has been saved!");
     }
+
+    /*
+     *  Languages, getting it the EASY way BOII
+     */
+
+    public function getLanguage()
+    {
+        $langType = $this->getonfig->get("Language");
+
+        if (!file_exists('/Languages/')) {
+            mkdir('/Languages', 0777, true);
+        }
+        if (!(is_dir($this->getDataFolder() . "Languages/ $langType.yml"))){
+        $this->saveResource("Languages/$langType.yml");
+            $langGet = (new Config($this->getDataFolder() . "Languages/" . $langType . ".yml", Config::YAML));
+            $string = null;
+            $this->getLanguageText($string);
+            $this->lang = $langGet;
+
+            $this->getLogger()->info(TextFormat::DARK_BLUE . "Using".$langType." as the Language!");
+       }
+       }
+
+        /*
+         *  Simple API to be used by (U - S )
+         */
+       public function getLanguageText($string){
+
+            if($string == null){
+                return "Please provide a string to translate!";
+
+            }
+
+            /*
+             * Getting the type of text they want to translate!
+            */
+
+            if($string == "Created_A_Faction"){
+                return $this->lang->get("Created_A_Faction");
+            }
+           if($string == "Faction_Already_Exist"){
+               return $this->lang->get("Faction_Already_Exist");
+           }
+           if($string == "Faction_Too_Short"){
+               return $this->lang->get("Faction_Too_Short");
+           }
+           if($string == "Faction_Too_Long"){
+               return $this->lang->get("Faction_Too_Long");
+           }
+           if($string == "Already_In_Faction"){
+               return $this->lang->get("Already_In_Faction");
+           }
+           if($string == "Faction_Cost_Reach"){
+               return $this->lang->get("ction_Cost_Reach");
+           }
+           if($string == "Faction_Set_Description"){
+               return $this->lang->get("Faction_Set_Description");
+           }
+           if($string == "Faction_Reset"){
+               return $this->lang->get("Faction_Reset");
+           }
+           if($string == "Faction_Remove"){
+               return $this->lang->get("Faction_Remove");
+           }
+           if($string == "Faction_Home_Teleport"){
+               return $this->lang->get("Faction_Home_Teleport");
+           }
+           if($string == "Faction_No_Home"){
+               return $this->lang->get("Faction_No_Home");
+           }  if($string == "Faction_No_Home_Set"){
+               return $this->lang->get("Faction_No_Home_Set");
+           }
+           if($string == "Faction_Rename"){
+               return $this->lang->get("Faction_Rename");
+           }  if($string == "Invited"){
+               return $this->lang->get("Invited");
+           }
+           if($string == "No_Permission_To_Invite"){
+               return $this->lang->get("No_Permission_To_Invite");
+           }
+           if($string == "No_Permission_To_Promote"){
+               return $this->lang->get("No_Permission_To_Promote");
+           }
+       }
 }

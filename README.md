@@ -23,7 +23,7 @@ $UltraFaction = $this->getServer()->getPluginManager()->getPlugin("UltraFaction"
 ```php
 // $player should be Instance of Player!
 
-$UltraFaction->checkStatus($player)
+$UltraFaction->IsPlayerInFaction($player)
 
 /*
   Will return "true". If the player is in a faction, Or false if not
