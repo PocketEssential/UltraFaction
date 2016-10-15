@@ -31,6 +31,9 @@ Language: english
 
 data-provider: sqlite
 
+#Supported, EconomyAPI, MassiveAPI (Todo)
+Economy: EconomyAPI
+
 # If your using MySQL : Enter the details before!
 MySql:
     Host: localhost
