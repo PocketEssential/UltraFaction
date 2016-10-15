@@ -161,8 +161,11 @@ class UltraFaction extends PluginBase implements Listener
         if ($string == "No_Faction") {
             return $this->lang->get("No_Faction");
         }
-        if ($string == "No_Faction_To_Set_Description") {
-            return $this->lang->get("No_Faction_To_Set_Description");
+        if ($string == "No_Faction_To_Do") {
+            return $this->lang->get("No_Faction_To_Do");
+        }
+        if ($string == "Faction_Description_Field_Empty") {
+            return $this->lang->get("Faction_Description_Field_Empty");
         }
     }
 
