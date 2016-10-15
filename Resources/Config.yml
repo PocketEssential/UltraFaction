@@ -31,7 +31,7 @@ Language: english
 
 data-provider: sqlite
 
-#Supported, EconomyAPI, MassiveAPI (Todo)
+#Supported, EconomyAPI, MassiveEconomy (Todo)
 Economy: EconomyAPI
 
 # If your using MySQL : Enter the details before!
