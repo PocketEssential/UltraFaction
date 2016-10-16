@@ -89,7 +89,7 @@ class UltraFaction extends PluginBase implements Listener
     
     public function existsFaction($faction_name){
         $scandir = scandir($this->getDataFolder()."/factions/");
-        foreach($sacdir as $dirs){
+        foreach($scandir as $dirs){
             if($dirs == $faction_name){
                 return true;
             } else {
