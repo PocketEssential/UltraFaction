@@ -50,7 +50,9 @@ class UltraFaction extends PluginBase implements Listener
     {
         $this->getServer()->getPluginManager()->registerEvents(new Listener($this), $this);
         $this->getCommand("f")->setExecutor(new Commands($this));
-            
+        
+        @mkdir($this->getDataFolder());
+        
         $this->config = new Config($this->getDataFolder() . "Config.yml", Config::YAML);
 
         $this->getLogger()->info("---------------------------------------");
@@ -78,17 +80,28 @@ class UltraFaction extends PluginBase implements Listener
     }
     
     public function getPlayerFaction(Player $player){
-        // Todo
+        // todo
     }
     
     public function IsPlayerInFaction(Player $player){
         //Todo
     }
     
+    public function existsFaction($faction_name){
+        $scandir = scandir($this->getDataFolder()."/factions/");
+        foreach($sacdir as $dirs){
+            if($dirs == $faction_name){
+                return true;
+            } else {
+                return false;
+            }
+        }
+    }
+    
     public function createFaction(Player $player, $faction_name){
         if(!$player->IsPlayerInFaction($player)){
             if(!$this->existsFaction($faction_name)){
-                $faction = new Config($this->getDataFolder() . "/factions/". $faction_name .".yml", Config::YAML);
+                $faction = (new Config($this->getDataFolder() . "/factions/". $faction_name .".yml", Config::YAML));
                 $faction->set("Leader", $player->getName());
                 $faction->save();
             } else {
