@@ -9,9 +9,11 @@ use PocketEssential\UltraFaction\UltraFaction;
 
 class Commands implements CommandExecutor
 {
-    public function __construct(UltraFaction $plugin){
+    public function __construct(UltraFaction $plugin)
+    {
         $this->plugin = $plugin;
     }
+
     public function onCommand(CommandSender $sender, Command $command, $labels, array $args)
     {
         $cmd = strtolower($command);
@@ -35,11 +37,11 @@ class Commands implements CommandExecutor
 
                      */
                     case "create":
-                        if ($args[1] == null) {
+                        if ($args[1] == null && $sender instanceof Player) {
                             $sender->sendMessage("/f create <FactionName>");
                         }
 
-                        if($args[1] != null && sender instanceof Player){
+                        if ($args[1] != null && sender instanceof Player) {
                             $this->plugin->createFaction($sender, $args[1]);
                             break;
                         }
@@ -61,10 +63,10 @@ class Commands implements CommandExecutor
                         if (!$this->plugin->IsPlayerInFaction($player)) {
                             $sender->sendMessage(UltraFaction::PREFIX . " You need to be in a faction to do this");
                         }
-                        if ($args[1] == null) {
+                        if ($args[1] == null && $sender instanceof Player) {
                             $sender->sendMessage(UltraFaction::PREFIX . " /f setdescription <Description>");
                         }
-                        if ($this->plugin->IsPlayerInFaction($player) && $args[1] != null) {
+                        if ($this->plugin->IsPlayerInFaction($player) && $args[1] != null && $sender instanceof Player) {
 
                             $sender->sendMessage(UltraFaction::PREFIX . " Faction has been created!");
 
@@ -85,13 +87,13 @@ class Commands implements CommandExecutor
                     case "rename":
                     case "changename":
                         $player = $sender;
-                        if ($args[1] == null) {
+                        if ($args[1] == null && $sender instanceof Player) {
                             $sender->sendMessage(UltraFaction::PREFIX . " /f rename <Name>");
                         }
                         if (!$this->plugin->IsPlayerInFaction($player)) {
                             $sender->sendMessage(UltraFaction::PREFIX . " You need to be in a faction to do this");
                         }
-                        if($this->plugin->IsPlayerInFaction($player) && $args[1] !== null){
+                        if ($this->plugin->IsPlayerInFaction($player) && $args[1] !== null && $sender instanceof Player) {
                             //todo
                             $sender->sendMessage(UltraFaction::PRIFEX . " Faction has successfully renamed!");
                         }
@@ -110,7 +112,8 @@ class Commands implements CommandExecutor
                         break;
                     case "claim":
                         //todo
-                        break;    
+                        break;
+
                 }
             }
         }
