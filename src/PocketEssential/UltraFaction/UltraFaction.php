@@ -84,6 +84,20 @@ class UltraFaction extends PluginBase implements Listener
     public function IsPlayerInFaction(Player $player){
         //Todo
     }
+    
+    public function createFaction(Player $player, $faction_name){
+        if(!$player->IsPlayerInFaction($player)){
+            if(!$this->existsFaction($faction_name)){
+                $faction = new Config($this->getDataFolder() . "/factions/". $faction_name .".yml", Config::YAML);
+                $faction->set("Leader", $player->getName());
+                $faction->save();
+            } else {
+                $player->sendMessage(UltraFaction::PRIFEX . " That faction name exists, Try another name.");
+            }
+        } else {
+            $player->sendMessage(UltraFaction::PRIFEX . " You are already in faction!");
+        }
+    }
 
     /*
      *  Languages, getting it the EASY way BOII
