@@ -1,5 +1,5 @@
 <?php
-namespace UltraFaction\commands;
+namespace PocketEssential\UltraFaction\commands;
 
 use pocketmine\command\Command;
 use pocketmine\command\CommandSender;
