@@ -39,10 +39,10 @@ class Commands implements CommandExecutor
                             $sender->sendMessage("/f create <FactionName>");
                         }
 
-                        if($args[1] != null && sender instanceof Player){
+                        if($args[1] != null && $sender instanceof Player){
                             $this->plugin->createFaction($sender, $args[1]);
-                            break;
                         }
+                        break;   
 
                     /*
                     ______                    _       _   _
