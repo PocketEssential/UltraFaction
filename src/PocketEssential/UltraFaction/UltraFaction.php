@@ -48,6 +48,9 @@ class UltraFaction extends PluginBase implements Listener
 
     public function onEnable()
     {
+        $this->getServer()->getPluginManager()->reisterEvents(new Listener($this), $this);
+        $this->getCommand("f")->setExecutor(new Commands($this));
+            
         $this->config = new Config($this->getDataFolder() . "Config.yml", Config::YAML);
 
         $this->getLogger()->info("---------------------------------------");
@@ -55,6 +58,7 @@ class UltraFaction extends PluginBase implements Listener
         $this->getLogger()->info("Data-Provider: ".$data);
         $this->getLogger()->info("|| Everything has been loaded ||| ");
         $this->getLogger()->info("----------------------------------------");
+        
     }
 
     public function onDisable()
@@ -69,7 +73,7 @@ class UltraFaction extends PluginBase implements Listener
     public function saveFile()
     {
         $this->getLogger()->info(TextFormat::YELLOW . "|| Saving all files ||");
-        $this->getConfig->save();
+        $this->getConfig()->save();
         $this->getLogger()->info(TextFormat::DARK_BLUE . "All config / files has been saved!");
     }
 
