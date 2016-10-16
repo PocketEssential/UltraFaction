@@ -36,7 +36,7 @@ class Commands implements CommandExecutor
 
                      */
                     case "create":
-                        if ($args[1] == null) {
+                        if ($args[1] == null && $sender instanceof Player) {
                             $sender->sendMessage("/f create <FactionName>");
                         }
 
@@ -62,7 +62,7 @@ class Commands implements CommandExecutor
                         if (!$this->plugin->IsPlayerInFaction($player)) {
                             $sender->sendMessage(UltraFaction::PREFIX . " You need to be in a faction to do this");
                         }
-                        if ($args[1] == null) {
+                        if ($args[1] == null && $sender instanceof Player) {
                             $sender->sendMessage(UltraFaction::PREFIX . " /f setdescription <Description>");
                         }
                         if ($this->plugin->IsPlayerInFaction($player) && $args[1] != null) {
@@ -86,7 +86,7 @@ class Commands implements CommandExecutor
                     case "rename":
                     case "changename":
                         $player = $sender;
-                        if ($args[1] == null) {
+                        if ($args[1] == null && $sender instanceof Player) {
                             $sender->sendMessage(UltraFaction::PREFIX . " /f rename <Name>");
                         }
                         if (!$this->plugin->IsPlayerInFaction($player)) {
