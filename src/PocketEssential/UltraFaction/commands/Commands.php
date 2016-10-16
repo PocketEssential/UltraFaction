@@ -39,8 +39,10 @@ class Commands implements CommandExecutor
                             $sender->sendMessage("/f create <FactionName>");
                         }
 
-                        // Todo: other events
-                        break;
+                        if($args[1] != null && sender instanceof Player){
+                            $this->plugin->createFaction($sender, $args[1]);
+                            break;
+                        }
 
                     /*
                     ______                    _       _   _
