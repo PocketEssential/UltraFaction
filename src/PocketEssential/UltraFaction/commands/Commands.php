@@ -4,6 +4,7 @@ namespace PocketEssential\UltraFaction\commands;
 use pocketmine\command\Command;
 use pocketmine\command\CommandSender;
 use pocketmine\command\CommandExecutor;
+use pocketmine\Player;
 
 use PocketEssential\UltraFaction\UltraFaction;
 
@@ -110,7 +111,22 @@ class Commands implements CommandExecutor
                         break;
                     case "claim":
                         //todo
-                        break;    
+                        break;
+                    case "invite":
+                        //todo
+                        break;
+                    case "kick":
+                        //todo
+                        break;
+                    case "leave":
+                        //todo
+                        break;
+                    case "delete":
+                        //todo
+                        break;
+                    case "deny":
+                        //todo
+                        break;
                 }
             }
         }
