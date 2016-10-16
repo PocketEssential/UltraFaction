@@ -122,13 +122,13 @@ class UltraFaction extends PluginBase implements Listener
     }
     
     public function getFactionLeader($faction_name){
-        if($this->existsFactiom($faction_name)){
+        if($this->existsFaction($faction_name)){
             $scandir = scandir($this->getDataFolder()."/factions/");
             foreach($scandir as $dirs){
                 $faction_data_name = substr($dirs, strpos($dirs, "_") + 1);
-                $faction_leader_name = substr($dirs, strpos($dirs, "_") - 1);// i think this doesn't work, i need to get before _
+                $leader = strstr($faction_data_name, '_', true);
                 if($faction_data_name == $faction_name){
-                    return $faction_leader_name;
+                    return $leader;
                 }
             }
         }
