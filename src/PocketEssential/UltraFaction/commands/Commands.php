@@ -3,11 +3,15 @@ namespace UltraFaction\commands;
 
 use pocketmine\command\Command;
 use pocketmine\command\CommandSender;
-use pocketmine\event\Listener;
+use pocketmine\command\CommandExecutor;
+
 use PocketEssential\UltraFaction\UltraFaction;
 
-class Commands implements Listener
+class Commands implements CommandExecutor
 {
+    public function __construct(UltraFaction $plugin){
+        $this->plugin = $plugin;
+    }
     public function onCommand(CommandSender $sender, Command $command, $labels, array $args)
     {
         $cmd = strtolower($command);
