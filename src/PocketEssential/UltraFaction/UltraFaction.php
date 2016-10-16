@@ -91,9 +91,30 @@ class UltraFaction extends PluginBase implements Listener
         //Todo
     }
     
+    public function addPlayerToFaction(Player $player, $faction_name){
+        if($this->existsFaction($faction_name)){
+            $faction = (new Config($this->getDataFolder()."/factions/".$this->getFactionLeader($faction_name)."_".$faction_name.".yml", Config::YAML));
+            $faction->set("members", $player->getName()); // need to update this, i'll do it - Ankit
+        }
+    }
+    
+    public function getFactionLeader($faction_name){
+        if($this->existsFactiom($faction_name)){
+            $scandir = scandir($this->getDataFolder()."/factions/");
+            foreach($scandir as $dirs){
+                $faction_data_name = substr($dirs, strpos($dirs, "_") + 1);
+                $faction_leader_name = substr($dirs, strpos($dirs, "_") - 1);// i think this doesn't work, i need to get before _
+                if($faction_data_name == $faction_name){
+                    return $faction_leader_name;
+                }
+            }
+        }
+    }
+    
     public function existsFaction($faction_name){
         $scandir = scandir($this->getDataFolder()."/factions/");
         foreach($scandir as $dirs){
+            $faction_data_name = substr($dirs, strpos($dirs, "_") + 1);
             if($dirs == $faction_name){
                 return true;
             } else {
@@ -106,7 +127,7 @@ class UltraFaction extends PluginBase implements Listener
         if(!$player->IsPlayerInFaction($player)){
             if(!$this->existsFaction($faction_name)){
                 $name = $player->getName();
-                $faction = (new Config($this->getDataFolder() . "/factions/"."$name"."_". $faction_name .".yml", Config::YAML));
+                $faction = (new Config($this->getDataFolder() . "/factions/". $name ."_". $faction_name .".yml", Config::YAML));
                 $faction->set("Leader", $player->getName());
                 $faction->save();
             } else {
