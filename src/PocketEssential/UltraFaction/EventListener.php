@@ -1,9 +1,9 @@
 <?php
-namespace PocketEssential/UltraFaction;
+namespace PocketEssential\UltraFaction;
 
 use PocketEssential\UltraFaction\UltraFaction;
 
-class Listener {
+class EventListener {
     public function __construct(UltraFaction $plugin){
         $this->plugin = $plugin;
     }
