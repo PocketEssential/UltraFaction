@@ -116,8 +116,13 @@ class UltraFaction extends PluginBase implements Listener
     
     public function addPlayerToFaction(Player $player, $faction_name){
         if($this->existsFaction($faction_name)){
-            $faction = (new Config($this->getDataFolder()."/factions/".$this->getFactionLeader($faction_name)."_".$faction_name.".yml", Config::YAML));
-            $faction->set("members", $player->getName()); // need to update this, i'll do it - Ankit
+            if($this->getServer()->getPlayer($player) !== null && $this->getServer()->getPlayer($player) instanceof Player){
+                $faction = (new Config($this->getDataFolder()."/factions/".$this->getFactionLeader($faction_name)."_".$faction_name.".yml", Config::YAML));
+                $add = $faction->get("members", []);// This is to make an array before entering on yml
+			    $add[] = $player->getName();
+                $faction->set("members", $add);
+                $faction->save();
+            }
         }
     }
     
@@ -126,7 +131,7 @@ class UltraFaction extends PluginBase implements Listener
             $scandir = scandir($this->getDataFolder()."/factions/");
             foreach($scandir as $dirs){
                 $faction_data_name = substr($dirs, strpos($dirs, "_") + 1);
-                $leader = strstr($faction_data_name, '_', true);
+                $leader = strstr($dirs, '_', true);
                 if($faction_data_name == $faction_name){
                     return $leader;
                 }
