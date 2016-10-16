@@ -85,13 +85,24 @@ class Commands implements Listener
                         if (!$this->plugin->IsPlayerInFaction($player)) {
                             $sender->sendMessage(UltraFaction::PREFIX . " You need to be in a faction to do this");
                         }
+                        break;
+                    case "war":
+                        //todo
+                        break;
+                    case "map":
+                        //todo
+                        break;
+                    case "ally":
+                        //todo
+                        break;
+                    case "unally":
+                        //todo
+                        break;
+                    case "claim":
+                        //todo
+                        break;    
                 }
             }
-            else {
-                    $sender->sendMessage(UltraFaction::PREFIX . " Faction has successfully been renamed");
-                 // Todo rename
-                }
-            }
-
         }
+    }
 }
