@@ -76,6 +76,14 @@ class UltraFaction extends PluginBase implements Listener
         $this->getConfig()->save();
         $this->getLogger()->info(TextFormat::DARK_BLUE . "All config / files has been saved!");
     }
+    
+    public function getPlayerFaction(Player $player){
+        // Todo
+    }
+    
+    public function IsPlayerInFaction(Player $player){
+        //Todo
+    }
 
     /*
      *  Languages, getting it the EASY way BOII
