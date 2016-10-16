@@ -50,17 +50,17 @@ class UltraFaction extends PluginBase implements Listener
     {
         $this->getServer()->getPluginManager()->registerEvents(new Listener($this), $this);
         $this->getCommand("f")->setExecutor(new Commands($this));
-        
+
         @mkdir($this->getDataFolder());
-        
+
         $this->config = new Config($this->getDataFolder() . "Config.yml", Config::YAML);
 
         $this->getLogger()->info("---------------------------------------");
-        $this->getLogger()->info("Using Language: ".$this->lang);
-        $this->getLogger()->info("Data-Provider: ".$data);
+        $this->getLogger()->info("Using Language: " . $this->lang);
+        $this->getLogger()->info("Data-Provider: " . $data);
         $this->getLogger()->info("|| Everything has been loaded ||| ");
         $this->getLogger()->info("----------------------------------------");
-        
+
     }
 
     public function onDisable()
@@ -78,7 +78,7 @@ class UltraFaction extends PluginBase implements Listener
         $this->getConfig()->save();
         $this->getLogger()->info(TextFormat::DARK_BLUE . "All config / files has been saved!");
     }
-    
+
     public function getPlayerFaction(Player $player)
     {
         $f = new Config($this->getDataFolder() . "faction/");
@@ -86,10 +86,21 @@ class UltraFaction extends PluginBase implements Listener
         $faction = substr($f, strpos($f, "_") + 1);
         return $faction;
     }
-    
-    public function IsPlayerInFaction(Player $player){
-        //Todo
+
+    public function IsPlayerInFaction(Player $player)
+    {
+        $faction = (new Config($this->getDataFolder() . "/factions/" . $this->getFactionLeader($faction_name) . "_" . $faction_name . ".yml", Config::YAML));
+
+        foreach ($faction as $factions) {
+            $factions->get("members");
+            if (strtolower($factions($player->getName()))) {
+                return true;
+            } else {
+                return false;
+            }
+        }
     }
+
     
     public function addPlayerToFaction(Player $player, $faction_name){
         if($this->existsFaction($faction_name)){
