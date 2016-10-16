@@ -4,6 +4,7 @@ namespace PocketEssential\UltraFaction\commands;
 use pocketmine\command\Command;
 use pocketmine\command\CommandSender;
 use pocketmine\command\CommandExecutor;
+use pocketmine\Player;
 
 use PocketEssential\UltraFaction\UltraFaction;
 
@@ -41,10 +42,14 @@ class Commands implements CommandExecutor
                             $sender->sendMessage("/f create <FactionName>");
                         }
 
+<<<<<<< HEAD
                         if ($args[1] != null && sender instanceof Player) {
+=======
+                        if($args[1] != null && $sender instanceof Player){
+>>>>>>> origin/master
                             $this->plugin->createFaction($sender, $args[1]);
-                            break;
                         }
+                        break;   
 
                     /*
                     ______                    _       _   _
@@ -113,7 +118,25 @@ class Commands implements CommandExecutor
                     case "claim":
                         //todo
                         break;
+<<<<<<< HEAD
 
+=======
+                    case "invite":
+                        //todo
+                        break;
+                    case "kick":
+                        //todo
+                        break;
+                    case "leave":
+                        //todo
+                        break;
+                    case "delete":
+                        //todo
+                        break;
+                    case "deny":
+                        //todo
+                        break;
+>>>>>>> origin/master
                 }
             }
         }

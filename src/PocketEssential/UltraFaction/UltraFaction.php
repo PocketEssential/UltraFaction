@@ -79,8 +79,12 @@ class UltraFaction extends PluginBase implements Listener
         $this->getLogger()->info(TextFormat::DARK_BLUE . "All config / files has been saved!");
     }
     
-    public function getPlayerFaction(Player $player){
-        // todo
+    public function getPlayerFaction(Player $player)
+    {
+        $f = new Config($this->getDataFolder() . "faction/");
+
+        $faction = substr($f, strpos($f, "_") + 1);
+        return $faction;
     }
     
     public function IsPlayerInFaction(Player $player){
@@ -101,7 +105,8 @@ class UltraFaction extends PluginBase implements Listener
     public function createFaction(Player $player, $faction_name){
         if(!$player->IsPlayerInFaction($player)){
             if(!$this->existsFaction($faction_name)){
-                $faction = (new Config($this->getDataFolder() . "/factions/". $faction_name .".yml", Config::YAML));
+                $name = $player->getName();
+                $faction = (new Config($this->getDataFolder() . "/factions/"."$name"."_". $faction_name .".yml", Config::YAML));
                 $faction->set("Leader", $player->getName());
                 $faction->save();
             } else {
