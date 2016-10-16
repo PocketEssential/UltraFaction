@@ -1,5 +1,16 @@
 name: UltraFaction
 main: PocketEssential\UltraFaction\UltraFaction
 api: 1.0.0
-version: 1.0.0
+version: 1.0.0b
 description: Rich Ultra Factions plugin for Minecraft: Pocket Edition
+
+commands:
+ f:
+  description: All faction command
+  permission: ultrafaction.f.command
+
+permissions:
+ ultrafaction.command:
+  default: true
+  description: Permission to use all faction command
+  
