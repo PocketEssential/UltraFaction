@@ -48,7 +48,7 @@ class UltraFaction extends PluginBase implements Listener
 
     public function onEnable()
     {
-        $this->getServer()->getPluginManager()->reisterEvents(new Listener($this), $this);
+        $this->getServer()->getPluginManager()->registerEvents(new Listener($this), $this);
         $this->getCommand("f")->setExecutor(new Commands($this));
             
         $this->config = new Config($this->getDataFolder() . "Config.yml", Config::YAML);
