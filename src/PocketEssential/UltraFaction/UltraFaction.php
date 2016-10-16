@@ -81,10 +81,22 @@ class UltraFaction extends PluginBase implements Listener
 
     public function getPlayerFaction(Player $player)
     {
-        $f = new Config($this->getDataFolder() . "faction/");
 
-        $faction = substr($f, strpos($f, "_") + 1);
-        return $faction;
+        if($this->getDataProvider() == "yaml" or "yml") {
+
+            $f = new Config($this->getDataFolder() . "faction/");
+
+            $faction = substr($f, strpos($f, "_") + 1);
+            return $faction;
+        }
+        if($this->getDataProvider() == "sqlite" or "lite"){
+            $this->getLogger()->info(UltraFaction::PREFIX." You are trying to use ".$this->getDataProvider()." as data provider! It has not been added yet!");
+            // Todo
+        }
+        if($this->getDataProvider() == "mysql" or "sql"){
+             $this->getLogger()->info(UltraFaction::PREFIX." You are trying to use ".$this->getDataProvider()." as data provider! It has not been added yet!");
+            //Todo
+        }
     }
 
     public function IsPlayerInFaction(Player $player)
