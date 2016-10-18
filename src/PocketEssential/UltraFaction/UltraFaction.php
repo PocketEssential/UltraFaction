@@ -84,7 +84,7 @@ class UltraFaction extends PluginBase implements Listener
 
         if($this->getDataProvider() == "yaml" or "yml") {
 
-            $f = new Config($this->getDataFolder() . "faction/");
+            $f = (new Config($this->getDataFolder() . "/factions/"));
 
             $faction = substr($f, strpos($f, "_") + 1);
             return $faction;
@@ -99,18 +99,8 @@ class UltraFaction extends PluginBase implements Listener
         }
     }
 
-    public function IsPlayerInFaction(Player $player)
-    {
-        $faction = (new Config($this->getDataFolder() . "/factions/" . $this->getFactionLeader($faction_name) . "_" . $faction_name . ".yml", Config::YAML));
-
-        foreach ($faction as $factions) {
-            $factions->get("members");
-            if (strtolower($factions($player->getName()))) {
-                return true;
-            } else {
-                return false;
-            }
-        }
+    public function IsPlayerInFaction(Player $player){
+	// Todo
     }
 
     
