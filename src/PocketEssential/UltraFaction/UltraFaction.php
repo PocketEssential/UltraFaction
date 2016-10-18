@@ -118,9 +118,26 @@ class UltraFaction extends PluginBase implements Listener
         if($this->existsFaction($faction_name)){
             if($this->getServer()->getPlayer($player) !== null && $this->getServer()->getPlayer($player) instanceof Player){
                 $faction = (new Config($this->getDataFolder()."/factions/".$this->getFactionLeader($faction_name)."_".$faction_name.".yml", Config::YAML));
-                $add = $faction->get("members", []);// This is to make an array before entering on yml
-			    $add[] = $player->getName();
+                $add = $faction->get("members", []);
+		$add[] = $player->getName();
                 $faction->set("members", $add);
+                $faction->save();
+            }
+        }
+    }
+    public function removePlayerFromFaction(Player $player, $faction_name){
+        if($this->existsFaction($faction_name)){
+            if($this->getServer()->getPlayer($player) !== null && $this->getServer()->getPlayer($player) instanceof Player){
+                $faction = (new Config($this->getDataFolder()."/factions/".$this->getFactionLeader($faction_name)."_".$faction_name.".yml", Config::YAML));
+                $members = $faction->get("members");
+		foreach($members as $fac_members){
+		    if($fac_members == $player->getName()){
+			$toremove = array_search($player->getName(), $fac_members);
+			if($toremove){
+			    unset($fac_members[$toremove]);
+			}
+		    }
+		}
                 $faction->save();
             }
         }
