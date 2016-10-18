@@ -119,7 +119,8 @@ class Commands implements CommandExecutor
                         //todo
                         break;
                     case "leave":
-                        //todo
+                        $this->plugin->removePlayerFromFaction($sender, $this->plugin->getFactionName($sender));
+                        $sender->sendMessage( UltraFaction::PRIFEX . " You have leaved the faction");
                         break;
                     case "delete":
                         //todo
