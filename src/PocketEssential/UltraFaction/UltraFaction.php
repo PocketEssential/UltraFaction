@@ -98,6 +98,14 @@ class UltraFaction extends PluginBase implements Listener
             //Todo
         }
     }
+	
+    public function isSameFaction($player1, $player2){
+	if($this->getPlayerFaction($player1) == $this->getPlayerFaction($player2)){
+	    return true;
+	} else {
+	    return false;
+	}
+    }
 
     public function IsPlayerInFaction(Player $player){
 	// Todo
