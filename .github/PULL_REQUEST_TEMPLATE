@@ -1,0 +1,12 @@
+### PR description
+
+> Write a short description about the Pull Request.
+
+
+### Status: Tested or Untested
+> Was this code tested or not? Please test code before submitting it as a pull request.
+
+``` 
+Note to devs who accept/don't accept pull requests:
+Make sure that code is tested before you approve it. If they did not test it, test it yourself. It MUST BE TESTED before approving the PR.
+```
