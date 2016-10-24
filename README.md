@@ -1,4 +1,9 @@
-# UltraFaction
+ _    _ _ _             ______         _   _                 
+| |  | | | |           |  ____|       | | (_)                
+| |  | | | |_ _ __ __ _| |__ __ _  ___| |_ _  ___  _ __  ___ 
+| |  | | | __| '__/ _` |  __/ _` |/ __| __| |/ _ \| '_ \/ __|
+| |__| | | |_| | | (_| | | | (_| | (__| |_| | (_) | | | \__ \
+ \____/|_|\__|_|  \__,_|_|  \__,_|\___|\__|_|\___/|_| |_|___/
 Rich Ultra Faction plugin for Minecraft: Pocket Edition
 Create your Faction, Claim your Land, Fight your Enemies!
 
