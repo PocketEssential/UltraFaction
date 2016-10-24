@@ -94,7 +94,7 @@ class Commands implements CommandExecutor
                         }
                         if($this->plugin->IsPlayerInFaction($player) && $args[1] !== null){
                             //todo
-                            $sender->sendMessage(UltraFaction::PRIFEX . " Faction has successfully renamed!");
+                            $sender->sendMessage(UltraFaction::PREFIX . " Faction has successfully renamed!");
                         }
                         break;
                     case "war":
@@ -120,7 +120,7 @@ class Commands implements CommandExecutor
                         break;
                     case "leave":
                         $this->plugin->removePlayerFromFaction($sender, $this->plugin->getFactionName($sender));
-                        $sender->sendMessage( UltraFaction::PRIFEX . " You have leaved the faction");
+                        $sender->sendMessage( UltraFaction::PREFIX . " You have left the faction.");
                         break;
                     case "delete":
                         //todo

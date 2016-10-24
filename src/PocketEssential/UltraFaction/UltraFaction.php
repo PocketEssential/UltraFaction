@@ -170,10 +170,10 @@ class UltraFaction extends PluginBase implements Listener
                 $faction->set("Leader", $player->getName());
                 $faction->save();
             } else {
-                $player->sendMessage(UltraFaction::PRIFEX . " That faction name exists, Try another name.");
+                $player->sendMessage(UltraFaction::PREFIX . " That faction name exists, Try another name.");
             }
         } else {
-            $player->sendMessage(UltraFaction::PRIFEX . " You are already in faction!");
+            $player->sendMessage(UltraFaction::PREFIX . " You are already in faction!");
         }
     }
 
