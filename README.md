@@ -1,11 +1,12 @@
- _    _ _ _             ______         _   _                 
-| |  | | | |           |  ____|       | | (_)                
-| |  | | | |_ _ __ __ _| |__ __ _  ___| |_ _  ___  _ __  ___ 
-| |  | | | __| '__/ _` |  __/ _` |/ __| __| |/ _ \| '_ \/ __|
-| |__| | | |_| | | (_| | | | (_| | (__| |_| | (_) | | | \__ \
- \____/|_|\__|_|  \__,_|_|  \__,_|\___|\__|_|\___/|_| |_|___/
-Rich Ultra Faction plugin for Minecraft: Pocket Edition
-Create your Faction, Claim your Land, Fight your Enemies!
+ _    _ _ _             ______         _   _                 <br>
+| |  | | | |           |  ____|       | | (_)                <br>
+| |  | | | |_ _ __ __ _| |__ __ _  ___| |_ _  ___  _ __  ___ <br>
+| |  | | | __| '__/ _` |  __/ _` |/ __| __| |/ _ \| '_ \/ __|<br>
+| |__| | | |_| | | (_| | | | (_| | (__| |_| | (_) | | | \__ \ <br>
+ \____/|_|\__|_|  \__,_|_|  \__,_|\___|\__|_|\___/|_| |_|___/ <br>
+
+### The Feature-Rich Ultra Factions plugin for your Minecraft: Pocket Edition PHP7 Server!
+#### Create your Faction, Claim your Land, Fight your Enemies!
 
 ## Features
 - [x] 3D chunk claiming system with configurable claim sizes
