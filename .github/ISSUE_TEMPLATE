@@ -1,0 +1,21 @@
+### Issue description
+
+> Write a short description about the issue
+
+### Steps to reproduce the issue
+
+> How did you find this issue? Did you type a command? Did you simply start your server? What happened? Write steps here.
+
+
+### OS and versions
+> * UltrFaction Version:
+> * Server Software (PM, Genisys etc.):
+> * Machine OS (Linux, Mac, Windows etc.):
+
+### Crashdump, console erros or other info
+
+> Was there a crash dump? Was there an error in the console? Is there any other information? Report it here. Please use proper markdown. An example of markdown is provided below.
+
+```
+Copy and paste crash dumps, code blocks, or console errors into here
+```
