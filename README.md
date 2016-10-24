@@ -10,6 +10,7 @@ Create your Faction, Claim your Land, Fight your Enemies!
 - [x] A very complex (but simple to use!) access system that allows for both global permission changes and per chunk access settings. 
 - [x] Warzone, safezone, and peaceful faction toggles - for example, you can have multiple warzone factions, each with their own names.
 - [x] Custom language/messages support. Server admins can translate the plugins themselves, or just replace the messages with their own.
+- [x] Open your faction, allow others to join without invitations!
 
 ### Simple API
 

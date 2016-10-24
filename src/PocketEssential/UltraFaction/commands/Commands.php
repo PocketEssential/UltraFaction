@@ -40,8 +40,16 @@ class Commands implements CommandExecutor
                 switch ($args[0]) {
                     case "help":
 
-                        $sender->sendMessage("----- UltraFaction Help -----");
-                        $sender->sendMessage("// Todo");
+                        $sender->sendMessage("-----.[ UltraFaction Help ].-----");
+                        $sender->sendMessage("/f create <Name>  - Creates a faction");
+                        $sender->sendMessage("/f desc <Descriotion>  - Change/set the faction description");
+                        $sender->sendMessage("/f open [yes/no] - Choose if invitation is required to join");
+                        $sender->sendMessage("/f invite <Player Name> - Invite a player to your faction");
+                        $sender->sendMessage("/f sethome - Sets the faction home at your current position");
+                        $sender->sendMessage("/f ally <Faction Name>  - Ally with another faction");
+                        $sender->sendMessage("/f allyaccept <Faction Name>  - Accept a ally request");
+
+                        // Todo: Other help things such as War, Waraccept, change name, kick et!
                         break;
 
                     /*
