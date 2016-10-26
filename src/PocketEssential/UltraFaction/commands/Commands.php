@@ -150,7 +150,7 @@ class Commands implements CommandExecutor
                         $sender->sendMessage( UltraFaction::PREFIX . " You have left the faction.");
                         break;
                     case "delete":
-                        if($this->plugin->getFactionLeader($this->plugin->getPlayerFaction($sender) == $sender->getName())){
+                        if($this->plugin->getFactionLeader($this->plugin->getPlayerFaction($sender)) == $sender->getName()){
                             unlink($this->getDataFolder() . "/factions/". $sender->getName() . "_" . $this->plugin->getPlayerFaction($sender) .".yml");
                             $sender->sendMessage(UltraFaction::PREFIX . " Faction has been deleted!");
                         }
