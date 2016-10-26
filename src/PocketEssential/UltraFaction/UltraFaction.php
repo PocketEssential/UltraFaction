@@ -211,63 +211,65 @@ class UltraFaction extends PluginBase implements Listener
          * Getting the type of text they want to translate!
         */
 
-        if ($string == "Created_A_Faction") {
-            return $this->lang->get("Created_A_Faction");
-        }
-        if ($string == "Faction_Already_Exist") {
-            return $this->lang->get("Faction_Already_Exist");
-        }
-        if ($string == "Faction_Too_Short") {
-            return $this->lang->get("Faction_Too_Short");
-        }
-        if ($string == "Faction_Too_Long") {
-            return $this->lang->get("Faction_Too_Long");
-        }
-        if ($string == "Already_In_Faction") {
-            return $this->lang->get("Already_In_Faction");
-        }
-        if ($string == "Faction_Cost_Reach") {
-            return $this->lang->get("ction_Cost_Reach");
-        }
-        if ($string == "Faction_Set_Description") {
-            return $this->lang->get("Faction_Set_Description");
-        }
-        if ($string == "Faction_Reset") {
-            return $this->lang->get("Faction_Reset");
-        }
-        if ($string == "Faction_Remove") {
-            return $this->lang->get("Faction_Remove");
-        }
-        if ($string == "Faction_Home_Teleport") {
-            return $this->lang->get("Faction_Home_Teleport");
-        }
-        if ($string == "Faction_No_Home") {
-            return $this->lang->get("Faction_No_Home");
-        }
-        if ($string == "Faction_No_Home_Set") {
-            return $this->lang->get("Faction_No_Home_Set");
-        }
-        if ($string == "Faction_Rename") {
-            return $this->lang->get("Faction_Rename");
-        }
-        if ($string == "Invited") {
-            return $this->lang->get("Invited");
-        }
-        if ($string == "No_Permission_To_Invite") {
-            return $this->lang->get("No_Permission_To_Invite");
-        }
-        if ($string == "No_Permission_To_Promote") {
-            return $this->lang->get("No_Permission_To_Promote");
-        }
-        if ($string == "No_Faction") {
-            return $this->lang->get("No_Faction");
-        }
-        if ($string == "No_Faction_To_Do") {
-            return $this->lang->get("No_Faction_To_Do");
-        }
-        if ($string == "Faction_Description_Field_Empty") {
-            return $this->lang->get("Faction_Description_Field_Empty");
-        }
+       	switch($string){
+		case  "Created_A_Faction":
+		    return $this->lang->get("Created_A_Faction");
+		break;
+		case  "Faction_Already_Exist":
+		    return $this->lang->get("Faction_Already_Exist");
+    		break;
+        	case "Faction_Too_Short" :
+        	    return $this->lang->get("Faction_Too_Short");
+        	break;
+       		 case "Faction_Too_Long" :
+       		     return $this->lang->get("Faction_Too_Long");
+        	break;
+        	case "Already_In_Faction" :
+        	    return $this->lang->get("Already_In_Faction");
+        	break;
+        	case "Faction_Cost_Reach" :
+        	    return $this->lang->get("ction_Cost_Reach");
+        	break;
+        	case "Faction_Set_Description" :
+        	    return $this->lang->get("Faction_Set_Description");
+        	break;
+        	case "Faction_Reset" :
+        	    return $this->lang->get("Faction_Reset");
+        	break;
+        	case "Faction_Remove" :
+        	    return $this->lang->get("Faction_Remove");
+        	break;
+        	case "Faction_Home_Teleport" :
+        	    return $this->lang->get("Faction_Home_Teleport");
+        	break;
+        	case "Faction_No_Home" :
+        	    return $this->lang->get("Faction_No_Home");
+        	break;
+        	case "Faction_No_Home_Set" :
+        	    return $this->lang->get("Faction_No_Home_Set");
+        	break;
+        	case "Faction_Rename" :
+        	    return $this->lang->get("Faction_Rename");
+        	break;
+        	case "Invited" :
+        	    return $this->lang->get("Invited");
+        	break;
+        	case "No_Permission_To_Invite" :
+        	    return $this->lang->get("No_Permission_To_Invite");
+        	break;
+        	case "No_Permission_To_Promote" :
+        	    return $this->lang->get("No_Permission_To_Promote");
+        	break;
+        	case "No_Faction" :
+        	    return $this->lang->get("No_Faction");
+        	break;
+        	case "No_Faction_To_Do" :
+        	    return $this->lang->get("No_Faction_To_Do");
+        	break;
+        	case "Faction_Description_Field_Empty" :
+        	    return $this->lang->get("Faction_Description_Field_Empty");
+        	break;
+	}
     }
 
     public function getDataProvider()
