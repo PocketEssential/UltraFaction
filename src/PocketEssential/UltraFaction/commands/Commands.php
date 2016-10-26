@@ -143,16 +143,34 @@ class Commands implements CommandExecutor
                         //todo
                         break;
                     case "kick":
-                        //todo
+                        if($this->plugin->getFactionLeader($this->plugin->getPlayerFaction($sender)) == $sender->getName()){
+                            if(isset($args[1])){
+                                $kicked_player = $this->plugin->getServer()->getOfflinePlayer($args[1]);
+                                $this->plugin->removePlayerFromFaction($args[1], $this->plugin->getFactionName($sender));
+                                foreach($this->plugin->getServer()->getOnlinePlayers() as $p){
+                                    if($p->getName() == $kicked_player->getName()){
+                                       $kicked_player->sendMessage(UltraFaction::PREFIX . " You have been kicked from faction.");
+                                    }
+                                }
+                            }
+                        } else {
+                            $sender->sendMessage(UltraFaction::PREFIX . " Only faction leaders can kick members.");   
+                        }
                         break;
                     case "leave":
-                        $this->plugin->removePlayerFromFaction($sender, $this->plugin->getFactionName($sender));
-                        $sender->sendMessage( UltraFaction::PREFIX . " You have left the faction.");
+                        if($this->plugin->getFactionLeader($this->plugin->getPlayerFaction($sender)) !== $sender->getName()){
+                            $this->plugin->removePlayerFromFaction($sender, $this->plugin->getFactionName($sender));
+                            $sender->sendMessage(UltraFaction::PREFIX . " You have left the faction.");
+                        } else {
+                            $sender->sendMessage(UltraFaction::PREFIX . " You cannot leave cause you are a leader.");
+                        }
                         break;
                     case "delete":
                         if($this->plugin->getFactionLeader($this->plugin->getPlayerFaction($sender)) == $sender->getName()){
                             unlink($this->getDataFolder() . "/factions/". $sender->getName() . "_" . $this->plugin->getPlayerFaction($sender) .".yml");
                             $sender->sendMessage(UltraFaction::PREFIX . " Faction has been deleted!");
+                        } else {
+                            $sender->sendMessage(UltraFaction::PREFIX . " Only faction leaders can delete faction.");
                         }
                         break;
                     case "deny":
