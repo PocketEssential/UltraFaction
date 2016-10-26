@@ -287,4 +287,10 @@ class UltraFaction extends PluginBase implements Listener
             return $this->data;
         }
     }
+
+    // Prefix to use in other Plugins
+    public static function getPrefix(){
+        return UltraFaction::PREFIX;
+    }
+
 }
