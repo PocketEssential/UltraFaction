@@ -180,7 +180,7 @@ class UltraFaction extends PluginBase implements Listener
 
     public function getLanguage()
     {
-        $langType = $this->getonfig->get("Language");
+        $langType = $this->getConfig()->get("Language");
 
         if (!file_exists('/Languages/')) {
             mkdir('/Languages', 0777, true);
