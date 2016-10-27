@@ -71,4 +71,4 @@ Can_Attack: false
 Claim_Price: 0
 
 # Choose if you wanna enable or disable the map feature!
-Enable: true
+Map_System: true

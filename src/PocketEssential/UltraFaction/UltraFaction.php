@@ -23,15 +23,12 @@
 namespace PocketEssential\UltraFaction;
 
 
-use pocketmine\command\Command;
 use pocketmine\Player;
-use pocketmine\command\CommandSender;
 use pocketmine\Server;
 use pocketmine\plugin\PluginBase;
 use pocketmine\event\Listener;
 use pocketmine\utils\TextFormat;
 use pocketmine\utils\Config;
-use pocketmine\command\ConsoleCommandSender;
 
 class UltraFaction extends PluginBase implements Listener
 {
@@ -54,7 +51,7 @@ class UltraFaction extends PluginBase implements Listener
 
         $this->getLogger()->info("---------------------------------------");
         $this->getLogger()->info("Using Language: " . $this->lang);
-        $this->getLogger()->info("Data-Provider: " . $data);
+        $this->getLogger()->info("Data-Provider: " . $this->data);
         $this->getLogger()->info("|| Everything has been loaded ||| ");
         $this->getLogger()->info("----------------------------------------");
 
@@ -79,19 +76,19 @@ class UltraFaction extends PluginBase implements Listener
     public function getPlayerFaction(Player $player)
     {
 
-        if($this->getDataProvider() == "yaml" or "yml") {
+        if ($this->getDataProvider() == "yaml" or "yml") {
 
             $f = (new Config($this->getDataFolder() . "/factions/"));
 
             $faction = substr($f, strpos($f, "_") + 1);
             return $faction;
         }
-        if($this->getDataProvider() == "sqlite" or "lite"){
-            $this->getLogger()->info(UltraFaction::PREFIX." You are trying to use ".$this->getDataProvider()." as data provider! It has not been added yet!");
+        if ($this->getDataProvider() == "sqlite" or "lite") {
+            $this->getLogger()->info(UltraFaction::PREFIX . " You are trying to use " . $this->getDataProvider() . " as data provider! It has not been added yet!");
             // Todo
         }
-        if($this->getDataProvider() == "mysql" or "sql"){
-             $this->getLogger()->info(UltraFaction::PREFIX." You are trying to use ".$this->getDataProvider()." as data provider! It has not been added yet!");
+        if ($this->getDataProvider() == "mysql" or "sql") {
+            $this->getLogger()->info(UltraFaction::PREFIX . " You are trying to use " . $this->getDataProvider() . " as data provider! It has not been added yet!");
             //Todo
         }
     }
@@ -197,7 +194,7 @@ class UltraFaction extends PluginBase implements Listener
     }
 
     /*
-     *  Simple API to be used by (U-S )
+     *  Simple API to be used by (US) or other developers! )
      */
     public function getLanguageText($string)
     {
@@ -293,4 +290,7 @@ class UltraFaction extends PluginBase implements Listener
         return UltraFaction::PREFIX;
     }
 
+    public function getEconomyType(){
+        return $this->getConfig()->get("Economy");
+    }
 }
