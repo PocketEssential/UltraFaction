@@ -23,6 +23,8 @@ namespace PocketEssential\UltraFaction;
 use PocketEssential\UltraFaction\UltraFaction;
 use pocketmine\event\Listener;
 use pocektmine\event\player\PlayerChatEvent;
+use pocketmine\event\entity\EntityDamageEvent;
+use pocketmine\event\entity\EntityDamageByEntityEvent;
 use pocketmine\utils\TextFormat as TF;
 
 class EventListener implements Listener{
