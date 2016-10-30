@@ -32,12 +32,17 @@ class EventListener implements Listener{
     public function onChat(PlayerChatEvent $event){
         $player = $event->getPlayer();
         $message = $event->getMessage();
-        if($this->plugin->IsPlayerInFaction($player)){
-            $faction = $this->plugin->getPlayerFaction($player);
-            if($this->plugin->getFactionLeader($faction) == $player->getName()){
-                $event->setFormat(TF::DARK_PURPLE . "**" . $faction  . " " . $player ." > ". $message);
+        $faction = $this->plugin->getPlayerFaction($player);
+        $purechat = $this->plugin->getServer()->getPluginManager()->getPlugin("PureChat");
+        if($purechat){
+            if($this->plugin->IsPlayerInFaction($player)){
+                if($this->plugin->getFactionLeader($faction) == $player->getName()){
+                    $event->setFormat(str_replace($this->plugin->getServer()->getConfig()->get("fac-format"), array("**".$faction, $player->getName(), $message), array("fac_name", "player_name", "message")));
+                } else {
+                    $event->setFormat(str_replace($this->plugin->getServer()->getConfig()->get("fac-format"), array($faction, $player->getName(), $message), array("fac_name", "player_name", "message")));
+                }
             } else {
-                $event->setFotmat(TF::DARK_PURPLE . "$faction . " " . $player .">". $message");
+                $event->setFormat(str_replace($this->plugin->getServer()->getConfig()->get("no-fac-format"), array($faction, $player->getName(), $message), array("fac_name", "player_name", "message")));
             }
         }
     }
