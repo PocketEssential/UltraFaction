@@ -46,4 +46,15 @@ class EventListener implements Listener{
             }
         }
     }
+    public function onDamage(EntityDamageEvent $event){
+        if($event instanceof EntityDamageByEntityEvent){
+            if($event->getEntity() instanceof Player && $event->getDamager() instanceof Player){
+                $player = $event->getEntity();
+                $damager = $event->getDamager();
+                if($this->plugin->isSameFaction($player, $damager)){
+                    $event->setCancelled(true);
+                }
+            }
+        }
+    }
 }
