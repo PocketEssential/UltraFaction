@@ -37,12 +37,12 @@ class EventListener implements Listener{
         if($purechat){
             if($this->plugin->IsPlayerInFaction($player)){
                 if($this->plugin->getFactionLeader($faction) == $player->getName()){
-                    $event->setFormat(str_replace($this->plugin->getServer()->getConfig()->get("fac-format"), array("**".$faction, $player->getName(), $message), array("fac_name", "player_name", "message")));
+                    $event->setFormat("**". $faction . $player->getName() ." > ". $message);
                 } else {
-                    $event->setFormat(str_replace($this->plugin->getServer()->getConfig()->get("fac-format"), array($faction, $player->getName(), $message), array("fac_name", "player_name", "message")));
+                    $event->setFormat($faction . $player->getName() ." > ". $message);
                 }
             } else {
-                $event->setFormat(str_replace($this->plugin->getServer()->getConfig()->get("no-fac-format"), array($faction, $player->getName(), $message), array("fac_name", "player_name", "message")));
+                $event->setFormat($player->getName() ." > ". $message);
             }
         }
     }
