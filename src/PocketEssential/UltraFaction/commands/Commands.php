@@ -49,6 +49,13 @@ class Commands implements CommandExecutor
                         $sender->sendMessage("/f sethome - Sets the faction home at your current position");
                         $sender->sendMessage("/f ally <Faction Name>  - Ally with another faction");
                         $sender->sendMessage("/f allyaccept <Faction Name>  - Accept a ally request");
+                        $sender->sendMessage("/f war <Faction Name>  - Send a war request");
+                        $sender->sendMessage("/f waraccept <Faction Name> - Accept a war request");
+                        $sender->sendMessage("/f rename <New Name> - Rename your faction name");
+                        $sender->sendMessage("/f kick <Player Name> - Kick a player off your faction");
+                        $sender->sendMessage("/f claim - Claim the plot your standing on");
+                        $sender->sendMessage("/f promote <Player Name> <Rank Type> - Promote a player on your faction");
+                        $sender->sendMessage("/f demote <Player Name> [Rank Type] - Demote a player to -1 rank below");
 
                         // Todo: Other help things such as War, Waraccept, change name, kick et!
                         break;
