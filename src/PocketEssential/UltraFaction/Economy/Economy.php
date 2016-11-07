@@ -69,7 +69,7 @@ class Economy
                 return true;
                 break;
 
-            case 'MassiveEconoy':
+            case 'MassiveEconomy':
                 $this->economy->payPlayer($player->getName(), $amount);
                 return true;
                 break;
@@ -85,7 +85,7 @@ class Economy
                 return true;
                 break;
 
-            case 'MassiveEconoy':
+            case 'MassiveEconomy':
                 $this->economy->takeMoney($player->getName(), $amount);
                 return true;
                 break;
