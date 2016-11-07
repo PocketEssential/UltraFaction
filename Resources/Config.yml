@@ -32,7 +32,8 @@ data-provider: sqlite
 Economy: EconomyAPI
 
 # If your using MySQL : Enter the details before!
-MySql:
+# Host: Example; localhost or, 127.0.0.1
+MySQL:
     Host: localhost
     Username: root
     Password: 12345678
