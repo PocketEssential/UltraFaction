@@ -53,7 +53,7 @@ class EventListener implements Listener{
             if($event->getEntity() instanceof Player && $event->getDamager() instanceof Player){
                 $player = $event->getEntity();
                 $damager = $event->getDamager();
-                if($this->plugin->isSameFaction($player, $damager)){
+                if($this->plugin->isSameFaction($player, $damager) && $this->plugin->getConfig()->get("Can_Attack") === false){
                     $event->setCancelled(true);
                 }
             }
