@@ -39,6 +39,7 @@ class UltraFaction extends PluginBase implements Listener
     const PREFIX = TextFormat::YELLOW . "[" . TextFormat::AQUA . "Faction" . TextFormat::YELLOW . "]";
     public $lang = [];
     public $data = null;
+    public $db;
 
     public function onEnable()
     {
@@ -54,6 +55,7 @@ class UltraFaction extends PluginBase implements Listener
         $this->getLogger()->info("Data-Provider: " . $this->data);
         $this->getLogger()->info("|| Everything has been loaded ||| ");
         $this->getLogger()->info("----------------------------------------");
+        $this->dateProvider();
 
     }
 
@@ -157,7 +159,7 @@ class UltraFaction extends PluginBase implements Listener
     }
     
     public function createFaction(Player $player, $faction_name){
-        if(!$player->IsPlayerInFaction($player)){
+        if(!$this->IsPlayerInFaction($player)){
             if(!$this->existsFaction($faction_name)){
                 $name = $player->getName();
                 $faction = (new Config($this->getDataFolder() . "/factions/". $name ."_". $faction_name .".yml", Config::YAML));
@@ -292,5 +294,16 @@ class UltraFaction extends PluginBase implements Listener
 
     public function getEconomyType(){
         return $this->getConfig()->get("Economy");
+    }
+
+    public function dateProvider(){
+     if($this->data == "sqlite"){
+         $this->db = new \SQLite3($this->getDataFolder() . "UltraFaction.db");
+         $this->db->exec("CREATE TABLE IF NOT EXISTS master (player TEXT PRIMARY KEY COLLATE NOCASE, faction TEXT, rank TEXT);");
+         $this->db->exec("CREATE TABLE IF NOT EXISTS confirm (player TEXT PRIMARY KEY COLLATE NOCASE, faction TEXT, invitedby TEXT, timestamp INT);");
+         $this->db->exec("CREATE TABLE IF NOT EXISTS motd (faction TEXT PRIMARY KEY, message TEXT);");
+         $this->db->exec("CREATE TABLE IF NOT EXISTS claim (faction TEXT PRIMARY KEY, x1 INT, z1 INT, x2 INT, z2 INT);");
+         $this->db->exec("CREATE TABLE IF NOT EXISTS home (faction TEXT PRIMARY KEY, x INT, y INT, z INT, world TEXT);");
+     }
     }
 }
