@@ -304,6 +304,7 @@ class UltraFaction extends PluginBase implements Listener
          $this->db->exec("CREATE TABLE IF NOT EXISTS motd (faction TEXT PRIMARY KEY, message TEXT);");
          $this->db->exec("CREATE TABLE IF NOT EXISTS claim (faction TEXT PRIMARY KEY, x1 INT, z1 INT, x2 INT, z2 INT);");
          $this->db->exec("CREATE TABLE IF NOT EXISTS home (faction TEXT PRIMARY KEY, x INT, y INT, z INT, world TEXT);");
+	 $this->db->exec("CREATE TABLE IF NOT EXISTS stats (faction TEXT PRIMARY KEY, kills INT, deaths INT;);");
      }
     }
 }
