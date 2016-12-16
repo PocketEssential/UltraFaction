@@ -18,7 +18,7 @@
 #| - If the issue persists, report it at https://github.com/PocketEssential/UltraFaction/issues                 |
 #|--------------------------------------------------------------------------------------------------------------|
 
-# Varibles: {color} - gets replaced with § , {online} - gets replaced with a int of how many players are in the server, {map} gets replaced with bases,tarrain ect.
+# Varibles: {color} - gets replaced with § , {online} - gets replaced with a int of how many players are in the server, {map} gets replaced with bases, terrain ect.
 
 Map:
   - [
