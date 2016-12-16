@@ -40,6 +40,8 @@ class UltraFaction extends PluginBase implements Listener
     public $lang = [];
     public $data = null;
     public $db;
+    public $economy;
+    public $type;
 
     public function onEnable()
     {
@@ -49,10 +51,29 @@ class UltraFaction extends PluginBase implements Listener
         @mkdir($this->getDataFolder());
 
         $this->config = new Config($this->getDataFolder() . "Config.yml", Config::YAML);
-
+	
+	if ($this->getConfig()->get("Economy") == "EconomyAPI") {
+            $eco = $this->getServer()->getPluginManager()->getPlugin('EconomyAPI');
+            if ($eco == false) {
+                $this->getLogger()->info("|| EconomyAPI cannot be found ||");
+            } else {
+                $this->economy = $eco;
+                $this->type = "EconomyAPI";
+            }
+        }elseif ($this->plugin->getConfig()->get("Economy") == "MassiveEconomy") {
+            $eco = $this->plugin->getServer()->getPluginManager()->getPlugin('MassiveEconomy');
+            if ($eco == false) {
+                $this->plugin->getLogger()->info("|| MassiveEconomy cannot be found ||");
+            } else {
+                $this->economy = $eco;
+                $this->type = "MassiveEconomy";
+            }
+        }
+	    
         $this->getLogger()->info("---------------------------------------");
         $this->getLogger()->info("Using Language: " . $this->lang);
         $this->getLogger()->info("Data-Provider: " . $this->data);
+	$this->getLogger()->info("Economy: " . $this->type);
         $this->getLogger()->info("|| Everything has been loaded ||| ");
         $this->getLogger()->info("----------------------------------------");
         $this->dateProvider();
@@ -296,6 +317,10 @@ class UltraFaction extends PluginBase implements Listener
         return $this->getConfig()->get("Economy");
     }
 
+    public function getEconomy(){
+	return Economy::getInstance();
+    }
+	
     public function dateProvider(){
      if($this->data == "sqlite"){
          $this->db = new \SQLite3($this->getDataFolder() . "UltraFaction.db");
