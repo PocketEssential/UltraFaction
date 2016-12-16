@@ -29,46 +29,26 @@ class Economy
 {
 
     const ECONOMY_TYPE = null;
-    public $economy = null;
-    public $type = null;
 
     public function __construct(UltraFaction $plugin)
     {
         $this->plugin = $plugin;
     }
 
-    public function Economy()
-    {
-        if ($this->plugin->getConfig()->get("Economy") == "EconomyAPI") {
-            $eco = $this->plugin->getServer()->getPluginManager()->getPlugin('EconomyAPI');
-            if ($eco == false) {
-                $this->plugin->getLogger()->info("|| EconomyAPI cannot be found ||");
-            } else {
-                $this->economy = $eco;
-                $this->type = "EconomyAPI";
-            }
-        }
-        if ($this->plugin->getConfig()->get("Economy") == "MassiveEconomy") {
-            $eco = $this->plugin->getServer()->getPluginManager()->getPlugin('MassiveEconomy');
-            if ($eco == false) {
-                $this->plugin->getLogger()->info("|| MassiveEconomy cannot be found ||");
-            } else {
-                $this->economy = $eco;
-                $this->type = "MassiveEconomy";
-            }
-        }
-    }
+    public static function getInstance(){
+		return self::$instance;
+	}
 
     public function addMoney($player, $amount)
     {
         switch ($this->type) {
             case 'EconomyAPI':
-                $this->economy->addMoney($player, $amount, true);
+                $this->plugin->economy->addMoney($player, $amount, true);
                 return true;
                 break;
 
             case 'MassiveEconomy':
-                $this->economy->payPlayer($player->getName(), $amount);
+                $this->plugin->economy->payPlayer($player->getName(), $amount);
                 return true;
                 break;
 
@@ -79,12 +59,12 @@ class Economy
     {
         switch ($this->type) {
             case 'EconomyAPI':
-                $this->economy->reduceMoney($player, $amount, true);
+                $this->plugin->economy->reduceMoney($player, $amount, true);
                 return true;
                 break;
 
             case 'MassiveEconomy':
-                $this->economy->takeMoney($player->getName(), $amount);
+                $this->plugin->economy->takeMoney($player->getName(), $amount);
                 return true;
                 break;
 
