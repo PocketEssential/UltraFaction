@@ -25,10 +25,9 @@ use pocketmine\Player;
 
 use PocketEssential\UltraFaction\UltraFaction;
 
-class Economy
-{
-
-    const ECONOMY_TYPE = null;
+class Economy{
+	const ECONOMY_TYPE = null;
+	private static $instance = null;
 
     public function __construct(UltraFaction $plugin)
     {
