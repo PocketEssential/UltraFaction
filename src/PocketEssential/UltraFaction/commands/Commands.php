@@ -79,7 +79,7 @@ class Commands implements CommandExecutor
                             $fac_name = $args[1];
                             $facmin = $this->plugin->getConfig()->get("factionNameLengthMin");
                             $facmax = $this->plugin->getConfig()->get("factionNameLengthMax");
-                            if(strlen($fac_name) < $facmin || strlen($fac_name) > $facmax)
+                            if(strlen($fac_name) < $facmin || strlen($fac_name) > $facmax){
                                 $claim_price = $this->plugin->getConfig()->get("Claim_Price");
                                 if($claim_price == 0){
                                     $this->plugin->createFaction($sender, $args[1]);
