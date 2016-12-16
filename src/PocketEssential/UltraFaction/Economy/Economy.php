@@ -43,20 +43,18 @@ class Economy
             $eco = $this->plugin->getServer()->getPluginManager()->getPlugin('EconomyAPI');
             if ($eco == false) {
                 $this->plugin->getLogger()->info("|| EconomyAPI cannot be found ||");
-                if ($eco == true) {
-                    $this->economy = $eco;
-                    $this->type = "EconomyAPI";
-                }
+            } else {
+                $this->economy = $eco;
+                $this->type = "EconomyAPI";
             }
         }
         if ($this->plugin->getConfig()->get("Economy") == "MassiveEconomy") {
             $eco = $this->plugin->getServer()->getPluginManager()->getPlugin('MassiveEconomy');
             if ($eco == false) {
                 $this->plugin->getLogger()->info("|| MassiveEconomy cannot be found ||");
-                if ($eco == true) {
-                    $this->economy = $eco;
-                    $this->type = "MassiveEconomy";
-                }
+            } else {
+                $this->economy = $eco;
+                $this->type = "MassiveEconomy";
             }
         }
     }
