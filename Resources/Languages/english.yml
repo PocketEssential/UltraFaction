@@ -37,7 +37,7 @@ Faction_Rename: Faction has successfully been renamed!
 Invited: {player} has been invited
 No_Permission_To_Invite: You don't have enough permissions to invite members to this faction.
 No_Permission_To_Promote: You don't have enough permissions to promote members in this faction.
-No_Permisison_To_Rename: Yoou don't have enough permissions to rename this faction.
+No_Permisison_To_Rename: You don't have enough permissions to rename this faction.
 No_Faction: You are not in a faction!
 No_Faction_To_Do: You must be in a faction in order to set the description.
 Faction_Description_Field_Empty: You must be in a faction in order to set the description.
