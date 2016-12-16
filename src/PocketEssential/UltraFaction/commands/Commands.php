@@ -76,8 +76,14 @@ class Commands implements CommandExecutor
                         }
 
                         if($args[1] != null && $sender instanceof Player){
-                            $this->plugin->createFaction($sender, $args[1]);
-                            $sender->sendMessage(UltraFaction::PREFIX ." You have successfully created a faction!");
+                            $claim_price = $this->plugin->getConfig()->get("Claim_Price");
+                            if($claim_price == 0){
+                                $this->plugin->createFaction($sender, $args[1]);
+                                $sender->sendMessage(UltraFaction::PREFIX ." You have successfully created a faction!");
+                            } else {
+                                $this->plugin->getEconomy()->takeMoney($sender, $claim_price);
+                                $sender->sendMessage(UltraFaction::PREFIX ." You have successfully created a faction for $".$claim_price."!");
+                            }
                         }
                         break;
 
