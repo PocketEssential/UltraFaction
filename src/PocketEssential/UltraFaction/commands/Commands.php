@@ -29,7 +29,7 @@ use PocketEssential\UltraFaction\UltraFaction;
 
 class Commands implements CommandExecutor {
 	public function __construct(UltraFaction $plugin) {
- 		$this->plugin = $plugin;
+		$this->plugin = $plugin;
  	}
  	public function onCommand(CommandSender $sender, Command $command, $labels, array $args) {
 		$cmd = strtolower($command);
@@ -57,140 +57,115 @@ class Commands implements CommandExecutor {
  						// Todo:Other help things such as War, Waraccept, change name, kick et!
  						break;
 
- /						*
- _____ _
- / __ \ | |
- | / \/_ __ ___ __ _| |_ ___
- | | | '__/ _ \/ _` | __/ _ \
- | \__/\ | | __/ (_| | || __/
- \____/_| \___|\__,_|\__\___|
-
- */
- case "create":if ($args[1] == null && $sender instanceof Player){$sender->sendMessage("/f create <FactionName>");
- }
-
- if($args[1] != null && $sender instanceof Player){
- $fac_name = $args[1];
- $facmin = $this->plugin->getConfig()->get("factionNameLengthMin");
- $facmax = $this->plugin->getConfig()->get("factionNameLengthMax");
- if(strlen($fac_name) < $facmin || strlen($fac_name) > $facmax){
- $claim_price = $this->plugin->getConfig()->get("Claim_Price");
- if($claim_price == 0){
- $this->plugin->createFaction($sender, $args[1]);
- $sender->sendMessage(UltraFaction::PREFIX ." You have successfully created a faction!");
- } else{$this->plugin->getEconomy()->takeMoney($sender, $claim_price);
- $sender->sendMessage(UltraFaction::PREFIX ." You have successfully created a faction for $".$claim_price."!");
- }
- } else{$sender->sendMessage(UltraFaction::PREFIX . " Your faction name should be more than ". $facmin ." and less than ". $facmax);
- }
- }
- break;
-
- /*
- ______ _ _ _
- | _ \ (_) | | (_)
- | | | |___ ___ ___ _ __ _ _ __ | |_ _ ___ _ __
- | | | / _ \/ __|/ __| '__| | '_ \| __| |/ _ \| '_ \
- | |/ / __/\__ \ (__| | | | |_) | |_| | (_) | | | |
- |___/ \___||___/\___|_| |_| .__/ \__|_|\___/|_| |_|
- | |
- |_|
- */
-
-case "description":
-					case "setdescription":
-						$player = $sender;
- 						if (!$this->plugin->IsPlayerInFaction($player)) {
-							$sender->sendMessage(UltraFaction::PREFIX . " You need to be in a faction to do this");
- 						}
- 						if ($args[1] == null && $sender instanceof Player) {
-							$sender->sendMessage(UltraFaction::PREFIX . " /f setdescription <Description>");
- 						}
- 						if ($this->plugin->IsPlayerInFaction($player) && $args[1] != null) {
-							$sender->sendMessage(UltraFaction::PREFIX . " Faction has been created!");
-
- 							// Todo other events
- 							break;
+ 					case "create":
+						if ($args[1] == null && $sender instanceof Player) {
+							$sender->sendMessage("/f create <FactionName>");
  						}
 
- /						*
- ______
- | ___ \
- | |_/ /___ _ __ __ _ _ __ ___ ___
- | 						// _ \ '_ \ / _` | '_ ` _ \ / _ \
- 						| |\ \ __/ | | | (_| | | | | | | __/
- \_| \_\___|_| |_|\__,_|_| |_| |_|\___|
-
- */
- case "rename":
-						case "changename":
-							$player = $sender;
- 							if ($args[1] == null && $sender instanceof Player) {
-								$sender->sendMessage(UltraFaction::PREFIX . " /f rename <Name>");
+ 						if($args[1] != null && $sender instanceof Player) {
+ 							$fac_name = $args[1];
+ 							$facmin = $this->plugin->getConfig()->get("factionNameLengthMin");
+ 							$facmax = $this->plugin->getConfig()->get("factionNameLengthMax");
+ 							if(strlen($fac_name) < $facmin || strlen($fac_name) > $facmax) {
+ 								$claim_price = $this->plugin->getConfig()->get("Claim_Price");
+ 								if($claim_price == 0) {
+ 									$this->plugin->createFaction($sender, $args[1]);
+ 									$sender->sendMessage(UltraFaction::PREFIX ." You have successfully created a faction!");
+ 								} else {
+									$this->plugin->getEconomy()->takeMoney($sender, $claim_price);
+ 									$sender->sendMessage(UltraFaction::PREFIX ." You have successfully created a faction for $".$claim_price."!");
+ 								}
+ 							} else {
+								$sender->sendMessage(UltraFaction::PREFIX . " Your faction name should be more than ". $facmin ." and less than ". $facmax);
  							}
+ 						}
+ 						break;
+
+						case "description":
+						case "setdescription":
+							$player = $sender;
  							if (!$this->plugin->IsPlayerInFaction($player)) {
 								$sender->sendMessage(UltraFaction::PREFIX . " You need to be in a faction to do this");
  							}
- 							if($this->plugin->IsPlayerInFaction($player) && $args[1] !== null) {
- 								//todo
- 								$sender->sendMessage(UltraFaction::PREFIX . " Faction has successfully renamed!");
+ 							if ($args[1] == null && $sender instanceof Player) {
+								$sender->sendMessage(UltraFaction::PREFIX . " /f setdescription <Description>");
  							}
- 							break;
- 							case "war":
-								//todo
+ 							if ($this->plugin->IsPlayerInFaction($player) && $args[1] != null) {
+								$sender->sendMessage(UltraFaction::PREFIX . " Faction has been created!");
+
+ 								// Todo other events
  								break;
- 							case "map":
-								//todo
+ 							}
+
+ 							case "rename":
+							case "changename":
+								$player = $sender;
+ 								if ($args[1] == null && $sender instanceof Player) {
+									$sender->sendMessage(UltraFaction::PREFIX . " /f rename <Name>");
+ 								}
+ 								if (!$this->plugin->IsPlayerInFaction($player)) {
+									$sender->sendMessage(UltraFaction::PREFIX . " You need to be in a faction to do this");
+ 								}
+ 								if($this->plugin->IsPlayerInFaction($player) && $args[1] !== null) {
+									//todo
+ 									$sender->sendMessage(UltraFaction::PREFIX . " Faction has successfully renamed!");
+ 								}
  								break;
- 							case "ally":
-								//todo
- 								break;
- 							case "unally":
-								//todo
- 								break;
- 							case "claim":
-								//todo
- 								break;
- 							case "invite":
-								//todo
- 								break;
- 							case "kick":
-								if($this->plugin->getFactionLeader($this->plugin->getPlayerFaction($sender)) == $sender->getName()) {
- 									if(isset($args[1])) {
- 										$kicked_player = $this->plugin->getServer()->getOfflinePlayer($args[1]);
- 										$this->plugin->removePlayerFromFaction($args[1], $this->plugin->getFactionName($sender));
- 										foreach($this->plugin->getServer()->getOnlinePlayers() as $p) {
- 											if($p->getName() == $kicked_player->getName()) {
- 												$kicked_player->sendMessage(UltraFaction::PREFIX . " You have been kicked from faction.");
+ 								case "war":
+									//todo
+ 									break;
+ 								case "map":
+									//todo
+ 									break;
+ 								case "ally":
+									//todo
+ 									break;
+ 								case "unally":
+									//todo
+ 									break;
+ 								case "claim":
+									//todo
+ 									break;
+ 								case "invite":
+									//todo
+ 									break;
+ 								case "kick":
+									if($this->plugin->getFactionLeader($this->plugin->getPlayerFaction($sender)) == $sender->getName()) {
+										if(isset($args[1])) {
+											$kicked_player = $this->plugin->getServer()->getOfflinePlayer($args[1]);
+ 											$this->plugin->removePlayerFromFaction($args[1], $this->plugin->getFactionName($sender));
+ 											foreach($this->plugin->getServer()->getOnlinePlayers() as $p) {
+												if($p->getName() == $kicked_player->getName()) {
+													$kicked_player->sendMessage(UltraFaction::PREFIX . " You have been kicked from faction.");
+ 												}
  											}
  										}
- 									}
- 								} else {
-									$sender->sendMessage(UltraFaction::PREFIX . " Only faction leaders can kick members.");
- 
- 								}
- 								break;
- 								case "leave":
-									if($this->plugin->getFactionLeader($this->plugin->getPlayerFaction($sender)) !== $sender->getName()) {
- 										$this->plugin->removePlayerFromFaction($sender, $this->plugin->getFactionName($sender));
- 										$sender->sendMessage(UltraFaction::PREFIX . " You have left the faction.");
  									} else {
-										$sender->sendMessage(UltraFaction::PREFIX . " You cannot leave cause you are a leader.");
+										$sender->sendMessage(UltraFaction::PREFIX . " Only faction leaders can kick members.");
+ 
  									}
  									break;
- 									case "delete":
-										if($this->plugin->getFactionLeader($this->plugin->getPlayerFaction($sender)) == $sender->getName()) {
- 											unlink($this->getDataFolder() . "/factions/". $sender->getName() . "_" . $this->plugin->getPlayerFaction($sender) .".yml");
- 											$sender->sendMessage(UltraFaction::PREFIX . " Faction has been deleted!");
+ 									case "leave":
+										if($this->plugin->getFactionLeader($this->plugin->getPlayerFaction($sender)) !== $sender->getName()) {
+											$this->plugin->removePlayerFromFaction($sender, $this->plugin->getFactionName($sender));
+ 											$sender->sendMessage(UltraFaction::PREFIX . " You have left the faction.");
  										} else {
-											$sender->sendMessage(UltraFaction::PREFIX . " Only faction leaders can delete faction.");
+											$sender->sendMessage(UltraFaction::PREFIX . " You cannot leave cause you are a leader.");
  										}
  										break;
- 										case "deny":
-											//todo
+ 										case "delete":
+											if($this->plugin->getFactionLeader($this->plugin->getPlayerFaction($sender)) == $sender->getName()) {
+												unlink($this->getDataFolder() . "/factions/". $sender->getName() . "_" . $this->plugin->getPlayerFaction($sender) .".yml");
+ 												$sender->sendMessage(UltraFaction::PREFIX . " Faction has been deleted!");
+ 											} else {
+												$sender->sendMessage(UltraFaction::PREFIX . " Only faction leaders can delete faction.");
+ 											}
  											break;
- 										}
+ 											case "deny":
+												//todo
+ 												break;
+ 											}
+ 									}
  								}
  							}
- 						}
-					}
+						}

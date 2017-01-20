@@ -1,5 +1,4 @@
 <?php
-
 # _    _ _ _             ______         _   _                 
 #| |  | | | |           |  ____|       | | (_)                
 #| |  | | | |_ _ __ __ _| |__ __ _  ___| |_ _  ___  _ __  ___ 
@@ -30,7 +29,7 @@ use pocketmine\utils\TextFormat;
 use pocketmine\utils\Config;
 
 class UltraFaction extends PluginBase implements Listener {
-/	*
+/*
  * Registering the PREFIX!
  */
  const PREFIX = TextFormat::YELLOW . "[" . TextFormat::AQUA . "Faction" . TextFormat::YELLOW . "]";
@@ -81,7 +80,7 @@ class UltraFaction extends PluginBase implements Listener {
 		$this->saveFile();
  	}
 
- /	*
+ /*
  * For easy access, for saving configs / resources.
  */
 
@@ -217,7 +216,7 @@ class UltraFaction extends PluginBase implements Listener {
 
  	}
 
- /	*
+ /*
  * Getting the type of text they want to translate!
  */
 
