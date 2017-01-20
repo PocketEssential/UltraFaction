@@ -93,11 +93,11 @@ class UltraFaction extends PluginBase implements Listener {
  			foreach($scan as $dirs) {
 				$f = (new Config($this->getDataFolder() . "/factions/".$dirs, Config::YAML));
 
- 				if(array_search($player->getName(), $f->get("members"));
- 				return basename($dirs,"yml");
- 			}else {
- 				return false;
- 			}
+ 				if(array_search($player->getName(), $f->get("members")){
+ 					return basename($dirs,"yml");
+				} else {
+ 					return false;
+ 				}
  		}
  	}
  	if ($this->getDataProvider() == "sqlite" or "lite") {
@@ -115,11 +115,16 @@ class UltraFaction extends PluginBase implements Listener {
  }
 
  public function IsPlayerInFaction(Player $player) {
-	$scan = scandir($this->getDataFolder()."/factions/");
+	$scan = glob($this->getDataFolder()."/factions/*.yml");
 	foreach($scan as $dirs) {
 		$cfg = new Config($this->getDataFolder()."/factions/".$dirs , Config::YAML);
-		return array_search($player->getName(), $cfg->get("members"));
+		if(array_search($player->getName(), $cfg->get("members")){
+			$fac = true;
+		} else {
+			$fac = false;
+		}
 	}
+	return $fac;
  }
 
  
