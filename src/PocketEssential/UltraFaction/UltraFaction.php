@@ -1,10 +1,10 @@
 <?php
-# _    _ _ _             ______         _   _                 
-#| |  | | | |           |  ____|       | | (_)                
-#| |  | | | |_ _ __ __ _| |__ __ _  ___| |_ _  ___  _ __  ___ 
-#| |  | | | __| '__/ _` |  __/ _` |/ __| __| |/ _ \| '_ \/ __|
+# _ _ _ _ ______ _ _ 
+#| | | | | | | ____| | | (_) 
+#| | | | | |_ _ __ __ _| |__ __ _ ___| |_ _ ___ _ __ ___ 
+#| | | | | __| '__/ _` | __/ _` |/ __| __| |/ _ \| '_ \/ __|
 #| |__| | | |_| | | (_| | | | (_| | (__| |_| | (_) | | | \__ \
-# \____/|_|\__|_|  \__,_|_|  \__,_|\___|\__|_|\___/|_| |_|___/
+# \____/|_|\__|_| \__,_|_| \__,_|\___|\__|_|\___/|_| |_|___/
 #
 # Made by PocketEssential Copyright 2016 ©
 #
@@ -29,10 +29,8 @@ use pocketmine\utils\TextFormat;
 use pocketmine\utils\Config;
 
 class UltraFaction extends PluginBase implements Listener {
-/*
- * Registering the PREFIX!
- */
- const PREFIX = TextFormat::YELLOW . "[" . TextFormat::AQUA . "Faction" . TextFormat::YELLOW . "]";
+
+	const PREFIX = TextFormat::YELLOW . "[" . TextFormat::AQUA . "Faction" . TextFormat::YELLOW . "]";
  	public $lang = [];
  	public $data = null;
  	public $db;
@@ -55,8 +53,7 @@ class UltraFaction extends PluginBase implements Listener {
 				$this->economy = $eco;
  				$this->type = "EconomyAPI";
  			}
- 		}else
-			if ($this->plugin->getConfig()->get("Economy") == "MassiveEconomy") {
+ 		}elseif ($this->plugin->getConfig()->get("Economy") == "MassiveEconomy") {
 			$eco = $this->plugin->getServer()->getPluginManager()->getPlugin('MassiveEconomy');
  			if ($eco == false) {
 				$this->plugin->getLogger()->info("|| MassiveEconomy cannot be found ||");
@@ -94,15 +91,13 @@ class UltraFaction extends PluginBase implements Listener {
 		if ($this->getDataProvider() == "yaml" or "yml") {
 			$scan = scandir($this->getDataFolder()."/factions/");
  			foreach($scan as $dirs) {
- 
-  				$f = (new Config($this->getDataFolder() . "/factions/".$dirs, Config::YAML));
+				$f = (new Config($this->getDataFolder() . "/factions/".$dirs, Config::YAML));
 
-  				if(array_search($player->getName(), $f->get("members"));
+ 				if(array_search($player->getName(), $f->get("members"));
  				return basename($dirs,"yml");
- 			}else
-				(
- return false;
- )
+ 			}else {
+ 				return false;
+ 			}
  		}
  	}
  	if ($this->getDataProvider() == "sqlite" or "lite") {
@@ -129,9 +124,9 @@ class UltraFaction extends PluginBase implements Listener {
 
  
  public function addPlayerToFaction(Player $player, $faction_name) {
- 	if($this->existsFaction($faction_name)) {
- 		if($this->getServer()->getPlayer($player) !== null && $this->getServer()->getPlayer($player) instanceof Player) {
- 			$faction = (new Config($this->getDataFolder()."/factions/".$faction_name.".yml", Config::YAML));
+	if($this->existsFaction($faction_name)) {
+		if($this->getServer()->getPlayer($player) !== null && $this->getServer()->getPlayer($player) instanceof Player) {
+			$faction = (new Config($this->getDataFolder()."/factions/".$faction_name.".yml", Config::YAML));
  			$add = $faction->get("members", []);
 			$add[] = $player->getName();
  			$faction->set("members", $add);
@@ -140,15 +135,15 @@ class UltraFaction extends PluginBase implements Listener {
  	}
  }
  public function removePlayerFromFaction(Player $player, $faction_name) {
- 	if($this->existsFaction($faction_name)) {
- 		if($this->getServer()->getPlayer($player) !== null && $this->getServer()->getPlayer($player) instanceof Player) {
- 			$faction = (new Config($this->getDataFolder()."/factions/".$faction_name.".yml", Config::YAML));
+	if($this->existsFaction($faction_name)) {
+		if($this->getServer()->getPlayer($player) !== null && $this->getServer()->getPlayer($player) instanceof Player) {
+			$faction = (new Config($this->getDataFolder()."/factions/".$faction_name.".yml", Config::YAML));
  			$members = $faction->get("members");
 			foreach($members as $fac_members) {
- 				if($fac_members == $player->getName()) {
+				if($fac_members == $player->getName()) {
 					$toremove = array_search($player->getName(), $fac_members);
 					if($toremove) {
- 						unset($fac_members[$toremove]);
+						unset($fac_members[$toremove]);
 					}
  				}
 			}
@@ -158,23 +153,23 @@ class UltraFaction extends PluginBase implements Listener {
  }
  
  public function getFactionLeader($faction_name) {
- 	if($this->existsFaction($faction_name)) {
- 		$cfg = new Config($this->getDataFolder()."/factions/".$faction_name.".yml");
+	if($this->existsFaction($faction_name)) {
+		$cfg = new Config($this->getDataFolder()."/factions/".$faction_name.".yml");
 		return $cfg->get("Leader");
  	}
  }
  
  public function existsFaction($faction_name) {
- 	$scandir = scandir($this->getDataFolder()."/factions/");
+	$scandir = scandir($this->getDataFolder()."/factions/");
  	foreach($scandir as $dirs) {
- 		return $dirs == $faction_name.".yml";
+		return $dirs == $faction_name.".yml";
  	}
  }
  
  public function createFaction(Player $player, $faction_name) {
- 	if(!$this->IsPlayerInFaction($player)) {
- 		if(!$this->existsFaction($faction_name)) {
- 			$name = $player->getName();
+	if(!$this->IsPlayerInFaction($player)) {
+		if(!$this->existsFaction($faction_name)) {
+			$name = $player->getName();
  			$faction = (new Config($this->getDataFolder() . "/factions/".$faction_name.".yml", Config::YAML));
  			$faction->set("Leader", $player->getName());
  			$faction->save();
@@ -221,16 +216,15 @@ class UltraFaction extends PluginBase implements Listener {
  */
 
  switch($string) {
-		case "Created_A_Faction":
-			return $this->lang->get("Created_A_Faction");
-			break;
+		case "Created_A_Faction":return $this->lang->get("Created_A_Faction");
+		break;
 		case "Faction_Already_Exist":
 			return $this->lang->get("Faction_Already_Exist");
  			break;
  		case "Faction_Too_Short" :
 			return $this->lang->get("Faction_Too_Short");
  			break;
-  		case "Faction_Too_Long" :
+ 		case "Faction_Too_Long" :
 			return $this->lang->get("Faction_Too_Long");
  			break;
  		case "Already_In_Faction" :
@@ -298,11 +292,11 @@ class UltraFaction extends PluginBase implements Listener {
 
  // Prefix to use in other Plugins
  public static function getPrefix() {
- 	return UltraFaction::PREFIX;
+	return UltraFaction::PREFIX;
  }
 
  public function getEconomyType() {
- 	return $this->getConfig()->get("Economy");
+	return $this->getConfig()->get("Economy");
  }
 
  public function getEconomy() {
@@ -310,8 +304,8 @@ class UltraFaction extends PluginBase implements Listener {
  }
 
  public function dateProvider() {
- 	if($this->data == "sqlite") {
- 		$this->db = new \SQLite3($this->getDataFolder() . "UltraFaction.db");
+	if($this->data == "sqlite") {
+		$this->db = new \SQLite3($this->getDataFolder() . "UltraFaction.db");
  		$this->db->exec("CREATE TABLE IF NOT EXISTS master (player TEXT PRIMARY KEY COLLATE NOCASE, faction TEXT, rank TEXT);");
  		$this->db->exec("CREATE TABLE IF NOT EXISTS confirm (player TEXT PRIMARY KEY COLLATE NOCASE, faction TEXT, invitedby TEXT, timestamp INT);");
  		$this->db->exec("CREATE TABLE IF NOT EXISTS motd (faction TEXT PRIMARY KEY, message TEXT);");
