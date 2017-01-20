@@ -100,11 +100,17 @@ class UltraFaction extends PluginBase implements Listener
     {
 
         if ($this->getDataProvider() == "yaml" or "yml") {
+			$scan = scandir($this->getDataFolder()."/factions/");
+            foreach($scan as $dirs){
+            
+           	 $f = (new Config($this->getDataFolder() . "/factions/".$dirs, Config::YAML));
 
-            $f = (new Config($this->getDataFolder() . "/factions/"));
-
-            $faction = substr($f, strpos($f, "_") + 1);
-            return $faction;
+      		  if(array_search($player->getName(), $f->get("members"));
+              	return basename($dirs,"yml");
+              }else(
+              	return false;
+              )
+            }
         }
         if ($this->getDataProvider() == "sqlite" or "lite") {
             $this->getLogger()->info(UltraFaction::PREFIX . " You are trying to use " . $this->getDataProvider() . " as data provider! It has not been added yet!");
