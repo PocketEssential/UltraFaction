@@ -120,8 +120,6 @@ class UltraFaction extends PluginBase implements Listener {
 		$cfg = new Config($this->getDataFolder()."/factions/".$dirs , Config::YAML);
 		if(array_search($player->getName(), $cfg->get("members")){
 			$fac = true;
-		} else {
-			$fac = false;
 		}
 	}
 	return $fac;
