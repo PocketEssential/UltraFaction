@@ -39,3 +39,6 @@ $UltraFaction->IsPlayerInFaction($player)
 ```
 
 #### More API examples will be added, as of now we're more into finishing the plugin and adding as much features as we can. And this includes a simple API that allows developers to extend UltraFaction without the need of editing the core itself!
+
+# Builds
+[![Poggit-CI](https://poggit.pmmp.io/ci.badge/PocketEssential/UltraFaction/UltraFaction)](https://poggit.pmmp.io/ci/PocketEssential/UltraFaction/UltraFaction)
