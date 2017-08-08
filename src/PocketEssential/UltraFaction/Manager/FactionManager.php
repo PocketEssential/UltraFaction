@@ -134,6 +134,7 @@ class FactionManager {
 			"Claimed" => null,
 			"Name" => $name,
 			"Description" => "Welcome to ".$player->getName() . "'s Faction!",
+			"Allies" => [],
 		];
 
 		$deject[$name] = $data;

@@ -36,7 +36,7 @@ use pocketmine\utils\Config;
  */
 class UltraFaction extends PluginBase implements Listener {
 
-	const PREFIX = TextFormat::YELLOW . "[" . TextFormat::AQUA . "Faction" . TextFormat::YELLOW . "] ";
+	const PREFIX = TextFormat::YELLOW . "[" . TextFormat::AQUA . "§c§lUF§r" . TextFormat::YELLOW . "]". TextFormat::GOLD ." ";
 	public $economy;
 	public $config;
 	public $language;
@@ -57,7 +57,7 @@ class UltraFaction extends PluginBase implements Listener {
 
 	public function getReady(){
 
-		$ready = new tool($this);
+		$ready = new Tool($this);
 		$ready->ready();
 	}
 }
