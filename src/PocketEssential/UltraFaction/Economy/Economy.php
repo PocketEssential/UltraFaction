@@ -20,48 +20,50 @@
 #|----------------------------------------------------------------------------------------------------------------|
 namespace PocketEssential\UltraFaction\Economy;
 
-use pocketmine\plugin\Plugin;
-use pocketmine\Player;
 
 use PocketEssential\UltraFaction\UltraFaction;
+use pocketmine\Player;
 
+/**
+ * Class Economy
+ * @package PocketEssential\UltraFaction\Economy
+ */
 class Economy {
-	const ECONOMY_TYPE = null;
-	private static $instance = null;
 
- 	public function __construct(UltraFaction $plugin) {
+	const NOT_ENOUGH_MONEY = "NOT_ENOUGH_MONEY";
+	const SUCCESS = "SUCCESS";
+
+	public $plugin;
+
+	/**
+	 * Economy constructor.
+	 * @param UltraFaction $plugin
+	 */
+	public function __construct(UltraFaction $plugin){
 		$this->plugin = $plugin;
- 	}
-
- 	public static function getInstance() {
-		return self::$instance;
 	}
 
- 	public function addMoney($player, $amount) {
-		switch ($this->type) {
-			case 'EconomyAPI':$this->plugin->economy->addMoney($player, $amount, true);
- 			return true;
- 			break;
+	/**
+	 * @param Player $player
+	 * @param $amount
+	 */
+	public function addMoney(Player $player, $amount){
 
- 			case 'MassiveEconomy':
-				$this->plugin->economy->payPlayer($player->getName(), $amount);
- 				return true;
- 				break;
+	}
 
- 			}
- 	}
+	/**
+	 * @param Player $player
+	 * @param $money
+	 */
+	public function takeMoney(Player $player, $money){
 
- 	public function takeMoney($player, $amount) {
-		switch ($this->type) {
-			case 'EconomyAPI':$this->plugin->economy->reduceMoney($player, $amount, true);
- 			return true;
- 			break;
+	}
 
- 			case 'MassiveEconomy':
-				$this->plugin->economy->takeMoney($player->getName(), $amount);
- 				return true;
- 				break;
+	/**
+	 * @param Player $player
+	 * @param $money
+	 */
+	public function giveMoney(Player $player, $money){
 
- 			}
- 	}
+	}
 }

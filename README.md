@@ -21,20 +21,17 @@
 
 ### Simple API
 
-```php
-// First you"ll need this
-$UltraFaction = $this->getServer()->getPluginManager()->getPlugin("UltraFaction");
-```
 
 #### Checking if the player belongs to a faction
 
 ```php
 // $player should be Instance of Player!
 
-$UltraFaction->IsPlayerInFaction($player)
+$UltraFaction::getFactionManager()->isInFaction(Player $player);
+
 
 /*
-  Will return "true". If the player is in a faction, Or false if not
+  returns bool
 */
 ```
 

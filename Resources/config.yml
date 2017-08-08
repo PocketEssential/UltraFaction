@@ -26,7 +26,7 @@ Language: english
 # Set default data type provider for UltraFaction
 # - mysql, sqlite, yaml
 
-data-provider: sqlite
+data-provider: yaml
 
 #Supported, EconomyAPI, MassiveEconomy (Todo)
 Economy: EconomyAPI
@@ -40,36 +40,9 @@ MySQL:
     Database: UltraFaction
 
 # Max members a faction can have: They can bypass it with the  correct permission
-Max_Member: 10
 
-# Choose if you want to allow players to claim plots at spawn
-Spawn_Claim: false
-
-# Claim plot size - In blocks / Limit of plots a faction can have | 0 means none.
-Claim_Size: 20
-Claim_Limit: 0
-
-# Allow mobs to destroy a claim plot?
-Mob_Grief: false
-
-# Allow none-faction members to spawn eggs in a claimed plot?
-Player_Grief: false
-
-# Max power a faction can have. 0.0 means there is not. Set it to a positive value in case you want to use this feature!
-factionPowerMax: 0.0
-
-# Limit the length of faction names here.
-factionNameLengthMin: 3
-factionNameLengthMax: 16
-
-# If you set this to false players can't set homes or teleport home.
-Home_Enable: true
-
-# Can faction members attack each other?
-Can_Attack: false
-
-# Price a faction must pay to be able to claim a plot! 0 - means free
-Claim_Price: 0
-
-# Choose if you wanna enable or disable the map feature!
-Map_System: true
+FactionSettings:
+ MaxMember: "10"
+ FriendlyDamage: "False"
+ Map: "True"
+ FactionBalance: "True"
