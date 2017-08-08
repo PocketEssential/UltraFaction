@@ -22,7 +22,7 @@
 namespace PocketEssential\UltraFaction;
 
 use MongoDB\Driver\Command;
-use PocketEssential\UltraFaction\Tool\getReady;
+use PocketEssential\UltraFaction\Tool\Tool;
 use pocketmine\Player;
 use pocketmine\Server;
 use pocketmine\plugin\PluginBase;
@@ -47,9 +47,9 @@ class UltraFaction extends PluginBase implements Listener {
 		$this->getReady();
 
 		$this->getLogger()->info(TextFormat::YELLOW. "---------------------------------------");
-		$this->getLogger()->info(TextFormat::LIGHT_PURPLE ."Using Language: " .TextFormat::BLUE. getReady::getInstance()->getLanguage());
-		$this->getLogger()->info(TextFormat::LIGHT_PURPLE ."Data-Provider: " .TextFormat::BLUE. getReady::getInstance()->getProvider());
-		$this->getLogger()->info(TextFormat::LIGHT_PURPLE ."Economy: " .TextFormat::BLUE. getReady::getInstance()->getEconomy());
+		$this->getLogger()->info(TextFormat::LIGHT_PURPLE ."Using Language: " .TextFormat::BLUE. Tool::getInstance()->getLanguage());
+		$this->getLogger()->info(TextFormat::LIGHT_PURPLE ."Data-Provider: " .TextFormat::BLUE. Tool::getInstance()->getProvider());
+		$this->getLogger()->info(TextFormat::LIGHT_PURPLE ."Economy: " .TextFormat::BLUE. Tool::getInstance()->getEconomy());
 		$this->getLogger()->info(TextFormat::GREEN ."|| Everything has been loaded ||| ");
 		$this->getLogger()->info(TextFormat::YELLOW. "----------------------------------------");
 
@@ -57,7 +57,7 @@ class UltraFaction extends PluginBase implements Listener {
 
 	public function getReady(){
 
-		$ready = new getReady($this);
+		$ready = new tool($this);
 		$ready->ready();
 	}
 }

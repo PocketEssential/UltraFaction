@@ -133,11 +133,21 @@ class FactionManager {
 			"Home" => null,
 			"Claimed" => null,
 			"Name" => $name,
+			"Description" => "Welcome to ".$player->getName() . "'s Faction!",
 		];
 
 		$deject[$name] = $data;
 
 		file_put_contents($this->plugin->getDataFolder() . "Factions/Factions.json", json_encode($deject, JSON_PRETTY_PRINT));
+
+		$file = file_get_contents($this->plugin->getDataFolder() . "Factions/Data.json");
+
+		$deject = json_decode($file, true);
+		$deject[$player->getName()] = [
+			"Faction" => $name
+		];
+		file_put_contents($this->plugin->getDataFolder() . "Factions/Data.json", json_encode($deject, JSON_PRETTY_PRINT));
+
 	}
 
 	/**
@@ -155,5 +165,32 @@ class FactionManager {
 		}else{
 			return false;
 		}
+	}
+
+	/**
+	 * @param Player $player
+	 * @return mixed
+	 */
+	public function getFactionData(Player $player){
+
+		$file = file_get_contents($this->plugin->getDataFolder() . "Factions/Factions.json");
+
+		$deject = json_decode($file, true);
+
+		return $deject[$this->getFaction($player)];
+	}
+
+	/**
+	 * @param Player $player
+	 * @param $data
+	 * @param $changes
+	 */
+	public function updateFactionData(Player $player, $data, $changes){
+
+		$file = file_get_contents($this->plugin->getDataFolder() . "Factions/Factions.json");
+
+		$deject = json_decode($file, true);
+		$deject[$this->getFaction($player)][$data] = $changes;
+		file_put_contents($this->plugin->getDataFolder() . "Factions/Factions.json", json_encode($deject, JSON_PRETTY_PRINT));
 	}
 }

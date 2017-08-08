@@ -43,49 +43,96 @@ class FactionCommand extends Base {
 
 		if($sender instanceof Player){
 
-			switch($args[0]){
+			$manager = new FactionManager($this->plugin);
 
-				case "help":
-				case "h":
-					$sender->sendMessage("-----.[ UltraFaction Help ].-----");
-					$sender->sendMessage("/f create <Name> - Creates a faction");
-					$sender->sendMessage("/f desc <Descriotion> - Change/set the faction description");
-					$sender->sendMessage("/f open [yes/no] - Choose if invitation is required to join");
-					$sender->sendMessage("/f invite <Player Name> - Invite a player to your faction");
-					$sender->sendMessage("/f sethome - Sets the faction home at your current position");
-					$sender->sendMessage("/f ally <Faction Name> - Ally with another faction");
-					$sender->sendMessage("/f allyaccept <Faction Name> - Accept a ally request");
-					$sender->sendMessage("/f war <Faction Name> - Send a war request");
-					$sender->sendMessage("/f waraccept <Faction Name> - Accept a war request");
-					$sender->sendMessage("/f rename <New Name> - Rename your faction name");
-					$sender->sendMessage("/f kick <Player Name> - Kick a player off your faction");
-					$sender->sendMessage("/f claim - Claim the plot your standing on");
-					$sender->sendMessage("/f promote <Player Name> <Rank Type> - Promote a player on your faction");
-					$sender->sendMessage("/f demote <Player Name> [Rank Type] - Demote a player to -1 rank below");
+			if(!isset($args[0])){
+				$sender->sendMessage("-----.[ UltraFaction Help ].-----");
+				$sender->sendMessage("/f create <Name> - Creates a faction");
+				$sender->sendMessage("/f desc <Descriotion> - Change/set the faction description");
+				$sender->sendMessage("/f open [yes/no] - Choose if invitation is required to join");
+				$sender->sendMessage("/f invite <Player Name> - Invite a player to your faction");
+				$sender->sendMessage("/f sethome - Sets the faction home at your current position");
+				$sender->sendMessage("/f ally <Faction Name> - Ally with another faction");
+				$sender->sendMessage("/f allyaccept <Faction Name> - Accept a ally request");
+				$sender->sendMessage("/f war <Faction Name> - Send a war request");
+				$sender->sendMessage("/f waraccept <Faction Name> - Accept a war request");
+				$sender->sendMessage("/f rename <New Name> - Rename your faction name");
+				$sender->sendMessage("/f kick <Player Name> - Kick a player off your faction");
+				$sender->sendMessage("/f claim - Claim the plot your standing on");
+				$sender->sendMessage("/f promote <Player Name> <Rank Type> - Promote a player on your faction");
+				$sender->sendMessage("/f demote <Player Name> [Rank Type] - Demote a player to -1 rank below");
+			}else{
+				switch($args[0]){
 
-					break;
+					case "help":
+					case "h":
+						$sender->sendMessage("-----.[ UltraFaction Help ].-----");
+						$sender->sendMessage("/f create <Name> - Creates a faction");
+						$sender->sendMessage("/f desc <Descriotion> - Change/set the faction description");
+						$sender->sendMessage("/f open [yes/no] - Choose if invitation is required to join");
+						$sender->sendMessage("/f invite <Player Name> - Invite a player to your faction");
+						$sender->sendMessage("/f sethome - Sets the faction home at your current position");
+						$sender->sendMessage("/f ally <Faction Name> - Ally with another faction");
+						$sender->sendMessage("/f allyaccept <Faction Name> - Accept a ally request");
+						$sender->sendMessage("/f war <Faction Name> - Send a war request");
+						$sender->sendMessage("/f waraccept <Faction Name> - Accept a war request");
+						$sender->sendMessage("/f rename <New Name> - Rename your faction name");
+						$sender->sendMessage("/f kick <Player Name> - Kick a player off your faction");
+						$sender->sendMessage("/f claim - Claim the plot your standing on");
+						$sender->sendMessage("/f promote <Player Name> <Rank Type> - Promote a player on your faction");
+						$sender->sendMessage("/f demote <Player Name> [Rank Type] - Demote a player to -1 rank below");
 
-				case "create":
-					if(!isset($args[1])){
-						$sender->sendMessage("/f create <name>");
-					}else{
-						if(FactionManager::getInstance()->isInFaction($sender)){
-							$sender->sendMessage("You're already in a faction");
+						break;
 
+					case "create":
+						if(!isset($args[1])){
+							$sender->sendMessage("/f create <name>");
 						}else{
-							if(FactionManager::getInstance()->isNameTaken($args[1])){
-								$sender->sendMessage("That faction name already exist");
+							if($manager->isInFaction($sender)){
+								$sender->sendMessage("You're already in a faction");
+
 							}else{
-								FactionManager::getInstance()->createFaction($sender, $args[1]);
-								$sender->sendMessage("Faction successfully created!");
+								if($manager->isNameTaken($args[1])){
+									$sender->sendMessage("That faction name already exist");
+								}else{
+									$manager->createFaction($sender, $args[1]);
+									$sender->sendMessage("Faction successfully created!");
+								}
 							}
 						}
-					}
-					break;
-				// Todo:Other help things such as War, Waraccept, change name, kick etc!
+						break;
+
+					case "description":
+						if(!$manager->isInFaction($sender)){
+							$sender->sendMessage("You're not in a faction");
+						}else{
+							$sender->sendMessage("This faction description is: ".$manager->getFactionData($sender)['Description']);
+						}
+						break;
+
+					case "desc":
+					case "setdesc":
+					case "setdescription":
+						if(!$manager->isInFaction($sender)){
+							$sender->sendMessage("You're not in a faction");
+						}else{
+							if(!$manager->isLeader($sender)){
+								$sender->sendMessage("Only the faction leader can do this");
+							} else {
+								if(!isset($args[1])){
+									$sender->sendMessage("/f desc <name>");
+								} else {
+									$manager->updateFactionData($sender, "Description", $args[1]);
+									$sender->sendMessage("Faction description has been set to $args[1]!");
+								}
+							}
+						}
+						break;
+					// Todo:Other help things such as War, Waraccept, change name, kick etc!
+				}
 			}
+			return true;
 		}
-		return true;
 	}
 
 	/**

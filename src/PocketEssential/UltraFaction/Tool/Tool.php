@@ -14,17 +14,17 @@ use PocketEssential\UltraFaction\UltraFaction;
 use pocketmine\utils\Config;
 
 /**
- * Class getReady
+ * Class tool
  * @package PocketEssential\UltraFaction\Tool
  */
-class getReady {
+class Tool {
 
 	public $plugin;
 	public $data;
 	public static $instance;
 
 	/**
-	 * getReady constructor.
+	 * tool constructor.
 	 * @param UltraFaction $plugin
 	 */
 	public function __construct(UltraFaction $plugin){
@@ -34,7 +34,7 @@ class getReady {
 	}
 
 	/**
-	 * @return getReady
+	 * @return Tool
 	 */
 	public static function getInstance(){
 		return self::$instance;
