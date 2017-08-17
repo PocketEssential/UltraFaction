@@ -47,7 +47,7 @@ class FactionManager {
 	 * @param Player $player
 	 * @return bool
 	 */
-	public function isInFaction(Player $player){
+	public function isInFaction(Player $player) : bool{
 
 		$file = file_get_contents($this->plugin->getDataFolder() . "Factions/Data.json");
 
@@ -64,7 +64,7 @@ class FactionManager {
 	 * @param Player $player
 	 * @return bool
 	 */
-	public function isLeader(Player $player){
+	public function isLeader(Player $player) : bool{
 
 		$file = file_get_contents($this->plugin->getDataFolder() . "Factions/Factions.json");
 
@@ -121,6 +121,24 @@ class FactionManager {
 	 * @param Player $player
 	 * @param $name
 	 */
+	public function kickFromFaction(Player $player, $name){
+
+		$file = file_get_contents($this->plugin->getDataFolder() . "Factions/Factions.json");
+
+		$deject = json_decode($file, true);
+
+		foreach($deject[$this->getFaction($player)]['Members'] as $key => $m){
+			if($m == $name){
+				unset($deject[$this->getFaction($player)]['Members'][$key]);
+				file_put_contents($this->plugin->getDataFolder() . "Factions/Factions.json", json_encode($deject, JSON_PRETTY_PRINT));
+				break;
+			}
+		}
+	}
+	/**
+	 * @param Player $player
+	 * @param $name
+	 */
 	public function createFaction(Player $player, $name){
 
 		$file = file_get_contents($this->plugin->getDataFolder() . "Factions/Factions.json");
@@ -155,7 +173,7 @@ class FactionManager {
 	 * @param $name
 	 * @return bool
 	 */
-	public function isNameTaken($name){
+	public function isNameTaken($name) : bool {
 
 		$file = file_get_contents($this->plugin->getDataFolder() . "Factions/Factions.json");
 
@@ -172,7 +190,7 @@ class FactionManager {
 	 * @param Player $player
 	 * @return mixed
 	 */
-	public function getFactionData(Player $player){
+	public function getFactionData(Player $player) : array {
 
 		$file = file_get_contents($this->plugin->getDataFolder() . "Factions/Factions.json");
 

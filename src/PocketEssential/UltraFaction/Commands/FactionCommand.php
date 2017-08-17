@@ -50,6 +50,7 @@ class FactionCommand extends Base {
 				$sender->sendMessage("-----.[ UltraFaction Help ].-----");
 				$sender->sendMessage("/f create <Name> - Creates a faction");
 				$sender->sendMessage("/f desc <Descriotion> - Change/set the faction description");
+				$sender->sendMessage("/f setdesc <Descriotion> - set the faction description");
 				$sender->sendMessage("/f open [yes/no] - Choose if invitation is required to join");
 				$sender->sendMessage("/f invite <Player Name> - Invite a player to your faction");
 				$sender->sendMessage("/f sethome - Sets the faction home at your current position");
@@ -74,6 +75,7 @@ class FactionCommand extends Base {
 						$sender->sendMessage("-----.[ UltraFaction Help ].-----");
 						$sender->sendMessage("/f create <Name> - Creates a faction");
 						$sender->sendMessage("/f desc <Descriotion> - Change/set the faction description");
+					$sender->sendMessage("/f setdesc <Descriotion> - set the faction description");
 						$sender->sendMessage("/f open [yes/no] - Choose if invitation is required to join");
 						$sender->sendMessage("/f invite <Player Name> - Invite a player to your faction");
 						$sender->sendMessage("/f sethome - Sets the faction home at your current position");
@@ -153,8 +155,41 @@ class FactionCommand extends Base {
 						}else{
 							if(count($manager->getFactionData($sender)['Allies']) == 0){
 								$sender->sendMessage(UltraFaction::PREFIX."This faction does not have any allies");
+							} else {
+								$sender->sendMessage(UltraFaction::PREFIX."Allies:");
+								foreach($manager->getFactionData($sender)['Allies'] as $a){
+									$sender->sendMessage("- ".$a);
+								}
 							}
 						}
+						break;
+
+					case "kick":
+					case "k":
+					if(!$manager->isInFaction($sender)){
+						$sender->sendMessage(UltraFaction::PREFIX."You're not in a faction");
+					}else{
+						if(!$manager->isLeader($sender)){
+							$sender->sendMessage(UltraFaction::PREFIX . "Only the faction leader can do this");
+						}else{
+							if(!isset($args[1])){
+								$sender->sendMessage("/f kick <name>");
+							}else{
+								if($args[1] == $sender->getName()){
+									$sender->sendMessage(UltraFaction::PREFIX . "You can't kick yourself!");
+								}else{
+									if(!in_array($args[1], $manager->getFactionData($sender)['Members'])){
+										$sender->sendMessage(UltraFaction::PREFIX . $args[1] . " is not in your faction!");
+									}else{
+										$manager->kickFromFaction($sender, $args[1]);
+										$sender->sendMessage(UltraFaction::PREFIX . "We successfully kicked {$args[1]} out of your faction!");
+									}
+								}
+							}
+						}
+					}
+					break;
+
 					// Todo:Other help things such as War, Waraccept, change name, kick etc!
 				}
 			}
