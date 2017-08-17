@@ -22,7 +22,7 @@ Created_A_Faction: Faction has been created!
 Faction_Already_Exist: That faction already exist
 Faction_Too_Short: Faction name is too short
 Faction_Too_Long: Faction name is too long
-Already_In_Faction: Your already in a faction
+Already_In_Faction: You are already in a faction
 Faction_Cost_Reach: You need at least {money} to create a faction
 
 Faction_Set_Description: Your faction description has been set
@@ -40,5 +40,4 @@ No_Permission_To_Promote: You don't have enough permissions to promote members i
 No_Permisison_To_Rename: You don't have enough permissions to rename this faction.
 No_Faction: You are not in a faction!
 No_Faction_To_Do: You must be in a faction in order to set the description.
-Faction_Description_Field_Empty: You must be in a faction in order to set the description.
-
+Faction_Description_Field_Empty: The description of the faction can not be empty
