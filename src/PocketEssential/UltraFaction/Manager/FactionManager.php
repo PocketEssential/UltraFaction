@@ -139,20 +139,21 @@ class FactionManager {
 	 * @param Player $player
 	 * @param $name
 	 */
-	public function createFaction(Player $player, $name){
+	public function createFaction(Player $player, $name, $power = 20){
 
 		$file = file_get_contents($this->plugin->getDataFolder() . "Factions/Factions.json");
 
 		$deject = json_decode($file, true);
 
 		$data = [
-			"Member" => [],
+			"Members" => [],
 			"Leader" => $player->getName(),
 			"Home" => null,
 			"Claimed" => null,
 			"Name" => $name,
 			"Description" => "Welcome to ".$player->getName() . "'s Faction!",
 			"Allies" => [],
+			"Power" => $power
 		];
 
 		$deject[$name] = $data;

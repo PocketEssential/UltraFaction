@@ -41,6 +41,7 @@ class UltraFaction extends PluginBase implements Listener {
 	public $config;
 	public $language;
 	public $lang;
+	public $data;
 
 	public function onEnable(){
 

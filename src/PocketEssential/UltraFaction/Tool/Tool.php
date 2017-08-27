@@ -10,6 +10,7 @@ namespace PocketEssential\UltraFaction\Tool;
 
 
 use PocketEssential\UltraFaction\Commands\FactionCommand;
+use PocketEssential\UltraFaction\Manager\Listener\UltraFactionListener;
 use PocketEssential\UltraFaction\UltraFaction;
 use pocketmine\utils\Config;
 
@@ -22,6 +23,7 @@ class Tool {
 	public $plugin;
 	public $data;
 	public static $instance;
+	public static $ultrafaction;
 
 	/**
 	 * tool constructor.
@@ -31,6 +33,7 @@ class Tool {
 		$this->plugin = $plugin;
 		$this->data = new Config($this->plugin->getDataFolder() . "config.yml", Config::YAML);
 		self::$instance = $this;
+		self::$ultrafaction = $this->plugin;
 	}
 
 	/**
@@ -38,6 +41,13 @@ class Tool {
 	 */
 	public static function getInstance(){
 		return self::$instance;
+	}
+
+	/**
+	 * @return UltraFaction
+	 */
+	public static function getUltraFaction(){
+		return self::$ultrafaction;
 	}
 
 	public function ready(){
@@ -73,6 +83,8 @@ class Tool {
 		$this->plugin->getServer()->getCommandMap()->registerAll('UltraFaction', [
 			new FactionCommand($this->plugin)
 		]);
+
+		$this->plugin->getServer()->getPluginManager()->registerEvents(new UltraFactionListener($this->plugin), $this->plugin);
 	}
 
 	/**

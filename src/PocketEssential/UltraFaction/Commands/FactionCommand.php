@@ -51,6 +51,7 @@ class FactionCommand extends Base {
 				$sender->sendMessage("/f create <Name> - Creates a faction");
 				$sender->sendMessage("/f desc <Descriotion> - Change/set the faction description");
 				$sender->sendMessage("/f setdesc <Descriotion> - set the faction description");
+				$sender->sendMessage("/f power - get your faction power");
 				$sender->sendMessage("/f open [yes/no] - Choose if invitation is required to join");
 				$sender->sendMessage("/f invite <Player Name> - Invite a player to your faction");
 				$sender->sendMessage("/f sethome - Sets the faction home at your current position");
@@ -67,7 +68,7 @@ class FactionCommand extends Base {
 				switch($args[0]){
 
 					default:
-						$sender->sendMessage(UltraFaction::PREFIX."Please use /f help for a list of commands");
+						$sender->sendMessage(UltraFaction::PREFIX . "Please use /f help for a list of commands");
 						break;
 
 					case "help":
@@ -75,7 +76,8 @@ class FactionCommand extends Base {
 						$sender->sendMessage("-----.[ UltraFaction Help ].-----");
 						$sender->sendMessage("/f create <Name> - Creates a faction");
 						$sender->sendMessage("/f desc <Descriotion> - Change/set the faction description");
-					$sender->sendMessage("/f setdesc <Descriotion> - set the faction description");
+						$sender->sendMessage("/f setdesc <Descriotion> - set the faction description");
+					    $sender->sendMessage("/f power - get your faction power");
 						$sender->sendMessage("/f open [yes/no] - Choose if invitation is required to join");
 						$sender->sendMessage("/f invite <Player Name> - Invite a player to your faction");
 						$sender->sendMessage("/f sethome - Sets the faction home at your current position");
@@ -93,17 +95,17 @@ class FactionCommand extends Base {
 
 					case "create":
 						if(!isset($args[1])){
-							$sender->sendMessage(UltraFaction::PREFIX."Please use /f create <name>");
+							$sender->sendMessage(UltraFaction::PREFIX . "Please use /f create <name>");
 						}else{
 							if($manager->isInFaction($sender)){
-								$sender->sendMessage(UltraFaction::PREFIX."You're already in a faction");
+								$sender->sendMessage(UltraFaction::PREFIX . "You're already in a faction");
 
 							}else{
 								if($manager->isNameTaken($args[1])){
-									$sender->sendMessage(UltraFaction::PREFIX."That faction name already exist");
+									$sender->sendMessage(UltraFaction::PREFIX . "That faction name already exist");
 								}else{
 									$manager->createFaction($sender, $args[1]);
-									$sender->sendMessage(UltraFaction::PREFIX."Faction successfully created!");
+									$sender->sendMessage(UltraFaction::PREFIX . "Faction successfully created!");
 								}
 							}
 						}
@@ -111,9 +113,9 @@ class FactionCommand extends Base {
 
 					case "description":
 						if(!$manager->isInFaction($sender)){
-							$sender->sendMessage(UltraFaction::PREFIX."You're not in a faction");
+							$sender->sendMessage(UltraFaction::PREFIX . "You're not in a faction");
 						}else{
-							$sender->sendMessage(UltraFaction::PREFIX."This faction description is: ".$manager->getFactionData($sender)['Description']);
+							$sender->sendMessage(UltraFaction::PREFIX . "This faction description is: " . $manager->getFactionData($sender)['Description']);
 						}
 						break;
 
@@ -121,44 +123,47 @@ class FactionCommand extends Base {
 					case "setdesc":
 					case "setdescription":
 						if(!$manager->isInFaction($sender)){
-							$sender->sendMessage(UltraFaction::PREFIX."You're not in a faction");
+							$sender->sendMessage(UltraFaction::PREFIX . "You're not in a faction");
 						}else{
 							if(!$manager->isLeader($sender)){
-								$sender->sendMessage(UltraFaction::PREFIX."Only the faction leader can do this");
-							} else {
+								$sender->sendMessage(UltraFaction::PREFIX . "Only the faction leader can do this");
+							}else{
 								if(!isset($args[1])){
 									$sender->sendMessage("/f desc <name>");
-								} else {
+								}else{
 									$manager->updateFactionData($sender, "Description", $args[1]);
-									$sender->sendMessage(UltraFaction::PREFIX."Faction description has been set to $args[1]!");
+									$sender->sendMessage(UltraFaction::PREFIX . "Faction description has been set to $args[1]!");
 								}
 							}
 						}
 						break;
 
 					case "members":
-					case "member"	:
-					if(!$manager->isInFaction($sender)){
-						$sender->sendMessage(UltraFaction::PREFIX."You're not in a faction");
-					}else{
-						$sender->sendMessage("-- ".$manager->getFaction($sender)." Members:");
-						$sender->sendMessage(TextFormat::YELLOW."Leader: ".TextFormat::LIGHT_PURPLE . $manager->getFactionLeader($sender));
-						foreach($manager->getFactionData($sender)['Members'] as $m){
-							$sender->sendMessage(TextFormat::YELLOW ."- ".TextFormat::GREEN . $m);
+					case "member"     :
+						if(!$manager->isInFaction($sender)){
+							$sender->sendMessage(UltraFaction::PREFIX . "You're not in a faction");
+						}else{
+							if(count($manager->getFactionData($sender)['Members']) == 0){
+								$sender->sendMessage(UltraFaction::PREFIX . "This faction does not have any members!");
+							}else{
+								$sender->sendMessage("-- " . $manager->getFaction($sender) . " Members:");
+								foreach($manager->getFactionData($sender)['Members'] as $m){
+									$sender->sendMessage(TextFormat::YELLOW . "- " . TextFormat::GREEN . $m);
+								}
+							}
 						}
-					}
-					break;
+						break;
 
 					case "allies":
 						if(!$manager->isInFaction($sender)){
-							$sender->sendMessage(UltraFaction::PREFIX."You're not in a faction");
+							$sender->sendMessage(UltraFaction::PREFIX . "You're not in a faction");
 						}else{
 							if(count($manager->getFactionData($sender)['Allies']) == 0){
-								$sender->sendMessage(UltraFaction::PREFIX."This faction does not have any allies");
-							} else {
-								$sender->sendMessage(UltraFaction::PREFIX."Allies:");
+								$sender->sendMessage(UltraFaction::PREFIX . "This faction does not have any allies");
+							}else{
+								$sender->sendMessage(UltraFaction::PREFIX . "Allies:");
 								foreach($manager->getFactionData($sender)['Allies'] as $a){
-									$sender->sendMessage("- ".$a);
+									$sender->sendMessage("- " . $a);
 								}
 							}
 						}
@@ -166,29 +171,38 @@ class FactionCommand extends Base {
 
 					case "kick":
 					case "k":
-					if(!$manager->isInFaction($sender)){
-						$sender->sendMessage(UltraFaction::PREFIX."You're not in a faction");
-					}else{
-						if(!$manager->isLeader($sender)){
-							$sender->sendMessage(UltraFaction::PREFIX . "Only the faction leader can do this");
+						if(!$manager->isInFaction($sender)){
+							$sender->sendMessage(UltraFaction::PREFIX . "You're not in a faction");
 						}else{
-							if(!isset($args[1])){
-								$sender->sendMessage("/f kick <name>");
+							if(!$manager->isLeader($sender)){
+								$sender->sendMessage(UltraFaction::PREFIX . "Only the faction leader can do this");
 							}else{
-								if($args[1] == $sender->getName()){
-									$sender->sendMessage(UltraFaction::PREFIX . "You can't kick yourself!");
+								if(!isset($args[1])){
+									$sender->sendMessage("/f kick <name>");
 								}else{
-									if(!in_array($args[1], $manager->getFactionData($sender)['Members'])){
-										$sender->sendMessage(UltraFaction::PREFIX . $args[1] . " is not in your faction!");
+									if($args[1] == $sender->getName()){
+										$sender->sendMessage(UltraFaction::PREFIX . "You can't kick yourself!");
 									}else{
-										$manager->kickFromFaction($sender, $args[1]);
-										$sender->sendMessage(UltraFaction::PREFIX . "We successfully kicked {$args[1]} out of your faction!");
+										if(!in_array($args[1], $manager->getFactionData($sender)['Members'])){
+											$sender->sendMessage(UltraFaction::PREFIX . $args[1] . " is not in your faction!");
+										}else{
+											$manager->kickFromFaction($sender, $args[1]);
+											$sender->sendMessage(UltraFaction::PREFIX . "We successfully kicked {$args[1]} out of your faction!");
+										}
 									}
 								}
 							}
 						}
-					}
-					break;
+						break;
+
+					case "power":
+					case "p":
+						if(!$manager->isInFaction($sender)){
+							$sender->sendMessage(UltraFaction::PREFIX . "You're not in a faction");
+						}else{
+							$sender->sendMessage(UltraFaction::PREFIX . "This faction power is: " . $manager->getFactionData($sender)['Power']);
+						}
+						break;
 
 					// Todo:Other help things such as War, Waraccept, change name, kick etc!
 				}
