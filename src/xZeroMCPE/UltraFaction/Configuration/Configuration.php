@@ -33,6 +33,8 @@ class Configuration
     public function loadConfiguration(){
 
         if(!file_exists($this->getDataFolder() . "Config.json")){
+            @mkdir($this->getDataFolder());
+            
             file_put_contents($this->getDataFolder() . "Config.json", json_encode(
                 [
                     "### Please Read ###" => "Follow the format otherwise we won't be able to load this well!",
