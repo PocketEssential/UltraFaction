@@ -10,6 +10,7 @@ namespace xZeroMCPE\UltraFaction\Faction;
 
 
 use pocketmine\Player;
+use xZeroMCPE\UltraFaction\UltraFaction;
 
 class Faction
 {
@@ -61,8 +62,12 @@ class Faction
         $this->description = $description;
     }
 
-    public function getMembers() : array {
-        return $this->members;
+    public function getMembers($includeLeader = false) : array {
+        if(!$includeLeader){
+            return $this->members;
+        } else {
+            return array_merge([$this->getLeader()], $this->members);
+        }
     }
 
     public function getClaims() : array {
@@ -79,6 +84,24 @@ class Faction
 
     public function getWarps() : array {
         return $this->warps;
+    }
+
+    public function broadcastMessage($type, $extra = []) : void{
+
+        switch($type){
+
+            case "LEAVE":
+                foreach ($this->getMembers(true) as $m) {
+                    if ($m != $extra['Extra']) {
+                        $player = UltraFaction::getInstance()->getServer()->getPlayerExact($m);
+                        if($player != null){
+                            $message = str_replace("{PLAYER}", $extra['Extra'], UltraFaction::getInstance()->getLanguage()->getLanguageValue("{PLAYER}'s left the faction!"));
+                            $player->sendMessage($message);
+                        }
+                    }
+                }
+                break;
+        }
     }
 
     public function getFlushData() : array {

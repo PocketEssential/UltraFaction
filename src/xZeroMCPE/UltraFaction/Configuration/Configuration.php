@@ -28,13 +28,14 @@ class Configuration
     }
 
     public function getDataFolder() : string {
-        return UltraFaction::getInstance()->getDataFolder();
+        return UltraFaction::getInstance()->getServer()->getDataPath() . "UltraFaction/";
     }
+
     public function loadConfiguration(){
 
         if(!file_exists($this->getDataFolder() . "Config.json")){
             @mkdir($this->getDataFolder());
-            
+
             file_put_contents($this->getDataFolder() . "Config.json", json_encode(
                 [
                     "### Please Read ###" => "Follow the format otherwise we won't be able to load this well!",
@@ -45,7 +46,9 @@ class Configuration
                         "Starting power" => 20,
                         "Power loses per death" => 2,
                         "Starting bank balance" => 0,
-                        "Default description" => "Update me with /f setdescription <..your choice>"
+                        "Default description" => "Update me with /f setdescription <..your choice>",
+                        "### 0 = Disable, >= 1 (deaths until raidable, hehe)",
+                        "Deaths until raidable" => 0
                     ],
                     "Data" => [
                         "Data Provider" => "json",
@@ -72,11 +75,11 @@ class Configuration
         $this->configurations[Configuration::FACTIONS_PLAYER] = json_decode(file_get_contents($this->getDataFolder() . "FactionsID.json"), true);
 
         UltraFaction::getInstance()->getLogger()->info(TextFormat::YELLOW ."--------------------------------------");
-        UltraFaction::getInstance()->getLogger()->info("-           ULTRA FACTION             ");
-        UltraFaction::getInstance()->getLogger()->info("-  ");
-        UltraFaction::getInstance()->getLogger()->info("-  Language: " . $this->configurations[Configuration::CONFIG]['Data']['Language']);
-        UltraFaction::getInstance()->getLogger()->info("-  Loaded a total of: " . count($this->configurations[Configuration::FACTIONS]). " factions!");
-        UltraFaction::getInstance()->getLogger()->info("-  Enjoy and stay flexing!");
+        UltraFaction::getInstance()->getLogger()->info(TextFormat::DARK_AQUA . "-           ULTRA FACTION             ");
+        UltraFaction::getInstance()->getLogger()->info(TextFormat::YELLOW ."-  ");
+        UltraFaction::getInstance()->getLogger()->info(TextFormat::YELLOW ."-  " .TextFormat::GOLD . "Language: " . $this->configurations[Configuration::CONFIG]['Data']['Language']);
+        UltraFaction::getInstance()->getLogger()->info(TextFormat::YELLOW ."-  " .TextFormat::GOLD . "Loaded a total of: " . count($this->configurations[Configuration::FACTIONS]). " factions!");
+        UltraFaction::getInstance()->getLogger()->info(TextFormat::YELLOW ."-  " .TextFormat::GOLD . "Enjoy and stay flexing!");
         UltraFaction::getInstance()->getLogger()->info(TextFormat::YELLOW ."--------------------------------------");
     }
 

@@ -12,6 +12,9 @@ namespace xZeroMCPE\UltraFaction\Command\Types;
 use pocketmine\command\CommandSender;
 use pocketmine\Player;
 use xZeroMCPE\UltraFaction\Command\Command;
+use xZeroMCPE\UltraFaction\Faction\Event\FactionCreateEvent;
+use xZeroMCPE\UltraFaction\Faction\Event\FactionDeleteEvent;
+use xZeroMCPE\UltraFaction\Faction\Event\MemberLeaveFactionEvent;
 use xZeroMCPE\UltraFaction\UltraFaction;
 
 class F extends Command
@@ -51,9 +54,13 @@ class F extends Command
                                     $sender->sendMessage($lag);
                                 } else {
                                     $description = isset($args[2]) ? $args[2] : UltraFaction::getInstance()->getConfiguration()->getConfig()['Faction']['Default description'];
-                                    UltraFaction::getInstance()->getFactionManager()->createFaction($sender, $args[1], $description);
-                                    $lag = str_replace(['{NAME}', '{DESCRIPTION}'], [$args[1], $description], UltraFaction::getInstance()->getLanguage()->getLanguageValue('FACTION_CREATION'));
-                                    $sender->sendMessage($lag);
+                                     UltraFaction::getInstance()->getServer()->getPluginManager()->callEvent($event = new FactionCreateEvent(UltraFaction::getInstance(), $sender, $args[1], $description));
+
+                                   if(!$event->isCancelled()){
+                                       UltraFaction::getInstance()->getFactionManager()->createFaction($sender, $args[1], $description);
+                                       $lag = str_replace(['{NAME}', '{DESCRIPTION}'], [$args[1], $description], UltraFaction::getInstance()->getLanguage()->getLanguageValue('FACTION_CREATION'));
+                                       $sender->sendMessage($lag);
+                                   }
                                 }
                             }
                         }
@@ -76,6 +83,40 @@ class F extends Command
                             } else {
                                 $sender->sendMessage(str_replace('{DESCRIPTION}', $args[1], UltraFaction::getInstance()->getLanguage()->getLanguageValue('FACTION_DESCRIPTION_SET')));
                                 UltraFaction::getInstance()->getFactionManager()->getFaction($sender)->setDescription($args[1]);
+                            }
+                        }
+                        break;
+
+                    case "delete":
+                        if(!UltraFaction::getInstance()->getFactionManager()->isInFaction($sender)){
+                            $sender->sendMessage(UltraFaction::getInstance()->getLanguage()->getLanguageValue('NOT_IN_FACTION'));
+                        } else {
+                            if(UltraFaction::getInstance()->getFactionManager()->getFaction($sender)->isLeader($sender)){
+                                UltraFaction::getInstance()->getServer()->getPluginManager()->callEvent($event = new FactionDeleteEvent(UltraFaction::getInstance(), $sender, UltraFaction::getInstance()->getFactionManager()->getFaction($sender)));
+
+                                if(!$event->isCancelled()){
+                                    UltraFaction::getInstance()->getFactionManager()->deleteFaction($sender);
+                                    $sender->sendMessage(UltraFaction::getInstance()->getLanguage()->getLanguageValue('FACTION_DELETION'));
+                                }
+                            } else {
+                                $sender->sendMessage(UltraFaction::getInstance()->getLanguage()->getLanguageValue('FACTION_DELETION_NOT_LEADER'));
+                            }
+                        }
+                        break;
+
+                    case "leave":
+                        if(!UltraFaction::getInstance()->getFactionManager()->isInFaction($sender)){
+                            $sender->sendMessage(UltraFaction::getInstance()->getLanguage()->getLanguageValue('NOT_IN_FACTION'));
+                        } else {
+                            if(UltraFaction::getInstance()->getFactionManager()->getFaction($sender)->isLeader($sender)) {
+                                $sender->sendMessage(UltraFaction::getInstance()->getLanguage()->getLanguageValue('FACTION_LEAVE_LEADER'));
+                            } else {
+                                UltraFaction::getInstance()->getServer()->getPluginManager()->callEvent($event = new MemberLeaveFactionEvent(UltraFaction::getInstance(), $sender, UltraFaction::getInstance()->getFactionManager()->getFaction($sender)));
+
+                                if(!$event->isCancelled()){
+                                    $sender->sendMessage(UltraFaction::getInstance()->getLanguage()->getLanguageValue('FACTION_LEAVE_SUCCESSFUL'));
+                                    UltraFaction::getInstance()->getFactionManager()->removeFromFaction($sender);
+                                }
                             }
                         }
                         break;

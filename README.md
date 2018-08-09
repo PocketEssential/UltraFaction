@@ -24,6 +24,7 @@
 
 
 #### Checking if the player belongs to a faction
+Make sure you're using: `xZeroMCPE\UltraFaction\UltraFaction`
 
 ```php
 
@@ -48,7 +49,25 @@ UltraFaction::getInstance()->getFactionManager()->isInFaction($player);
 UltraFaction::getInstance()->getFactionManager()->getFaction($player);
 ```
 
-#### More API examples will be added, as of now we're more into finishing the plugin and adding as much features as we can. And this includes a simple API that allows developers to extend UltraFaction without the need of editing the core itself!
+#### Not quite yet
+We have a bunch of events you can tie so.
+
+```php
+// Listen to when someone creates a faction?
+
+public function onCreate(FactionCreateEvent $event){
+  
+  $player = $event->getPlayer();
+  
+  if($event->getFactionName() == "Zero"){
+   $player->sendMessage("You can't use that faction name because you're not cool!");
+  }
+}
+```
+
+
+#### That's all you need to know for now.
+We have a ton of others, we'll try to update the readme, or alternatively, create a wiki
 
 # Builds
 [![Poggit-CI](https://poggit.pmmp.io/ci.badge/PocketEssential/UltraFaction/UltraFaction)](https://poggit.pmmp.io/ci/PocketEssential/UltraFaction/UltraFaction)

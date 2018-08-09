@@ -7,5 +7,11 @@
   "FACTION_CREATION_NOT_ENOUGH_MONEY": "You don't have enough money to create a faction!",
   "FACTION_DESCRIPTION": "Your faction description is {DESCRIPTION}",
   "FACTION_DESCRIPTION_SET": "You set the faction description to {DESCRIPTION}",
-  "FACTION_DESCRIPTION_SET_FORGOT": "You forgot to tell us the description you wanted!"
+  "FACTION_DESCRIPTION_SET_FORGOT": "You forgot to tell us the description you wanted!",
+  "FACTION_DELETION_NOT_LEADER": "You're not the faction leader...",
+  "FACTION_DELETION_SUCCESS": "You deleted your faction! OOF",
+  "FACTION_LEAVE_LEADER": "You can't leave your own faction! Delete it using /f delete",
+  "FACTION_LEAVE_SUCCESSFUL": "You left the faction!",
+  "FACTION_LEAVE_MEMBER_BROADCAST": "{PLAYER}'s left the faction!",
+  "MEMBER_ATTACK_MEMBER": "You can't attack {VICTIM} because they're in your faction!"
 }

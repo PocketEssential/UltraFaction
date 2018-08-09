@@ -11,6 +11,7 @@ namespace xZeroMCPE\UltraFaction\Faction;
 
 use pocketmine\Player;
 use xZeroMCPE\UltraFaction\Configuration\Configuration;
+use xZeroMCPE\UltraFaction\Faction\Listener\FactionListener;
 use xZeroMCPE\UltraFaction\UltraFaction;
 
 class FactionManager
@@ -24,6 +25,9 @@ class FactionManager
     }
 
     public function loadRequired(){
+
+        UltraFaction::getInstance()->getServer()->getPluginManager()->registerEvents(new FactionListener(), UltraFaction::getInstance());
+
         if(count(UltraFaction::getInstance()->getConfiguration()->configurations[Configuration::FACTIONS]) != 0){
             foreach (UltraFaction::getInstance()->getConfiguration()->configurations[Configuration::FACTIONS] as $factions){
                 $this->factions[$factions['ID']] = new Faction($factions['Leader'], $factions['ID'], $factions['Name'], $factions['Description'], $factions['Members'], $factions['Claims'], $factions['Power'], $factions['Bank'], $factions['Warps']);
@@ -35,16 +39,42 @@ class FactionManager
         return $this->factions[UltraFaction::getInstance()->getConfiguration()->configurations[Configuration::FACTIONS_PLAYER][$player->getXuid()]];
     }
 
+    public function getFactionByID(string $id) : ?Faction {
+
+        if(isset($this->factions[$id])){
+            return $this->factions[$id];
+        }
+        return null;
+    }
+
     public function createFaction(Player $leader, string $name, string $description){
         $id = uniqid('UZ-');
         $this->factions[$id] = new Faction($leader->getName(), $id, $name, $description, [], [], UltraFaction::getInstance()->getConfiguration()->getConfig()['Faction']['Starting power'],
             UltraFaction::getInstance()->getConfiguration()->getConfig()['Faction']['Starting bank balance'], []);
 
-        UltraFaction::getInstance()->getConfiguration()->configurations[Configuration::FACTIONS_PLAYER][$leader->getXuid()] = $id;
+        UltraFaction::getInstance()->getConfiguration()->configurations[Configuration::FACTIONS_PLAYER][$leader->getName()] = $id;
+    }
+
+    public function deleteFaction(Player $player) {
+
+        $id = $this->getFaction($player)->getID();
+
+        foreach ($this->getFaction($player)->getMembers() as $member){
+            unset(UltraFaction::getInstance()->getConfiguration()->configurations[Configuration::FACTIONS_PLAYER][$member]);
+        }
+        unset(UltraFaction::getInstance()->getConfiguration()->configurations[Configuration::FACTIONS_PLAYER][$player->getName()]);
+        unset($this->factions[$id]);
+    }
+
+    public function removeFromFaction(Player $player) {
+
+        $this->getFaction($player)->broadcastMessage('LEAVE', ['Extra' => $player->getName()]);
+        unset($this->getFaction($player)->members[array_search($player->getName(), $this->getFaction($player)->members)]);
+        unset(UltraFaction::getInstance()->getConfiguration()->configurations[Configuration::FACTIONS_PLAYER][$player->getName()]);
     }
 
     public function isInFaction(Player $player) : bool {
-        return isset(UltraFaction::getInstance()->getConfiguration()->configurations[Configuration::FACTIONS_PLAYER][$player->getXuid()]);
+        return isset(UltraFaction::getInstance()->getConfiguration()->configurations[Configuration::FACTIONS_PLAYER][$player->getName()]);
     }
 
     public function getFactionsDump() : array {
