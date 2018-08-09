@@ -9,6 +9,7 @@
 ### The Feature-Rich Ultra Factions plugin for your Minecraft: Pocket Edition PHP7 Server!
 #### Create your Faction, Claim your Land, Fight your Enemies!
 
+**This is being MAINTAINED for Versai.pro**
 ## Features
 - [x] 3D chunk claiming system with configurable claim sizes
 - [x] Faction homes, protections, and money.
@@ -19,20 +20,32 @@
 - [x] Custom language/messages support. Server admins can translate the plugins themselves, or just replace the messages with their own.
 - [x] Open your faction, allow others to join without invitations!
 
-### Simple API
+### Unique but *simple* API
 
 
 #### Checking if the player belongs to a faction
 
 ```php
-// $player should be Instance of Player!
-
-$UltraFaction::getFactionManager()->isInFaction(Player $player);
-
 
 /*
-  returns bool
+* $player should be instance of a Player
+* returns a bool
 */
+
+UltraFaction::getInstance()->getFactionManager()->isInFaction($player);
+```
+
+#### Get a player faction
+
+```php
+
+/*
+* $player should be instance of a Player
+* returns a \Faction\Faction object
+* You should check if they belong to a faction first!
+*/
+
+UltraFaction::getInstance()->getFactionManager()->getFaction($player);
 ```
 
 #### More API examples will be added, as of now we're more into finishing the plugin and adding as much features as we can. And this includes a simple API that allows developers to extend UltraFaction without the need of editing the core itself!

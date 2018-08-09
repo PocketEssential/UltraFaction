@@ -16,16 +16,20 @@ class Faction
 
     public $leader;
     public $id;
+    public $name;
+    public $description;
     public $members;
     public $claims;
     public $power;
     public $bank;
     public $warps;
 
-    public function __construct(string $leader, string $id, array $members, array $claims, int $power, int $bank, array $warps)
+    public function __construct(string $leader, string $id, string $name, string $description, array $members, array $claims, int $power, int $bank, array $warps)
     {
         $this->leader = $leader;
         $this->id = $id;
+        $this->name = $name;
+        $this->description = $description;
         $this->members = $members;
         $this->claims = $claims;
         $this->power = $power;
@@ -43,6 +47,10 @@ class Faction
 
     public function getID() : string {
         return $this->id;
+    }
+
+    public function getName() : string {
+        return $this->name;
     }
 
     public function getMembers() : array {
@@ -69,6 +77,7 @@ class Faction
         return [
             "Leader" => $this->leader,
             "ID" => $this->id,
+            "Name" => $this->name,
             "Members" => $this->members,
             "Power" => $this->power,
             "Bank" => $this->bank,

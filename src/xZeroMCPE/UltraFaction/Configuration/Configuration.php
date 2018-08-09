@@ -70,6 +70,10 @@ class Configuration
         UltraFaction::getInstance()->getLogger()->info(TextFormat::YELLOW ."--------------------------------------");
     }
 
+    public function getConfig() {
+        return $this->configurations[Configuration::CONFIG];
+    }
+
     public function handleShutdown(){
 
         file_put_contents($this->getDataFolder() . "Config.json", json_encode($this->configurations[Configuration::CONFIG]), JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE);

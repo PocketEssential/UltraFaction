@@ -24,6 +24,7 @@ namespace xZeroMCPE\UltraFaction;
 
 
 use pocketmine\plugin\PluginBase;
+use xZeroMCPE\UltraFaction\Command\Types\F;
 use xZeroMCPE\UltraFaction\Configuration\Configuration;
 use xZeroMCPE\UltraFaction\Faction\FactionManager;
 
@@ -55,6 +56,10 @@ class UltraFaction extends PluginBase
 
         $this->components['Configuration'] = new Configuration();
         $this->components['FactionManager']= new FactionManager();
+
+        $this->getServer()->getCommandMap()->registerAll('UltraFaction', [
+            new F($this)
+        ]);
     }
 
     public function getConfiguration() : Configuration {

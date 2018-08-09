@@ -26,13 +26,20 @@ class FactionManager
     public function loadRequired(){
         if(count(UltraFaction::getInstance()->getConfiguration()->configurations[Configuration::FACTIONS]) != 0){
             foreach (UltraFaction::getInstance()->getConfiguration()->configurations[Configuration::FACTIONS] as $factions){
-                $this->factions[$factions['ID']] = new Faction($factions['Leader'], $factions['ID'], $factions['Members'], $factions['Claims'], $factions['Power'], $factions['Bank'], $factions['Warps']);
+                $this->factions[$factions['ID']] = new Faction($factions['Leader'], $factions['ID'], $factions['Name'], $factions['Description'], $factions['Members'], $factions['Claims'], $factions['Power'], $factions['Bank'], $factions['Warps']);
             }
         }
     }
 
     public function getFaction(Player $player) : Faction {
         return $this->factions[UltraFaction::getInstance()->getConfiguration()->configurations[Configuration::FACTIONS_PLAYER][$player->getXuid()]];
+    }
+
+    public function createFaction(Player $leader, string $name, string $description){
+        $id = uniqid('UZ-');
+        $this->factions[$id] = new Faction($leader->getName(), $id, $name, $description, [], [], UltraFaction::getInstance()->getConfiguration()->getConfig()['Starting power'],
+            UltraFaction::getInstance()->getConfiguration()->getConfig()['Starting bank balance'], []);
+        UltraFaction::getInstance()->getConfiguration()->configurations[Configuration::CONFIG][$leader->getXuid()] = $id;
     }
 
     public function isInFaction(Player $player) : bool {
