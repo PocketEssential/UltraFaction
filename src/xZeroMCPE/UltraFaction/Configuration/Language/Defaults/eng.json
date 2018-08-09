@@ -1,0 +1,11 @@
+{
+  "IN_FACTION": "You're already in a faction!",
+  "NOT_IN_FACTION": "You're not in a faction!",
+  "FACTION_CREATION": "You have successfully created a faction with name {NAME} and description {DESCRIPTION}",
+  "FACTION_CREATION_NAME_FORGOT": "You forgot to tell us the faction name!",
+  "FACTION_CREATION_MAX_NAME": "You can only have a max of {MAX_CHAR} chracters in the name!",
+  "FACTION_CREATION_NOT_ENOUGH_MONEY": "You don't have enough money to create a faction!",
+  "FACTION_DESCRIPTION": "Your faction description is {DESCRIPTION}",
+  "FACTION_DESCRIPTION_SET": "You set the faction description to {DESCRIPTION}",
+  "FACTION_DESCRIPTION_SET_FORGOT": "You forgot to tell us the description you wanted!"
+}

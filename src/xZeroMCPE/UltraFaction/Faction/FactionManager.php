@@ -37,13 +37,14 @@ class FactionManager
 
     public function createFaction(Player $leader, string $name, string $description){
         $id = uniqid('UZ-');
-        $this->factions[$id] = new Faction($leader->getName(), $id, $name, $description, [], [], UltraFaction::getInstance()->getConfiguration()->getConfig()['Starting power'],
-            UltraFaction::getInstance()->getConfiguration()->getConfig()['Starting bank balance'], []);
-        UltraFaction::getInstance()->getConfiguration()->configurations[Configuration::CONFIG][$leader->getXuid()] = $id;
+        $this->factions[$id] = new Faction($leader->getName(), $id, $name, $description, [], [], UltraFaction::getInstance()->getConfiguration()->getConfig()['Faction']['Starting power'],
+            UltraFaction::getInstance()->getConfiguration()->getConfig()['Faction']['Starting bank balance'], []);
+
+        UltraFaction::getInstance()->getConfiguration()->configurations[Configuration::FACTIONS_PLAYER][$leader->getXuid()] = $id;
     }
 
     public function isInFaction(Player $player) : bool {
-        return isset($this->factions[UltraFaction::getInstance()->getConfiguration()->configurations[Configuration::FACTIONS_PLAYER][$player->getXuid()]]);
+        return isset(UltraFaction::getInstance()->getConfiguration()->configurations[Configuration::FACTIONS_PLAYER][$player->getXuid()]);
     }
 
     public function getFactionsDump() : array {

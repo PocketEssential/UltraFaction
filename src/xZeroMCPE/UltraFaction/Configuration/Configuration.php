@@ -10,6 +10,7 @@ namespace xZeroMCPE\UltraFaction\Configuration;
 
 
 use pocketmine\utils\TextFormat;
+use xZeroMCPE\UltraFaction\Configuration\Language\Language;
 use xZeroMCPE\UltraFaction\UltraFaction;
 
 class Configuration
@@ -41,7 +42,8 @@ class Configuration
                         "Faction creation cost" => 0,
                         "Starting power" => 20,
                         "Power loses per death" => 2,
-                        "Starting bank balance" => 0
+                        "Starting bank balance" => 0,
+                        "Default description" => "Update me with /f setdescription <..your choice>"
                     ],
                     "Data" => [
                         "Data Provider" => "json",
@@ -58,9 +60,15 @@ class Configuration
             ), JSON_PRETTY_PRINT|JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_UNICODE);
         }
 
+        if(!file_exists($this->getDataFolder() . "Languages/")){
+            @mkdir($this->getDataFolder() . "Languages");
+            file_put_contents($this->getDataFolder() . "Languages/" . "eng.json", file_get_contents(__DIR__ . "/Language/Defaults/eng.json"));
+        }
+
         $this->configurations[Configuration::CONFIG] = json_decode(file_get_contents($this->getDataFolder() . "Config.json"), true);
         $this->configurations[Configuration::FACTIONS] = json_decode(file_get_contents($this->getDataFolder() . "Factions.json"), true);
         $this->configurations[Configuration::FACTIONS_PLAYER] = json_decode(file_get_contents($this->getDataFolder() . "FactionsID.json"), true);
+
         UltraFaction::getInstance()->getLogger()->info(TextFormat::YELLOW ."--------------------------------------");
         UltraFaction::getInstance()->getLogger()->info("-           ULTRA FACTION             ");
         UltraFaction::getInstance()->getLogger()->info("-  ");
@@ -79,5 +87,6 @@ class Configuration
         file_put_contents($this->getDataFolder() . "Config.json", json_encode($this->configurations[Configuration::CONFIG]), JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE);
         file_put_contents($this->getDataFolder() . "Factions.json", json_encode(UltraFaction::getInstance()->getFactionManager()->getFactionsDump()), JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE);
         file_put_contents($this->getDataFolder() . "FactionsID.json", json_encode($this->configurations[Configuration::FACTIONS_PLAYER]), JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE);
+        UltraFaction::getInstance()->getLogger()->info(TextFormat::GREEN . "[DATA] Flushed and saved all data!");
     }
 }

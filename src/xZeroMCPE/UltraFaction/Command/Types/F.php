@@ -33,9 +33,51 @@ class F extends Command
             if(!isset($args[0])){
                 $this->sendHelp($sender);
             } else {
-                switch($args[0]){
+                switch(strtolower($args[0])){
+
                     default:
                         $this->sendHelp($sender);
+                        break;
+
+                    case "create":
+                        if(UltraFaction::getInstance()->getFactionManager()->isInFaction($sender)){
+                            $sender->sendMessage(UltraFaction::getInstance()->getLanguage()->getLanguageValue('IN_FACTION'));
+                        } else {
+                            if(!isset($args[1])){
+                                $sender->sendMessage(UltraFaction::getInstance()->getLanguage()->getLanguageValue('FACTION_CREATION_NAME_FORGOT'));
+                            } else {
+                                if(strlen($args[1]) > UltraFaction::getInstance()->getConfiguration()->getConfig()['Faction']['Maximum faction name']){
+                                    $lag = str_replace("{MAX_CHAR}", UltraFaction::getInstance()->getConfiguration()->getConfig()['Faction']['Maximum faction name'], UltraFaction::getInstance()->getLanguage()->getLanguageValue('FACTION_CREATION_MAX_NAME'));
+                                    $sender->sendMessage($lag);
+                                } else {
+                                    $description = isset($args[2]) ? $args[2] : UltraFaction::getInstance()->getConfiguration()->getConfig()['Faction']['Default description'];
+                                    UltraFaction::getInstance()->getFactionManager()->createFaction($sender, $args[1], $description);
+                                    $lag = str_replace(['{NAME}', '{DESCRIPTION}'], [$args[1], $description], UltraFaction::getInstance()->getLanguage()->getLanguageValue('FACTION_CREATION'));
+                                    $sender->sendMessage($lag);
+                                }
+                            }
+                        }
+                        break;
+
+                    case "description":
+                        if(!UltraFaction::getInstance()->getFactionManager()->isInFaction($sender)){
+                            $sender->sendMessage(UltraFaction::getInstance()->getLanguage()->getLanguageValue('NOT_IN_FACTION'));
+                        } else {
+                            $sender->sendMessage(str_replace('{DESCRIPTION}', UltraFaction::getInstance()->getFactionManager()->getFaction($sender)->getDescription(), UltraFaction::getInstance()->getLanguage()->getLanguageValue('FACTION_DESCRIPTION')));
+                        }
+                        break;
+
+                    case "setdescription":
+                        if(!UltraFaction::getInstance()->getFactionManager()->isInFaction($sender)){
+                            $sender->sendMessage(UltraFaction::getInstance()->getLanguage()->getLanguageValue('NOT_IN_FACTION'));
+                        } else {
+                            if(!isset($args[1])){
+                                $sender->sendMessage(UltraFaction::getInstance()->getLanguage()->getLanguageValue('FACTION_DESCRIPTION_SET_FORGOT'));
+                            } else {
+                                $sender->sendMessage(str_replace('{DESCRIPTION}', $args[1], UltraFaction::getInstance()->getLanguage()->getLanguageValue('FACTION_DESCRIPTION_SET')));
+                                UltraFaction::getInstance()->getFactionManager()->getFaction($sender)->setDescription($args[1]);
+                            }
+                        }
                         break;
                 }
             }

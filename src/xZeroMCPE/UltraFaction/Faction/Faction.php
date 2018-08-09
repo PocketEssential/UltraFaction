@@ -53,6 +53,14 @@ class Faction
         return $this->name;
     }
 
+    public function getDescription() : string {
+        return $this->description;
+    }
+
+    public function setDescription(string $description) : void {
+        $this->description = $description;
+    }
+
     public function getMembers() : array {
         return $this->members;
     }
@@ -78,7 +86,9 @@ class Faction
             "Leader" => $this->leader,
             "ID" => $this->id,
             "Name" => $this->name,
+            "Description" => $this->description,
             "Members" => $this->members,
+            "Claims" => $this->claims,
             "Power" => $this->power,
             "Bank" => $this->bank,
             "Warps" => $this->warps
