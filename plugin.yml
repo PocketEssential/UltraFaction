@@ -1,6 +1,6 @@
 name: UltraFaction
 main: xZeroMCPE\UltraFaction\UltraFaction
-version: 1.0.0
+version: 1.0.1
 author: xZeroMCPE
 description: Rich
 api: [3.0.0]

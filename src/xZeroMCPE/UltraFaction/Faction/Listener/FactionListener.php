@@ -43,7 +43,7 @@ class FactionListener implements Listener
                             UltraFaction::getInstance()->getServer()->getPluginManager()->callEvent($event = new FactionMemberAttackMemberEvent(UltraFaction::getInstance(), $damager, UltraFaction::getInstance()->getFactionManager()->getFaction($damager), $player));
 
                             if (!$event->isCancelled()) {
-                                if(!UltraFaction::getInstance()->getConfiguration()->getConfig()['Faction']['Damage']['Friendly Fire']){
+                                if (!UltraFaction::getInstance()->getConfiguration()->getConfig()['Faction']['Damage']['Friendly Fire']) {
                                     $message = str_replace(['{VICTIM}'], [$player->getName()], UltraFaction::getInstance()->getLanguage()->getLanguageValue('MEMBER_ATTACK_MEMBER'));
                                     $damager->sendMessage($message);
                                     $event->setCancelled();

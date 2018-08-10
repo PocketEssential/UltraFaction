@@ -64,7 +64,6 @@ class Configuration
                         "Max amount of power" => 20,
                         "Power loses per death" => 2,
                         "Starting bank balance" => 0,
-                        "Default description" => "Update me with /f setdescription <..your choice>",
                         "### 0 = Disable, >= 1 (deaths until raidable, hehe)",
                         "Deaths until raidable" => 0,
                         "Damage" => [
@@ -86,10 +85,12 @@ class Configuration
                         ]
                     ],
                     "Data" => [
+                        "--------->" => "You can choose from: json, yaml",
                         "Data Provider" => "json",
                         "Language" => "eng"
                     ],
                     "Features" => [
+                        "--------->" => "Set this to false if you don't want us to display the HUD",
                         "Built in HUD" => true,
                     ],
                     "Economy" => [

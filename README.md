@@ -65,6 +65,18 @@ public function onCreate(FactionCreateEvent $event){
 }
 ```
 
+```php
+// Maybe when something changes?
+
+public function onCreate(FactionStatusChangeEvent $event){
+  
+  $player = $event->getPlayer();
+  
+  if($event->getStatus() === FactionStatusChangeEvent::STATUS_FACTION_OPEN){
+   $player->sendMessage("Oh wow, you opened your faction :o");
+  }
+}
+```
 
 #### That's all you need to know for now.
 We have a ton of others, we'll try to update the readme, or alternatively, create a wiki

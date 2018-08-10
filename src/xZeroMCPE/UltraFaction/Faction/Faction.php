@@ -30,6 +30,7 @@ class Faction
     public $bank;
     public $warps;
     public $home;
+    public $isOpen;
 
     /**
      * Faction constructor.
@@ -43,8 +44,9 @@ class Faction
      * @param int $bank
      * @param array $warps
      * @param string $home
+     * @param bool $isOpen
      */
-    public function __construct(string $leader, string $id, string $name, string $description, array $members, array $claims, int $power, int $bank, array $warps, string $home)
+    public function __construct(string $leader, string $id, string $name, string $description, array $members, array $claims, int $power, int $bank, array $warps, string $home, bool $isOpen)
     {
         $this->leader = $leader;
         $this->id = $id;
@@ -56,6 +58,7 @@ class Faction
         $this->bank = $bank;
         $this->warps = $warps;
         $this->home = $home;
+        $this->isOpen = $isOpen;
     }
 
     /**
@@ -164,6 +167,21 @@ class Faction
     }
 
     /**
+     * @return bool
+     */
+    public function isOpen() : bool {
+        return $this->isOpen;
+    }
+
+    /**
+     * @return bool
+     */
+    public function setOpen() : bool {
+        $this->isOpen = !$this->isOpen;
+        return $this->isOpen();
+    }
+
+    /**
      * @param $type
      * @param array $extra
      */
@@ -215,7 +233,8 @@ class Faction
             "Power" => $this->power,
             "Bank" => $this->bank,
             "Warps" => $this->warps,
-            "Home" => $this->home
+            "Home" => $this->home,
+            "isOpen" => $this->isOpen
         ];
     }
 }

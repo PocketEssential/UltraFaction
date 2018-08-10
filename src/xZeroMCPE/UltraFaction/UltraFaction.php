@@ -36,7 +36,7 @@ use xZeroMCPE\UltraFaction\Faction\FactionManager;
 class UltraFaction extends PluginBase
 {
 
-    public $components = [];
+    private $components = [];
     public static $instance;
 
     public function onEnable()

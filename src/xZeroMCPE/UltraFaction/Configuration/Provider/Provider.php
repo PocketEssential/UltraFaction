@@ -11,6 +11,7 @@ namespace xZeroMCPE\UltraFaction\Configuration\Provider;
 
 use xZeroMCPE\UltraFaction\Configuration\Provider\Types\FactionsProvider;
 use xZeroMCPE\UltraFaction\Configuration\Provider\Types\JsonProvider;
+use xZeroMCPE\UltraFaction\Configuration\Provider\Types\YamlProvider;
 use xZeroMCPE\UltraFaction\UltraFaction;
 
 /**
@@ -38,6 +39,10 @@ class Provider
 
             case "json":
                 $this->providerType = new JsonProvider();
+                break;
+
+            case "yaml":
+                $this->providerType = new YamlProvider();
                 break;
 
             default:

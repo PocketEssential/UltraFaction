@@ -22,7 +22,7 @@ class JsonProvider implements FactionsProvider
     /**
      * @return array
      */
-    public function getAllFactions(): array
+    public function getAllFactions() : array
     {
 
         $data = [];
@@ -45,7 +45,7 @@ class JsonProvider implements FactionsProvider
     /**
      * @return array
      */
-    public function getAllFactionsID(): array
+    public function getAllFactionsID() : array
     {
 
         $data = [];
@@ -65,9 +65,9 @@ class JsonProvider implements FactionsProvider
         return $data;
     }
 
-    public function flushData(): void
+    public function flushData() : void
     {
-        file_put_contents(Configuration::getDataFolderPath() . "Factions.json", json_encode(UltraFaction::getInstance()->getFactionManager()->getFactionsDump()), JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE);
-        file_put_contents(Configuration::getDataFolderPath() . "FactionsID.json", json_encode(UltraFaction::getInstance()->getConfiguration()->configurations[Configuration::FACTIONS_PLAYER]), JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE);
+        file_put_contents(Configuration::getDataFolderPath() . "Factions.json", json_encode(UltraFaction::getInstance()->getFactionManager()->getFactionsDump(), JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE));
+        file_put_contents(Configuration::getDataFolderPath() . "FactionsID.json", json_encode(UltraFaction::getInstance()->getConfiguration()->configurations[Configuration::FACTIONS_PLAYER], JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE));
     }
 }
