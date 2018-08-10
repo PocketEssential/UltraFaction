@@ -19,8 +19,9 @@ use xZeroMCPE\UltraFaction\UltraFaction;
 
 class F extends Command
 {
-    public $plugin;
 
+    public $plugin;
+    public $invites = [];
 
     public function __construct(UltraFaction $plugin)
     {
@@ -118,6 +119,46 @@ class F extends Command
                                     UltraFaction::getInstance()->getFactionManager()->removeFromFaction($sender);
                                 }
                             }
+                        }
+                        break;
+
+                    case "invite":
+                        if(!UltraFaction::getInstance()->getFactionManager()->isInFaction($sender)){
+                            $sender->sendMessage(UltraFaction::getInstance()->getLanguage()->getLanguageValue('NOT_IN_FACTION'));
+                        } else {
+                            if (!UltraFaction::getInstance()->getFactionManager()->getFaction($sender)->isLeader($sender)) {
+                                $sender->sendMessage(UltraFaction::getInstance()->getLanguage()->getLanguageValue('FACTION_INVITE_NOT_LEADER'));
+                            } else {
+                                if(!isset($args[1])){
+                                    $sender->sendMessage(UltraFaction::getInstance()->getLanguage()->getLanguageValue('FACTION_INVITE_NAME_FORGOT'));
+                                } else {
+                                    $player = UltraFaction::getInstance()->getServer()->getPlayer($args[1]);
+
+                                    if($player == null){
+                                        $sender->sendMessage(str_replace("{PLAYER}", $args[1], UltraFaction::getInstance()->getLanguage()->getLanguageValue('FACTION_INVITE_PLAYER_OFFLINE')));
+                                    } else {
+                                        if(UltraFaction::getInstance()->getFactionManager()->isInFaction($player)){
+                                            $sender->sendMessage(str_replace("{PLAYER}", $player->getName(), UltraFaction::getInstance()->getLanguage()->getLanguageValue('FACTION_INVITE_PLAYER_IN_FACTION')));
+                                        } else {
+                                            $sender->sendMessage(str_replace("{PLAYER}", $player->getName(), UltraFaction::getInstance()->getLanguage()->getLanguageValue('FACTION_INVITE_SUCCESS')));
+                                            $sender->sendMessage(str_replace(["{PLAYER}", "{FACTION}"], [$sender->getName(), UltraFaction::getInstance()->getFactionManager()->getFaction($sender)->getName()], UltraFaction::getInstance()->getLanguage()->getLanguageValue('FACTION_INVITE_SUCCESS_PARTY')));
+                                            $this->invites[$player->getName()] = UltraFaction::getInstance()->getFactionManager()->getFaction($sender)->getID();
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        break;
+
+                    case "accept":
+                        if(!isset($this->invites[$sender->getName()])){
+                            $sender->sendMessage(str_replace("{PLAYER}", $sender->getName(), UltraFaction::getInstance()->getLanguage()->getLanguageValue("You don't have any faction invites!")));
+                        } else {
+                            $sender->sendMessage(str_replace(["{PLAYER}", "{FACTION}"], [UltraFaction::getInstance()->getFactionManager()->getFaction($sender)->getLeader(),
+                                UltraFaction::getInstance()->getFactionManager()->getFaction($sender)->getName()], UltraFaction::getInstance()->getLanguage()->getLanguageValue('FACTION_INVITE_ACCEPT')));
+                            UltraFaction::getInstance()->getFactionManager()->getFactionByID($this->invites[$sender->getName()])->broadcastMessage("MEMBER_JOIN", ['Extra' => $sender->getName()]);
+                            UltraFaction::getInstance()->getFactionManager()->addToFaction($sender, $this->invites[$sender->getName()]);
+                            unset($this->invites[$sender->getName()]);
                         }
                         break;
                 }

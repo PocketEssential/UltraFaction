@@ -95,7 +95,19 @@ class Faction
                     if ($m != $extra['Extra']) {
                         $player = UltraFaction::getInstance()->getServer()->getPlayerExact($m);
                         if($player != null){
-                            $message = str_replace("{PLAYER}", $extra['Extra'], UltraFaction::getInstance()->getLanguage()->getLanguageValue("{PLAYER}'s left the faction!"));
+                            $message = str_replace("{PLAYER}", $extra['Extra'], UltraFaction::getInstance()->getLanguage()->getLanguageValue("FACTION_LEAVE_SUCCESSFUL"));
+                            $player->sendMessage($message);
+                        }
+                    }
+                }
+                break;
+
+            case "MEMBER_JOIN":
+                foreach ($this->getMembers(true) as $m) {
+                    if ($m != $extra['Extra']) {
+                        $player = UltraFaction::getInstance()->getServer()->getPlayerExact($m);
+                        if($player != null){
+                            $message = str_replace("{PLAYER}", $extra['Extra'], UltraFaction::getInstance()->getLanguage()->getLanguageValue("FACTION_INVITE_ACCEPT_BROADCAST"));
                             $player->sendMessage($message);
                         }
                     }

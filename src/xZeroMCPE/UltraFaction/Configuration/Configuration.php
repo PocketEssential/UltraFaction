@@ -44,15 +44,32 @@ class Configuration
                         "Maximum number of warps" => 4,
                         "Faction creation cost" => 0,
                         "Starting power" => 20,
+                        "Max amount of power" => 20,
                         "Power loses per death" => 2,
                         "Starting bank balance" => 0,
                         "Default description" => "Update me with /f setdescription <..your choice>",
                         "### 0 = Disable, >= 1 (deaths until raidable, hehe)",
-                        "Deaths until raidable" => 0
+                        "Deaths until raidable" => 0,
+                        "Damage" => [
+                            "Friendly fire" => false,
+                        ],
+                        "Max faction claim" => 4,
+                        "Disallow commands while in enemeny Territory" => [
+                            '/spawn',
+                            '/home',
+                            '/tpa',
+                            '/sethome',
+                            '/homes',
+                            '/tpall',
+                            '/warp'
+                        ]
                     ],
                     "Data" => [
                         "Data Provider" => "json",
                         "Language" => "eng"
+                    ],
+                    "Features" => [
+                        "Built in HUD" => true,
                     ]
             ], JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES));
             file_put_contents($this->getDataFolder() . "Factions.json", json_encode(

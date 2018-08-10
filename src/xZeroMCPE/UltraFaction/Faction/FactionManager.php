@@ -12,6 +12,7 @@ namespace xZeroMCPE\UltraFaction\Faction;
 use pocketmine\Player;
 use xZeroMCPE\UltraFaction\Configuration\Configuration;
 use xZeroMCPE\UltraFaction\Faction\Listener\FactionListener;
+use xZeroMCPE\UltraFaction\Faction\Tasks\FactionHud;
 use xZeroMCPE\UltraFaction\UltraFaction;
 
 class FactionManager
@@ -28,6 +29,10 @@ class FactionManager
 
         UltraFaction::getInstance()->getServer()->getPluginManager()->registerEvents(new FactionListener(), UltraFaction::getInstance());
 
+        if(UltraFaction::getInstance()->getConfiguration()->getConfig()['Features']['Built in HUD']){
+            UltraFaction::getInstance()->getScheduler()->scheduleRepeatingTask(new FactionHud(), 20);
+        }
+
         if(count(UltraFaction::getInstance()->getConfiguration()->configurations[Configuration::FACTIONS]) != 0){
             foreach (UltraFaction::getInstance()->getConfiguration()->configurations[Configuration::FACTIONS] as $factions){
                 $this->factions[$factions['ID']] = new Faction($factions['Leader'], $factions['ID'], $factions['Name'], $factions['Description'], $factions['Members'], $factions['Claims'], $factions['Power'], $factions['Bank'], $factions['Warps']);
@@ -36,7 +41,7 @@ class FactionManager
     }
 
     public function getFaction(Player $player) : Faction {
-        return $this->factions[UltraFaction::getInstance()->getConfiguration()->configurations[Configuration::FACTIONS_PLAYER][$player->getXuid()]];
+        return $this->factions[UltraFaction::getInstance()->getConfiguration()->configurations[Configuration::FACTIONS_PLAYER][$player->getName()]];
     }
 
     public function getFactionByID(string $id) : ?Faction {
@@ -64,6 +69,12 @@ class FactionManager
         }
         unset(UltraFaction::getInstance()->getConfiguration()->configurations[Configuration::FACTIONS_PLAYER][$player->getName()]);
         unset($this->factions[$id]);
+    }
+
+    public function addToFaction(Player $player, string $id){
+
+        $this->getFactionByID($id)->members[] = $player->getName();
+        UltraFaction::getInstance()->getConfiguration()->configurations[Configuration::FACTIONS_PLAYER][$player->getName()] = $id;
     }
 
     public function removeFromFaction(Player $player) {

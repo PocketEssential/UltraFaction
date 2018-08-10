@@ -13,5 +13,16 @@
   "FACTION_LEAVE_LEADER": "You can't leave your own faction! Delete it using /f delete",
   "FACTION_LEAVE_SUCCESSFUL": "You left the faction!",
   "FACTION_LEAVE_MEMBER_BROADCAST": "{PLAYER}'s left the faction!",
-  "MEMBER_ATTACK_MEMBER": "You can't attack {VICTIM} because they're in your faction!"
+  "MEMBER_ATTACK_MEMBER": "You can't attack {VICTIM} because they're in your faction!",
+  "NOT_IN_FACTION_HUD": "Howdy {PLAYER} You're not in a faction!",
+  "IN_FACTION_HUD": "Faction: {FACTION} | Hello! {PLAYER}",
+  "FACTION_INVITE_NOT_LEADER": "Only the leader can invite members!",
+  "FACTION_INVITE_NAME_FORGOT": "You did not tell us whom to invite",
+  "FACTION_INVITE_PLAYER_OFFLINE": "{PLAYER}'s is offline/cannot be found!",
+  "FACTION_INVITE_PLAYER_IN_FACTION": "{PLAYER}'s is already in a faction",
+  "FACTION_INVITE_SUCCESS": "You have invited {PLAYER} to your faction!",
+  "FACTION_INVITE_SUCCESS_PARTY": "You received a faction invitation from {PLAYER}. You can accept it using /f accept",
+  "FACTION_INVITE_NOT_FOUND": "You don't have any faction invites!",
+  "FACTION_INVITE_ACCEPT": "You have successfully joined {PLAYER}'s faction!",
+  "FACTION_INVITE_ACCEPT_BROADCAST": "{PLAYER} joined the faction!"
 }

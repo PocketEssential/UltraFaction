@@ -50,7 +50,7 @@ UltraFaction::getInstance()->getFactionManager()->getFaction($player);
 ```
 
 #### Not quite yet
-We have a bunch of events you can tie so.
+We have a bunch of events you can tie to.
 
 ```php
 // Listen to when someone creates a faction?
