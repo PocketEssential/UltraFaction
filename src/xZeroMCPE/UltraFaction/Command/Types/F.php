@@ -11,9 +11,11 @@ namespace xZeroMCPE\UltraFaction\Command\Types;
 
 use pocketmine\command\CommandSender;
 use pocketmine\Player;
+use pocketmine\utils\TextFormat;
 use xZeroMCPE\UltraFaction\Command\Command;
 use xZeroMCPE\UltraFaction\Faction\Event\FactionCreateEvent;
 use xZeroMCPE\UltraFaction\Faction\Event\FactionDeleteEvent;
+use xZeroMCPE\UltraFaction\Faction\Event\FactionSetHomeEvent;
 use xZeroMCPE\UltraFaction\Faction\Event\MemberLeaveFactionEvent;
 use xZeroMCPE\UltraFaction\UltraFaction;
 
@@ -235,8 +237,29 @@ class F extends Command
                         if (!UltraFaction::getInstance()->getFactionManager()->getFaction($sender)->isLeader($sender)) {
                             $sender->sendMessage(UltraFaction::getInstance()->getLanguage()->getLanguageValue('FACTION_HOME_SET_NOT_LEADER'));
                         } else {
-                            UltraFaction::getInstance()->getFactionManager()->getFaction($sender)->setHome($sender->asVector3());
-                            $sender->sendMessage(UltraFaction::getInstance()->getLanguage()->getLanguageValue('FACTION_HOME_SET_SUCCESS'));
+                            UltraFaction::getInstance()->getServer()->getPluginManager()->callEvent($event = new FactionSetHomeEvent(UltraFaction::getInstance(), $sender, UltraFaction::getInstance()->getFactionManager()->getFaction($sender)));
+
+                            if(!$event->isCancelled()){
+                                UltraFaction::getInstance()->getFactionManager()->getFaction($sender)->setHome($sender->asVector3());
+                                $sender->sendMessage(UltraFaction::getInstance()->getLanguage()->getLanguageValue('FACTION_HOME_SET_SUCCESS'));
+                            }
+                        }
+                    }
+                    break;
+
+                    case "info":
+                    case "information":
+                    if(!UltraFaction::getInstance()->getFactionManager()->isInFaction($sender)){
+                        $sender->sendMessage(UltraFaction::getInstance()->getLanguage()->getLanguageValue('NOT_IN_FACTION'));
+                    } else {
+                        $la = UltraFaction::getInstance()->getLanguage()->getLanguageValueArray("FACTION_INFORMATION");
+
+                        foreach ($la as $i){
+                            $message = str_replace("{LEADER}", UltraFaction::getInstance()->getFactionManager()->getFaction($sender)->getLeader(), $i);
+                            $message = str_replace("{MEMBERS}", count(UltraFaction::getInstance()->getFactionManager()->getFaction($sender)->getMembers()), $message);
+                            $message = str_replace("{POWER}", UltraFaction::getInstance()->getFactionManager()->getFaction($sender)->getPower(), $message);
+                            $message = str_replace("{DESCRIPTION}", UltraFaction::getInstance()->getFactionManager()->getFaction($sender)->getDescription(), $message);
+                            $sender->sendMessage($message);
                         }
                     }
                         break;

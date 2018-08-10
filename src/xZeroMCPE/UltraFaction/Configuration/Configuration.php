@@ -11,6 +11,7 @@ namespace xZeroMCPE\UltraFaction\Configuration;
 
 use pocketmine\utils\TextFormat;
 
+use xZeroMCPE\UltraFaction\Configuration\Provider\Provider;
 use xZeroMCPE\UltraFaction\UltraFaction;
 
 /**
@@ -21,6 +22,8 @@ class Configuration
 {
 
     public $configurations = [];
+
+    public $provider;
 
     const CONFIG = "Config";
     const FACTIONS = "Factions";
@@ -35,6 +38,13 @@ class Configuration
      * @return string
      */
     public function getDataFolder() : string {
+        return UltraFaction::getInstance()->getServer()->getDataPath() . "UltraFaction/";
+    }
+
+    /**
+     * @return string
+     */
+    public static function getDataFolderPath() : string {
         return UltraFaction::getInstance()->getServer()->getDataPath() . "UltraFaction/";
     }
 
@@ -81,6 +91,9 @@ class Configuration
                     ],
                     "Features" => [
                         "Built in HUD" => true,
+                    ],
+                    "Economy" => [
+                        "Hook" => "# Replace this with an Economy plugin name you'd like us to hook to #"
                     ]
             ], JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES));
             file_put_contents($this->getDataFolder() . "Factions.json", json_encode(
@@ -94,15 +107,17 @@ class Configuration
         }
 
         $this->configurations[Configuration::CONFIG] = json_decode(file_get_contents($this->getDataFolder() . "Config.json"), true);
-        $this->configurations[Configuration::FACTIONS] = json_decode(file_get_contents($this->getDataFolder() . "Factions.json"), true);
-        $this->configurations[Configuration::FACTIONS_PLAYER] = json_decode(file_get_contents($this->getDataFolder() . "FactionsID.json"), true);
+        $this->provider = new Provider($this->configurations[Configuration::CONFIG]['Data']['Data Provider']);
+
+        $this->configurations[Configuration::FACTIONS] = $this->getProvider()->getProvider()->getAllFactions();
+        $this->configurations[Configuration::FACTIONS_PLAYER] = $this->getProvider()->getProvider()->getAllFactionsID();
 
         UltraFaction::getInstance()->getLogger()->info(TextFormat::YELLOW ."--------------------------------------");
         UltraFaction::getInstance()->getLogger()->info(TextFormat::DARK_AQUA . "-           ULTRA FACTION             ");
         UltraFaction::getInstance()->getLogger()->info(TextFormat::YELLOW ."-  ");
         UltraFaction::getInstance()->getLogger()->info(TextFormat::YELLOW ."-  " .TextFormat::GOLD . "Language: " . $this->configurations[Configuration::CONFIG]['Data']['Language']);
         UltraFaction::getInstance()->getLogger()->info(TextFormat::YELLOW ."-  " .TextFormat::GOLD . "Loaded a total of: " . count($this->configurations[Configuration::FACTIONS]). " factions!");
-        UltraFaction::getInstance()->getLogger()->info(TextFormat::YELLOW ."-  " .TextFormat::GOLD . "Data Provider: " . $this->configurations[Configuration::CONFIG]['Data']['Data Provider']);
+        UltraFaction::getInstance()->getLogger()->info(TextFormat::YELLOW ."-  " .TextFormat::GOLD . "Data Provider: " . $this->getProvider()->getProviderName());
         UltraFaction::getInstance()->getLogger()->info(TextFormat::YELLOW ."-  " .TextFormat::GOLD . "Enjoy and stay flexing!");
         UltraFaction::getInstance()->getLogger()->info(TextFormat::YELLOW ."--------------------------------------");
     }
@@ -114,11 +129,16 @@ class Configuration
         return $this->configurations[Configuration::CONFIG];
     }
 
+    /**
+     * @return Provider
+     */
+    public function getProvider() : Provider {
+        return $this->provider;
+    }
+
     public function handleShutdown(){
 
-        file_put_contents($this->getDataFolder() . "Config.json", json_encode($this->configurations[Configuration::CONFIG]), JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE);
-        file_put_contents($this->getDataFolder() . "Factions.json", json_encode(UltraFaction::getInstance()->getFactionManager()->getFactionsDump()), JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE);
-        file_put_contents($this->getDataFolder() . "FactionsID.json", json_encode($this->configurations[Configuration::FACTIONS_PLAYER]), JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE);
+        $this->getProvider()->getProvider()->flushData();
         UltraFaction::getInstance()->getLogger()->info(TextFormat::GREEN . "[DATA] Flushed and saved all data!");
     }
 }

@@ -48,11 +48,23 @@ class Language
      * @param string $type
      * @return string
      */
-    public function getLanguageValue(string $type): string {
+    public function getLanguageValue(string $type) : string {
         if(isset($this->language[$type])){
             return $this->language[$type];
         } else {
             return "ERROR_LANGUAGE_NOT_FOUND [{$type}]";
+        }
+    }
+
+    /**
+     * @param string $type
+     * @return array
+     */
+    public function getLanguageValueArray(string $type) :array {
+        if(isset($this->language[$type])){
+            return $this->language[$type];
+        } else {
+            return ["ERROR_LANGUAGE_NOT_FOUND [{$type}]_ARRAY"];
         }
     }
 }

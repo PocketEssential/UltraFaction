@@ -35,5 +35,13 @@
   "FACTION_NO_HOME": "Your faction does not have any homes",
   "FACTION_HOME_SET_NOT_LEADER": "Only the faction leader can set the home!",
   "FACTION_HOME_SET_SUCCESS": "You have successful set the faction home!",
-  "FACTION_HOME_WELCOME": "Welcome to your factions home!"
+  "FACTION_HOME_WELCOME": "Welcome to your factions home!",
+  "FACTION_INFORMATION": [
+    "--------FACTION INFORMATION--------",
+    "Leader: {LEADER}",
+    "Members: {MEMBERS}",
+    "Power: {POWER}",
+    "Description: {DESCRIPTION}",
+    "----------------------------------"
+  ]
 }
