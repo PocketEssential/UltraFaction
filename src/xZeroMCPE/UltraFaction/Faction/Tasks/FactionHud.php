@@ -12,9 +12,16 @@ namespace xZeroMCPE\UltraFaction\Faction\Tasks;
 use pocketmine\scheduler\Task;
 use xZeroMCPE\UltraFaction\UltraFaction;
 
+/**
+ * Class FactionHud
+ * @package xZeroMCPE\UltraFaction\Faction\Tasks
+ */
 class FactionHud extends Task
 {
 
+    /**
+     * @param int $currentTick
+     */
     public function onRun(int $currentTick)
     {
         foreach (UltraFaction::getInstance()->getServer()->getOnlinePlayers() as $player){

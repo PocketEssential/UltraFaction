@@ -17,12 +17,20 @@ use xZeroMCPE\UltraFaction\Faction\Event\FactionDeleteEvent;
 use xZeroMCPE\UltraFaction\Faction\Event\MemberLeaveFactionEvent;
 use xZeroMCPE\UltraFaction\UltraFaction;
 
+/**
+ * Class F
+ * @package xZeroMCPE\UltraFaction\Command\Types
+ */
 class F extends Command
 {
 
     public $plugin;
     public $invites = [];
 
+    /**
+     * F constructor.
+     * @param UltraFaction $plugin
+     */
     public function __construct(UltraFaction $plugin)
     {
         $this->plugin = $plugin;
@@ -30,6 +38,12 @@ class F extends Command
     }
 
 
+    /**
+     * @param CommandSender $sender
+     * @param string $commandLabel
+     * @param array $args
+     * @return bool
+     */
     public function execute(CommandSender $sender, string $commandLabel, array $args): bool
     {
 
@@ -161,6 +175,71 @@ class F extends Command
                             unset($this->invites[$sender->getName()]);
                         }
                         break;
+
+                    case "power":
+                        if(!UltraFaction::getInstance()->getFactionManager()->isInFaction($sender)){
+                            $sender->sendMessage(UltraFaction::getInstance()->getLanguage()->getLanguageValue('NOT_IN_FACTION'));
+                        } else {
+                            $sender->sendMessage(str_replace('{POWER}', UltraFaction::getInstance()->getFactionManager()->getFaction($sender)->getPower(), UltraFaction::getInstance()->getLanguage()->getLanguageValue('FACTION_POWER')));
+                        }
+                        break;
+
+                    case "kick":
+                        if(!UltraFaction::getInstance()->getFactionManager()->isInFaction($sender)){
+                            $sender->sendMessage(UltraFaction::getInstance()->getLanguage()->getLanguageValue('NOT_IN_FACTION'));
+                        } else {
+                            if (!UltraFaction::getInstance()->getFactionManager()->getFaction($sender)->isLeader($sender)) {
+                                $sender->sendMessage(UltraFaction::getInstance()->getLanguage()->getLanguageValue('FACTION_KICK_NOT_LEADER'));
+                            } else {
+                                if (!isset($args[1])) {
+                                    $sender->sendMessage(UltraFaction::getInstance()->getLanguage()->getLanguageValue('FACTION_KICK_NAME_FORGOT'));
+                                } else {
+                                    $player = UltraFaction::getInstance()->getServer()->getPlayer($args[1]);
+
+                                    if($player == null){
+                                        $sender->sendMessage(str_replace("{PLAYER}", $args[1], UltraFaction::getInstance()->getLanguage()->getLanguageValue('FACTION_KICK_PLAYER_OFFLINE')));
+                                    } else {
+                                        if (UltraFaction::getInstance()->getFactionManager()->isInFaction($player)) {
+                                            if(UltraFaction::getInstance()->getFactionManager()->getFaction($player)->getName() !=
+                                                (UltraFaction::getInstance()->getFactionManager()->getFaction($sender))->getName()){
+                                                $sender->sendMessage(str_replace("{PLAYER}", $player->getName(), UltraFaction::getInstance()->getLanguage()->getLanguageValue('FACTION_KICK_PLAYER_NOT_IN_FACTION')));
+                                            } else {
+                                                $sender->sendMessage(str_replace("{PLAYER}", $player->getName(), UltraFaction::getInstance()->getLanguage()->getLanguageValue('FACTION_KICK_SUCCESS')));
+                                                UltraFaction::getInstance()->getFactionManager()->removeFromFaction($player, true);
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        break;
+
+                    case "home":
+                        if(!UltraFaction::getInstance()->getFactionManager()->isInFaction($sender)){
+                            $sender->sendMessage(UltraFaction::getInstance()->getLanguage()->getLanguageValue('NOT_IN_FACTION'));
+                        } else {
+                            if(strlen(UltraFaction::getInstance()->getFactionManager()->getFaction($sender)->getHome()) == 0){
+                                $sender->sendMessage(UltraFaction::getInstance()->getLanguage()->getLanguageValue('FACTION_NO_HOME'));
+                            } else {
+                                UltraFaction::getInstance()->getFactionManager()->getFaction($sender)->teleportToHome($sender);
+                                $sender->sendMessage(UltraFaction::getInstance()->getLanguage()->getLanguageValue('FACTION_HOME_WELCOME'));
+                            }
+                        }
+                        break;
+
+                    case "sethome":
+                    case "homeset":
+                    if(!UltraFaction::getInstance()->getFactionManager()->isInFaction($sender)){
+                        $sender->sendMessage(UltraFaction::getInstance()->getLanguage()->getLanguageValue('NOT_IN_FACTION'));
+                    } else {
+                        if (!UltraFaction::getInstance()->getFactionManager()->getFaction($sender)->isLeader($sender)) {
+                            $sender->sendMessage(UltraFaction::getInstance()->getLanguage()->getLanguageValue('FACTION_HOME_SET_NOT_LEADER'));
+                        } else {
+                            UltraFaction::getInstance()->getFactionManager()->getFaction($sender)->setHome($sender->asVector3());
+                            $sender->sendMessage(UltraFaction::getInstance()->getLanguage()->getLanguageValue('FACTION_HOME_SET_SUCCESS'));
+                        }
+                    }
+                        break;
                 }
             }
         } else {
@@ -169,6 +248,9 @@ class F extends Command
         return true;
     }
 
+    /**
+     * @param Player $player
+     */
     public function sendHelp(Player $player){
 
         $help = [

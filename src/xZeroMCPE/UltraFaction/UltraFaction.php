@@ -29,6 +29,10 @@ use xZeroMCPE\UltraFaction\Configuration\Configuration;
 use xZeroMCPE\UltraFaction\Configuration\Language\Language;
 use xZeroMCPE\UltraFaction\Faction\FactionManager;
 
+/**
+ * Class UltraFaction
+ * @package xZeroMCPE\UltraFaction
+ */
 class UltraFaction extends PluginBase
 {
 
@@ -48,6 +52,9 @@ class UltraFaction extends PluginBase
         }
     }
 
+    /**
+     * @return UltraFaction
+     */
     public static function getInstance() : UltraFaction {
         return self::$instance;
     }
@@ -64,14 +71,23 @@ class UltraFaction extends PluginBase
         ]);
     }
 
+    /**
+     * @return Configuration
+     */
     public function getConfiguration() : Configuration {
         return $this->components['Configuration'];
     }
 
+    /**
+     * @return Language
+     */
     public function getLanguage() : Language {
         return $this->components['Language'];
     }
 
+    /**
+     * @return FactionManager
+     */
     public function getFactionManager() : FactionManager{
         return $this->components['FactionManager'];
     }

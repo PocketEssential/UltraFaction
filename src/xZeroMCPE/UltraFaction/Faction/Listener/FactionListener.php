@@ -16,9 +16,16 @@ use pocketmine\Player;
 use xZeroMCPE\UltraFaction\Faction\Event\FactionMemberAttackMemberEvent;
 use xZeroMCPE\UltraFaction\UltraFaction;
 
+/**
+ * Class FactionListener
+ * @package xZeroMCPE\UltraFaction\Faction\Listener
+ */
 class FactionListener implements Listener
 {
 
+    /**
+     * @param EntityDamageEvent $event
+     */
     public function onDamage(EntityDamageEvent $event)
     {
 

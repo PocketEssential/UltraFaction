@@ -24,5 +24,16 @@
   "FACTION_INVITE_SUCCESS_PARTY": "You received a faction invitation from {PLAYER}. You can accept it using /f accept",
   "FACTION_INVITE_NOT_FOUND": "You don't have any faction invites!",
   "FACTION_INVITE_ACCEPT": "You have successfully joined {PLAYER}'s faction!",
-  "FACTION_INVITE_ACCEPT_BROADCAST": "{PLAYER} joined the faction!"
+  "FACTION_INVITE_ACCEPT_BROADCAST": "{PLAYER} joined the faction!",
+  "FACTION_POWER": "Your faction power is {POWER}",
+  "FACTION_KICK_NOT_LEADER": "Only the faction leader can kick members!",
+  "FACTION_KICK_NAME_FORGOT": "You didn't tell us who to kick!",
+  "FACTION_KICK_PLAYER_OFFLINE": "We can't find {PLAYER} because they're offline!",
+  "FACTION_KICK_PLAYER_NOT_IN_FACTION": "That player is not in your faction",
+  "FACTION_KICK_SUCCESS": "You have successfully kicked {PLAYER} from your faction!",
+  "FACTION_KICKED_MEMBER_BROADCAST": "{PLAYER} got kicked off the faction!",
+  "FACTION_NO_HOME": "Your faction does not have any homes",
+  "FACTION_HOME_SET_NOT_LEADER": "Only the faction leader can set the home!",
+  "FACTION_HOME_SET_SUCCESS": "You have successful set the faction home!",
+  "FACTION_HOME_WELCOME": "Welcome to your factions home!"
 }

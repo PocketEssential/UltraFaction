@@ -11,6 +11,10 @@ namespace xZeroMCPE\UltraFaction\Configuration\Language;
 
 use xZeroMCPE\UltraFaction\UltraFaction;
 
+/**
+ * Class Language
+ * @package xZeroMCPE\UltraFaction\Configuration\Language
+ */
 class Language
 {
 
@@ -24,6 +28,12 @@ class Language
 
     public function loadLanguage(){
 
+        if(!file_exists(UltraFaction::getInstance()->getConfiguration()->getDataFolder() . "Languages/")){
+            @mkdir(UltraFaction::getInstance()->getConfiguration()->getDataFolder() . "Languages");
+            file_put_contents(UltraFaction::getInstance()->getConfiguration()->getDataFolder() . "Languages/" . "eng.json", file_get_contents(__DIR__ . "/Defaults/eng.json"));
+        }
+
+
         $language = UltraFaction::getInstance()->getConfiguration()->getConfig()['Data']['Language'];
 
         if(!file_exists(UltraFaction::getInstance()->getConfiguration()->getDataFolder() . "Languages/". $language . ".json")){
@@ -34,6 +44,10 @@ class Language
         }
     }
 
+    /**
+     * @param string $type
+     * @return string
+     */
     public function getLanguageValue(string $type): string {
         if(isset($this->language[$type])){
             return $this->language[$type];

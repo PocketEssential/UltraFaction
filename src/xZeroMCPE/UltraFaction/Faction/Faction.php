@@ -9,9 +9,14 @@
 namespace xZeroMCPE\UltraFaction\Faction;
 
 
+use pocketmine\math\Vector3;
 use pocketmine\Player;
 use xZeroMCPE\UltraFaction\UltraFaction;
 
+/**
+ * Class Faction
+ * @package xZeroMCPE\UltraFaction\Faction
+ */
 class Faction
 {
 
@@ -24,8 +29,22 @@ class Faction
     public $power;
     public $bank;
     public $warps;
+    public $home;
 
-    public function __construct(string $leader, string $id, string $name, string $description, array $members, array $claims, int $power, int $bank, array $warps)
+    /**
+     * Faction constructor.
+     * @param string $leader
+     * @param string $id
+     * @param string $name
+     * @param string $description
+     * @param array $members
+     * @param array $claims
+     * @param int $power
+     * @param int $bank
+     * @param array $warps
+     * @param string $home
+     */
+    public function __construct(string $leader, string $id, string $name, string $description, array $members, array $claims, int $power, int $bank, array $warps, string $home)
     {
         $this->leader = $leader;
         $this->id = $id;
@@ -36,32 +55,56 @@ class Faction
         $this->power = $power;
         $this->bank = $bank;
         $this->warps = $warps;
+        $this->home = $home;
     }
 
+    /**
+     * @return string
+     */
     public function getLeader() : string {
         return $this->leader;
     }
 
+    /**
+     * @param Player $player
+     * @return bool
+     */
     public function isLeader(Player $player) : bool {
         return $this->leader == $player->getName() ? true : false;
     }
 
+    /**
+     * @return string
+     */
     public function getID() : string {
         return $this->id;
     }
 
+    /**
+     * @return string
+     */
     public function getName() : string {
         return $this->name;
     }
 
+    /**
+     * @return string
+     */
     public function getDescription() : string {
         return $this->description;
     }
 
+    /**
+     * @param string $description
+     */
     public function setDescription(string $description) : void {
         $this->description = $description;
     }
 
+    /**
+     * @param bool $includeLeader
+     * @return array
+     */
     public function getMembers($includeLeader = false) : array {
         if(!$includeLeader){
             return $this->members;
@@ -70,22 +113,60 @@ class Faction
         }
     }
 
+    /**
+     * @return array
+     */
     public function getClaims() : array {
         return $this->claims;
     }
 
+    /**
+     * @return int
+     */
     public function getPower() : int {
         return $this->power;
     }
 
+    /**
+     * @return int
+     */
     public function getBank() : int {
         return $this->bank;
     }
 
+    /**
+     * @return array
+     */
     public function getWarps() : array {
         return $this->warps;
     }
 
+    /**
+     * @return string
+     */
+    public function getHome() : string {
+        return $this->home;
+    }
+
+    /**
+     * @param Vector3 $vector3
+     */
+    public function setHome(Vector3 $vector3) : void {
+        $this->home = $vector3->getX() . ":" . $vector3->getY() . ":" . $vector3->getZ();
+    }
+
+    /**
+     * @param Player $player
+     */
+    public function teleportToHome(Player $player) : void {
+        $home = explode(":", $this->getHome());
+        $player->teleport(new Vector3((int) $home[0], (int) $home[1], (int) $home[2]));
+    }
+
+    /**
+     * @param $type
+     * @param array $extra
+     */
     public function broadcastMessage($type, $extra = []) : void{
 
         switch($type){
@@ -95,7 +176,11 @@ class Faction
                     if ($m != $extra['Extra']) {
                         $player = UltraFaction::getInstance()->getServer()->getPlayerExact($m);
                         if($player != null){
-                            $message = str_replace("{PLAYER}", $extra['Extra'], UltraFaction::getInstance()->getLanguage()->getLanguageValue("FACTION_LEAVE_SUCCESSFUL"));
+                           if($extra['isKicked']){
+                               $message = str_replace("{PLAYER}", $extra['Extra'], UltraFaction::getInstance()->getLanguage()->getLanguageValue("FACTION_KICKED_MEMBER_BROADCAST"));
+                           } else {
+                               $message = str_replace("{PLAYER}", $extra['Extra'], UltraFaction::getInstance()->getLanguage()->getLanguageValue("FACTION_LEAVE_SUCCESSFUL"));
+                           }
                             $player->sendMessage($message);
                         }
                     }
@@ -116,6 +201,9 @@ class Faction
         }
     }
 
+    /**
+     * @return array
+     */
     public function getFlushData() : array {
         return [
             "Leader" => $this->leader,
@@ -126,7 +214,8 @@ class Faction
             "Claims" => $this->claims,
             "Power" => $this->power,
             "Bank" => $this->bank,
-            "Warps" => $this->warps
+            "Warps" => $this->warps,
+            "Home" => $this->home
         ];
     }
 }

@@ -10,9 +10,13 @@ namespace xZeroMCPE\UltraFaction\Configuration;
 
 
 use pocketmine\utils\TextFormat;
-use xZeroMCPE\UltraFaction\Configuration\Language\Language;
+
 use xZeroMCPE\UltraFaction\UltraFaction;
 
+/**
+ * Class Configuration
+ * @package xZeroMCPE\UltraFaction\Configuration
+ */
 class Configuration
 {
 
@@ -27,6 +31,9 @@ class Configuration
         $this->loadConfiguration();
     }
 
+    /**
+     * @return string
+     */
     public function getDataFolder() : string {
         return UltraFaction::getInstance()->getServer()->getDataPath() . "UltraFaction/";
     }
@@ -54,7 +61,7 @@ class Configuration
                             "Friendly fire" => false,
                         ],
                         "Max faction claim" => 4,
-                        "Disallow commands while in enemeny Territory" => [
+                        "Disallow commands while in enemy Territory" => [
                             '/spawn',
                             '/home',
                             '/tpa',
@@ -62,6 +69,10 @@ class Configuration
                             '/homes',
                             '/tpall',
                             '/warp'
+                        ],
+                        "Power System" => [
+                            'Power gained per kill' => 4,
+                            'Power loss per death' => 4,
                         ]
                     ],
                     "Data" => [
@@ -82,11 +93,6 @@ class Configuration
             ), JSON_PRETTY_PRINT|JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_UNICODE);
         }
 
-        if(!file_exists($this->getDataFolder() . "Languages/")){
-            @mkdir($this->getDataFolder() . "Languages");
-            file_put_contents($this->getDataFolder() . "Languages/" . "eng.json", file_get_contents(__DIR__ . "/Language/Defaults/eng.json"));
-        }
-
         $this->configurations[Configuration::CONFIG] = json_decode(file_get_contents($this->getDataFolder() . "Config.json"), true);
         $this->configurations[Configuration::FACTIONS] = json_decode(file_get_contents($this->getDataFolder() . "Factions.json"), true);
         $this->configurations[Configuration::FACTIONS_PLAYER] = json_decode(file_get_contents($this->getDataFolder() . "FactionsID.json"), true);
@@ -96,10 +102,14 @@ class Configuration
         UltraFaction::getInstance()->getLogger()->info(TextFormat::YELLOW ."-  ");
         UltraFaction::getInstance()->getLogger()->info(TextFormat::YELLOW ."-  " .TextFormat::GOLD . "Language: " . $this->configurations[Configuration::CONFIG]['Data']['Language']);
         UltraFaction::getInstance()->getLogger()->info(TextFormat::YELLOW ."-  " .TextFormat::GOLD . "Loaded a total of: " . count($this->configurations[Configuration::FACTIONS]). " factions!");
+        UltraFaction::getInstance()->getLogger()->info(TextFormat::YELLOW ."-  " .TextFormat::GOLD . "Data Provider: " . $this->configurations[Configuration::CONFIG]['Data']['Data Provider']);
         UltraFaction::getInstance()->getLogger()->info(TextFormat::YELLOW ."-  " .TextFormat::GOLD . "Enjoy and stay flexing!");
         UltraFaction::getInstance()->getLogger()->info(TextFormat::YELLOW ."--------------------------------------");
     }
 
+    /**
+     * @return mixed
+     */
     public function getConfig() {
         return $this->configurations[Configuration::CONFIG];
     }
