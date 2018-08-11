@@ -45,6 +45,7 @@
     "Power: {POWER}/{MAX_POWER}",
     "Description: {DESCRIPTION}",
     "Open: {OPEN}",
+    "Your Role: {ROLE}",
     "----------------------------------"
   ],
   "FACTION_HELP": [

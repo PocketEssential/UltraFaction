@@ -70,22 +70,24 @@ class F extends Command
                         if(UltraFaction::getInstance()->getFactionManager()->isInFaction($sender)){
                             $sender->sendMessage(UltraFaction::getInstance()->getLanguage()->getLanguageValue('IN_FACTION'));
                         } else {
-                            if(!isset($args[1])){
+                            if (!isset($args[1])) {
                                 $sender->sendMessage(UltraFaction::getInstance()->getLanguage()->getLanguageValue('FACTION_CREATION_NAME_FORGOT'));
                             } else {
-                                if(strlen($args[1]) > UltraFaction::getInstance()->getConfiguration()->getConfig()['Faction']['Maximum faction name']){
+                                if (strlen($args[1]) > UltraFaction::getInstance()->getConfiguration()->getConfig()['Faction']['Maximum faction name']) {
                                     $lag = str_replace("{MAX_CHAR}", UltraFaction::getInstance()->getConfiguration()->getConfig()['Faction']['Maximum faction name'], UltraFaction::getInstance()->getLanguage()->getLanguageValue('FACTION_CREATION_MAX_NAME'));
                                     $sender->sendMessage($lag);
                                 } else {
                                     $description = isset($args[2]) ? $args[2] : UltraFaction::getInstance()->getLanguage()->getLanguageValue("DEFAULT_FACTION_DESCRIPTION");
-                                     UltraFaction::getInstance()->getServer()->getPluginManager()->callEvent($event = new FactionCreateEvent(UltraFaction::getInstance(), $sender, $args[1], $description));
+                                    UltraFaction::getInstance()->getServer()->getPluginManager()->callEvent($event = new FactionCreateEvent(UltraFaction::getInstance(), $sender, $args[1], $description));
 
-                                   if(!$event->isCancelled()){
-                                       UltraFaction::getInstance()->getFactionManager()->createFaction($sender, $args[1], $description);
-                                       $lag = str_replace(['{NAME}', '{DESCRIPTION}'], [$args[1], $description], UltraFaction::getInstance()->getLanguage()->getLanguageValue('FACTION_CREATION'));
-                                       $sender->sendMessage($lag);
-                                       $sender->getServer()->broadcastMessage(str_replace(['{PLAYER}', '{FACTION}', '{DESCRIPTION}'], [$sender->getName(), $args[1], $description], UltraFaction::getInstance()->getLanguage()->getLanguageValue('FACTION_CREATION_BROADCAST')));
-                                   }
+                                    if (!$event->isCancelled()) {
+                                        UltraFaction::getInstance()->getFactionManager()->createFaction($sender, $args[1], $description);
+                                        $lag = str_replace(['{NAME}', '{DESCRIPTION}'], [$args[1], $description], UltraFaction::getInstance()->getLanguage()->getLanguageValue('FACTION_CREATION'));
+                                        $sender->sendMessage($lag);
+                                        if (UltraFaction::getInstance()->getConfiguration()->getConfig()['Faction']['Broadcast faction creation']) {
+                                            $sender->getServer()->broadcastMessage(str_replace(['{PLAYER}', '{FACTION}', '{DESCRIPTION}'], [$sender->getName(), $args[1], $description], UltraFaction::getInstance()->getLanguage()->getLanguageValue('FACTION_CREATION_BROADCAST')));
+                                        }
+                                    }
                                 }
                             }
                         }
@@ -275,6 +277,7 @@ class F extends Command
                             $message = str_replace("{MAX_POWER}", UltraFaction::getInstance()->getConfiguration()->getConfig()['Faction']['Max amount of power'], $message);
                             $message = str_replace("{DESCRIPTION}", UltraFaction::getInstance()->getFactionManager()->getFaction($sender)->getDescription(), $message);
                             $message = str_replace("{OPEN}", UltraFaction::getInstance()->getFactionManager()->getFaction($sender)->isOpen() ? "Yes" : "No", $message);
+                            $message = str_replace("{ROLE}", UltraFaction::getInstance()->getFactionManager()->getFaction($sender)->getRole($sender), $message);
                             $sender->sendMessage($message);
                         }
                     }
@@ -350,9 +353,7 @@ class F extends Command
                                             $sender->sendMessage(UltraFaction::getInstance()->getLanguage()->getLanguageValue('FACTION_JOIN_NOT_OPEN'));
                                         } else {
                                             UltraFaction::getInstance()->getFactionManager()->addToFaction($sender, UltraFaction::getInstance()->getFactionManager()->getFaction($player)->getID());
-                                            if(UltraFaction::getInstance()->getConfiguration()->getConfig()['Faction']['Broadcast faction creation']){
-                                                $sender->sendMessage(str_replace("{FACTION}", UltraFaction::getInstance()->getFactionManager()->getFaction($player)->getName(), UltraFaction::getInstance()->getLanguage()->getLanguageValue('FACTION_JOIN_SUCCESS')));
-                                            }
+                                            $sender->sendMessage(str_replace("{FACTION}", UltraFaction::getInstance()->getFactionManager()->getFaction($player)->getName(), UltraFaction::getInstance()->getLanguage()->getLanguageValue('FACTION_JOIN_SUCCESS')));
                                         }
                                     }
                                 }
@@ -412,6 +413,7 @@ class F extends Command
                         break;
 
                     case "promote":
+                    case "demote":
                         if(!UltraFaction::getInstance()->getFactionManager()->isInFaction($sender)){
                             $sender->sendMessage(UltraFaction::getInstance()->getLanguage()->getLanguageValue('NOT_IN_FACTION'));
                         } else {

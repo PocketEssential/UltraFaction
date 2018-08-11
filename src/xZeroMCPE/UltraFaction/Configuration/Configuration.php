@@ -67,7 +67,7 @@ class Configuration
                         "### 0 = Disable, >= 1 (deaths until raidable, hehe)",
                         "Deaths until raidable" => 0,
                         "Damage" => [
-                            "Friendly fire" => false,
+                            "Friendly Fire" => false,
                         ],
                         "Max Claims" => 4,
                         "Claim Size" => "24",
