@@ -11,6 +11,7 @@ namespace xZeroMCPE\UltraFaction\Faction\Event;
 
 use pocketmine\Player;
 use pocketmine\plugin\Plugin;
+use xZeroMCPE\UltraFaction\Faction\Faction;
 
 /**
  * Class FactionMemberAttackMemberEvent
@@ -30,7 +31,7 @@ class FactionMemberAttackMemberEvent extends FactionEvent
      * @param $faction
      * @param $victim
      */
-    public function __construct(Plugin $plugin, $player, $faction, $victim)
+    public function __construct(Plugin $plugin, Player $player, Faction $faction, Player $victim)
     {
         parent::__construct($plugin, $player, $faction);
         $this->victim = $victim;

@@ -69,7 +69,8 @@ class Configuration
                         "Damage" => [
                             "Friendly fire" => false,
                         ],
-                        "Max faction claim" => 4,
+                        "Max Claims" => 4,
+                        "Claim Size" => "24",
                         "Disallow commands while in enemy Territory" => [
                             '/spawn',
                             '/home',
@@ -82,7 +83,8 @@ class Configuration
                         "Power System" => [
                             'Power gained per kill' => 4,
                             'Power loss per death' => 4,
-                        ]
+                        ],
+                        "Broadcast faction creation" => true,
                     ],
                     "Data" => [
                         "--------->" => "You can choose from: json, yaml",

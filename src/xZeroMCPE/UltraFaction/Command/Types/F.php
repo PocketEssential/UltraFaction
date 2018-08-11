@@ -13,12 +13,16 @@ use pocketmine\command\CommandSender;
 use pocketmine\Player;
 use xZeroMCPE\UltraFaction\Command\Command;
 use xZeroMCPE\UltraFaction\Faction\Event\FactionChatEvent;
+use xZeroMCPE\UltraFaction\Faction\Event\FactionClaimEvent;
 use xZeroMCPE\UltraFaction\Faction\Event\FactionCreateEvent;
 use xZeroMCPE\UltraFaction\Faction\Event\FactionDeleteEvent;
+use xZeroMCPE\UltraFaction\Faction\Event\FactionPromoteEvent;
 use xZeroMCPE\UltraFaction\Faction\Event\FactionSetHomeEvent;
 use xZeroMCPE\UltraFaction\Faction\Event\FactionStatusChangeEvent;
+use xZeroMCPE\UltraFaction\Faction\Event\FactionUnclaimEvent;
 use xZeroMCPE\UltraFaction\Faction\Event\MemberLeaveFactionEvent;
 use xZeroMCPE\UltraFaction\UltraFaction;
+use xZeroMCPE\UltraFaction\Utils\Role;
 
 /**
  * Class F
@@ -80,6 +84,7 @@ class F extends Command
                                        UltraFaction::getInstance()->getFactionManager()->createFaction($sender, $args[1], $description);
                                        $lag = str_replace(['{NAME}', '{DESCRIPTION}'], [$args[1], $description], UltraFaction::getInstance()->getLanguage()->getLanguageValue('FACTION_CREATION'));
                                        $sender->sendMessage($lag);
+                                       $sender->getServer()->broadcastMessage(str_replace(['{PLAYER}', '{FACTION}', '{DESCRIPTION}'], [$sender->getName(), $args[1], $description], UltraFaction::getInstance()->getLanguage()->getLanguageValue('FACTION_CREATION_BROADCAST')));
                                    }
                                 }
                             }
@@ -163,7 +168,7 @@ class F extends Command
                                             $sender->sendMessage(str_replace("{PLAYER}", $player->getName(), UltraFaction::getInstance()->getLanguage()->getLanguageValue('FACTION_INVITE_PLAYER_IN_FACTION')));
                                         } else {
                                             $sender->sendMessage(str_replace("{PLAYER}", $player->getName(), UltraFaction::getInstance()->getLanguage()->getLanguageValue('FACTION_INVITE_SUCCESS')));
-                                            $sender->sendMessage(str_replace(["{PLAYER}", "{FACTION}"], [$sender->getName(), UltraFaction::getInstance()->getFactionManager()->getFaction($sender)->getName()], UltraFaction::getInstance()->getLanguage()->getLanguageValue('FACTION_INVITE_SUCCESS_PARTY')));
+                                            $player->sendMessage(str_replace(["{PLAYER}", "{FACTION}"], [$sender->getName(), UltraFaction::getInstance()->getFactionManager()->getFaction($sender)->getName()], UltraFaction::getInstance()->getLanguage()->getLanguageValue('FACTION_INVITE_SUCCESS_PARTY')));
                                             $this->invites[$player->getName()] = UltraFaction::getInstance()->getFactionManager()->getFaction($sender)->getID();
                                         }
                                     }
@@ -265,7 +270,7 @@ class F extends Command
 
                         foreach ($la as $i){
                             $message = str_replace("{LEADER}", UltraFaction::getInstance()->getFactionManager()->getFaction($sender)->getLeader(), $i);
-                            $message = str_replace("{MEMBERS}", count(UltraFaction::getInstance()->getFactionManager()->getFaction($sender)->getMembers()), $message);
+                            $message = str_replace("{MEMBERS}", count(UltraFaction::getInstance()->getFactionManager()->getFaction($sender)->getMembers()) + 1, $message);
                             $message = str_replace("{POWER}", UltraFaction::getInstance()->getFactionManager()->getFaction($sender)->getPower(), $message);
                             $message = str_replace("{MAX_POWER}", UltraFaction::getInstance()->getConfiguration()->getConfig()['Faction']['Max amount of power'], $message);
                             $message = str_replace("{DESCRIPTION}", UltraFaction::getInstance()->getFactionManager()->getFaction($sender)->getDescription(), $message);
@@ -312,7 +317,6 @@ class F extends Command
                         if (!UltraFaction::getInstance()->getFactionManager()->getFaction($sender)->isLeader($sender)) {
                             $sender->sendMessage(UltraFaction::getInstance()->getLanguage()->getLanguageValue('FACTION_SET_OPEN_NOT_LEADER'));
                         } else {
-
                             UltraFaction::getInstance()->getServer()->getPluginManager()->callEvent($event = new FactionStatusChangeEvent(UltraFaction::getInstance(),
                              $sender, UltraFaction::getInstance()->getFactionManager()->getFaction($sender), UltraFaction::getInstance()->getFactionManager()->getFaction($sender)
                              ->isOpen() ? FactionStatusChangeEvent::STATUS_FACTION_OPEN : FactionStatusChangeEvent::STATUS_FACTION_CLOSE));
@@ -346,7 +350,104 @@ class F extends Command
                                             $sender->sendMessage(UltraFaction::getInstance()->getLanguage()->getLanguageValue('FACTION_JOIN_NOT_OPEN'));
                                         } else {
                                             UltraFaction::getInstance()->getFactionManager()->addToFaction($sender, UltraFaction::getInstance()->getFactionManager()->getFaction($player)->getID());
-                                            $sender->sendMessage(str_replace("{FACTION}", UltraFaction::getInstance()->getFactionManager()->getFaction($player)->getName(), UltraFaction::getInstance()->getLanguage()->getLanguageValue('FACTION_JOIN_SUCCESS')));
+                                            if(UltraFaction::getInstance()->getConfiguration()->getConfig()['Faction']['Broadcast faction creation']){
+                                                $sender->sendMessage(str_replace("{FACTION}", UltraFaction::getInstance()->getFactionManager()->getFaction($player)->getName(), UltraFaction::getInstance()->getLanguage()->getLanguageValue('FACTION_JOIN_SUCCESS')));
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        break;
+
+                    case "claim":
+                        if(!UltraFaction::getInstance()->getFactionManager()->isInFaction($sender)){
+                            $sender->sendMessage(UltraFaction::getInstance()->getLanguage()->getLanguageValue('NOT_IN_FACTION'));
+                        } else {
+                            if (!UltraFaction::getInstance()->getFactionManager()->getFaction($sender)->isLeader($sender)) {
+                                $sender->sendMessage(UltraFaction::getInstance()->getLanguage()->getLanguageValue('FACTION_CLAIM_NOT_LEADER'));
+                            } else {
+                                if (count(UltraFaction::getInstance()->getFactionManager()->getFaction($sender)->getClaims()) ==
+                                    UltraFaction::getInstance()->getConfiguration()->getConfig()['Faction']['Max Claims']) {
+                                    $sender->sendMessage(str_replace("{MAX_CLAIM}", UltraFaction::getInstance()->getConfiguration()->getConfig()['Faction']['Max Claims'], UltraFaction::getInstance()->getLanguage()->getLanguageValue('FACTION_MAX_CLAIM_REACHED')));
+                                } else {
+                                    UltraFaction::getInstance()->getServer()->getPluginManager()->callEvent($event = new FactionClaimEvent(UltraFaction::getInstance(),
+                                        $sender, UltraFaction::getInstance()->getFactionManager()->getFaction($sender), $sender->asVector3()));
+
+                                    if(!$event->isCancelled()){
+                                        UltraFaction::getInstance()->getFactionManager()->getFaction($sender)->addClaim($event->getClaim());
+                                        $sender->sendMessage(UltraFaction::getInstance()->getLanguage()->getLanguageValue('FACTION_CLAIM_SUCCESS'));
+                                    }
+                                }
+                            }
+                        }
+                        break;
+
+                    case "unclaim":
+                        if(!UltraFaction::getInstance()->getFactionManager()->isInFaction($sender)){
+                            $sender->sendMessage(UltraFaction::getInstance()->getLanguage()->getLanguageValue('NOT_IN_FACTION'));
+                        } else {
+                            if (!UltraFaction::getInstance()->getFactionManager()->getFaction($sender)->isLeader($sender)) {
+                                $sender->sendMessage(UltraFaction::getInstance()->getLanguage()->getLanguageValue('FACTION_UNCLAIM_NOT_LEADER'));
+                            } else {
+                                if (count(UltraFaction::getInstance()->getFactionManager()->getFaction($sender)->getClaims()) == 0) {
+                                    $sender->sendMessage(UltraFaction::getInstance()->getLanguage()->getLanguageValue('FACTION_UNCLAIM_NO_CLAIM'));
+                                } else {
+
+                                    $claim = isset($args[1]) ? is_int($args[1]) ? 0 : $args[1] : 0;
+                                    if(!isset(UltraFaction::getInstance()->getFactionManager()->getFaction($sender)->claims[$claim])){
+                                        $sender->sendMessage(UltraFaction::getInstance()->getLanguage()->getLanguageValue('FACTION_UNCLAIM_CLAIM_NOT_FOUND'));
+                                    } else {
+                                        UltraFaction::getInstance()->getServer()->getPluginManager()->callEvent($event = new FactionUnclaimEvent(UltraFaction::getInstance(),
+                                            $sender, UltraFaction::getInstance()->getFactionManager()->getFaction($sender), $sender->asVector3()));
+
+                                        if(!$event->isCancelled()){
+                                            UltraFaction::getInstance()->getFactionManager()->getFaction($sender)->removeClaim($claim);
+                                            $sender->sendMessage(str_replace("{CLAIM_ID}", $claim, UltraFaction::getInstance()->getLanguage()->getLanguageValue('FACTION_UNCLAIM_SUCCESS')));
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        break;
+
+                    case "promote":
+                        if(!UltraFaction::getInstance()->getFactionManager()->isInFaction($sender)){
+                            $sender->sendMessage(UltraFaction::getInstance()->getLanguage()->getLanguageValue('NOT_IN_FACTION'));
+                        } else {
+                            if(!UltraFaction::getInstance()->getFactionManager()->getFaction($sender)->isLeader($sender)){
+                                $sender->sendMessage(UltraFaction::getInstance()->getLanguage()->getLanguageValue('FACTION_PROMOTE_NOT_LEADER'));
+                            } else {
+                                if (!isset($args[1])) {
+                                    $sender->sendMessage(UltraFaction::getInstance()->getLanguage()->getLanguageValue('FACTION_PROMOTE_FORGOT_NAME'));
+                                } else {
+                                    $player = UltraFaction::getInstance()->getServer()->getPlayer($args[1]);
+
+                                    if ($player == null) {
+                                        $sender->sendMessage(str_replace("{PLAYER}", $args[1], UltraFaction::getInstance()->getLanguage()->getLanguageValue('FACTION_PROMOTE_NOT_FOUND')));
+                                    } else {
+                                        if (!UltraFaction::getInstance()->getFactionManager()->isInFaction($player)) {
+                                            $sender->sendMessage(str_replace("{PLAYER}", $player->getName(), UltraFaction::getInstance()->getLanguage()->getLanguageValue('FACTION_PROMOTE_PLAYER_NOT_IN_FACTION_ELSE')));
+                                        } else {
+                                            if(UltraFaction::getInstance()->getFactionManager()->getFaction($player)->getName() !=
+                                              (UltraFaction::getInstance()->getFactionManager()->getFaction($sender)->getName())){
+                                                $sender->sendMessage(str_replace("{PLAYER}", $player->getName(), UltraFaction::getInstance()->getLanguage()->getLanguageValue('FACTION_PROMOTE_PLAYER_NOT_IN_FACTION_ELSE')));
+                                            } else {
+                                                if(UltraFaction::getInstance()->getFactionManager()->getFaction($player)->isLeader($player)){
+                                                    $sender->sendMessage(str_replace("{PLAYER}", $player->getName(), UltraFaction::getInstance()->getLanguage()->getLanguageValue('FACTION_PROMOTE_CANNOT_PROMOTE_LEADER')));
+                                                } else {
+                                                    $faction = UltraFaction::getInstance()->getFactionManager()->getFaction($sender);
+                                                    $role = $faction->getRole($player);
+                                                    $newRole = $faction->getRole($player) == Role::MEMBER ? Role::OFFICER : Role::MEMBER or $faction->getRole($player) == Role::OFFICER ? Role::MEMBER : Role::OFFICER;
+
+                                                    UltraFaction::getInstance()->getServer()->getPluginManager()->callEvent($event = new FactionPromoteEvent(UltraFaction::getInstance(), $player, $faction, $role, $newRole));
+
+                                                    if(!$event->isCancelled()){
+                                                        $faction->setRole($player);
+                                                        $sender->sendMessage(str_replace(['{PLAYER}', '{ROLE}', '{OLD_ROLE}'], [$player->getName(), $newRole, $role], UltraFaction::getInstance()->getLanguage()->getLanguageValue('FACTION_PROMOTE_SUCCESSFUL')));
+                                                    }
+                                                }
+                                            }
                                         }
                                     }
                                 }

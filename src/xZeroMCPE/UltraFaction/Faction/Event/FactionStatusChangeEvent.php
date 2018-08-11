@@ -9,7 +9,9 @@
 namespace xZeroMCPE\UltraFaction\Faction\Event;
 
 
+use pocketmine\Player;
 use pocketmine\plugin\Plugin;
+use xZeroMCPE\UltraFaction\Faction\Faction;
 
 /**
  * Class FactionStatusChangeEvent
@@ -30,7 +32,7 @@ class FactionStatusChangeEvent extends FactionEvent
      * @param $faction
      * @param int $status
      */
-    public function __construct(Plugin $plugin, $player, $faction, int $status)
+    public function __construct(Plugin $plugin, Player $player, Faction $faction, int $status)
     {
         parent::__construct($plugin, $player, $faction);
         $this->status = $status;

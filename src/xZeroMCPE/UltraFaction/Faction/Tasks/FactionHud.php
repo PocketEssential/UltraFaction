@@ -29,11 +29,18 @@ class FactionHud extends Task
                 $faction = UltraFaction::getInstance()->getFactionManager()->getFaction($player);
                 $message = str_replace("{PLAYER}", $player->getName(), UltraFaction::getInstance()->getLanguage()->getLanguageValue('IN_FACTION_HUD'));
                 $message = str_replace("{FACTION}", $faction->getName(), $message);
+                $message = str_replace("{FACTION_OPEN_STATUS}", $faction->isOpen() ? "Yes" : "No", $message);
+                $message = str_replace("{UUID}", $player->getXuid(), $message);
+                $message = str_replace("{HEALTH}", $player->getHealth(), $message);
+                $message = str_replace("{HUNGER}", $player->getFood(), $message);
                 $message = str_replace("{FACTION_POWER}", $faction->getPower(), $message);
                 $message = str_replace("{FACTION_DESCRIPTION}", $faction->getDescription(), $message);
                 $player->sendTip($message);
             } else {
                 $message = str_replace("{PLAYER}", $player->getName(), UltraFaction::getInstance()->getLanguage()->getLanguageValue('NOT_IN_FACTION_HUD'));
+                $message = str_replace("{UUID}", $player->getXuid(), $message);
+                $message = str_replace("{HEALTH}", $player->getHealth(), $message);
+                $message = str_replace("{HUNGER}", $player->getFood(), $message);
                 $player->sendTip($message);
             }
         }

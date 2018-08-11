@@ -33,7 +33,7 @@ class FactionEvent extends PluginEvent implements Cancellable
      * @param $player
      * @param $faction
      */
-    public function __construct(Plugin $plugin, $player, $faction)
+    public function __construct(Plugin $plugin, Player $player, Faction $faction)
     {
         parent::__construct($plugin);
         $this->player = $player;

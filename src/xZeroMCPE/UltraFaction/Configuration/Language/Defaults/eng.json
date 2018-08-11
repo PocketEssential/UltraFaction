@@ -2,6 +2,7 @@
   "IN_FACTION": "You're already in a faction!",
   "NOT_IN_FACTION": "You're not in a faction!",
   "FACTION_CREATION": "You have successfully created a faction with name {NAME} and description {DESCRIPTION}",
+  "FACTION_CREATION_BROADCAST": "{PLAYER} created a faction called {FACTION}!",
   "DEFAULT_FACTION_DESCRIPTION": "A regular faction with no description :P",
   "FACTION_CREATION_NAME_FORGOT": "You forgot to tell us the faction name!",
   "FACTION_CREATION_MAX_NAME": "You can only have a max of {MAX_CHAR} chracters in the name!",
@@ -62,6 +63,9 @@
     "- /f accept",
     "- /f open",
     "- /f join",
+    "- /f claim",
+    "- /f unclaim",
+    "- /f promote",
     "",
     "-----------------------------"
   ],
@@ -74,5 +78,19 @@
   "FACTION_JOIN_SUCCESS": "You joined the faction {FACTION} welcome!",
   "FACTION_SET_OPEN_NOT_LEADER": "Only the faction leader can set it open or not",
   "FACTION_OPEN_SUCCESS_OPEN": "Your faction is open!",
-  "FACTION_OPEN_SUCCESS_CLOSE": "Your faction is no longer open!"
+  "FACTION_OPEN_SUCCESS_CLOSE": "Your faction is no longer open!",
+  "FACTION_CLAIM_NOT_LEADER": "Only the faction leader can claim!",
+  "FACTION_CLAIM_SUCCESS": "You have successfully claimed this region!",
+  "FACTION_MAX_CLAIM_REACHED": "You can only have a maximum of {MAX_CLAIM} claims!",
+  "FACTION_UNCLAIM_NOT_LEADER": "Only the leader can unclaim!",
+  "FACTION_UNCLAIM_NO_CLAIM": "You don't have any claims!",
+  "FACTION_UNCLAIM_CLAIM_NOT_FOUND": "We can't claim any claims matching that",
+  "FACTION_UNCLAIM_SUCCESS": "You have successful unclaim region {CLAIM_ID}!",
+  "FACTION_PROMOTE_NOT_LEADER": "Only the faction leader can promote!",
+  "FACTION_PROMOTE_FORGOT_NAME": "You didn't tell us who you wanted to promote",
+  "FACTION_PROMOTE_NOT_FOUND": "We can't find that {PLAYER}",
+  "FACTION_PROMOTE_PLAYER_NOT_IN_FACTION": "{PLAYER} is not in your faction",
+  "FACTION_PROMOTE_PLAYER_NOT_IN_FACTION_ELSE": "{PLAYER} is not in a faction at all",
+  "FACTION_PROMOTE_CANNOT_PROMOTE_LEADER": "You can't promote yourself...",
+  "FACTION_PROMOTE_SUCCESSFUL": "You promoted {PLAYER} to {ROLE}"
 }

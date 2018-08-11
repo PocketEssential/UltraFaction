@@ -9,7 +9,9 @@
 namespace xZeroMCPE\UltraFaction\Faction\Event;
 
 
+use pocketmine\Player;
 use pocketmine\plugin\Plugin;
+use xZeroMCPE\UltraFaction\Faction\Faction;
 
 /**
  * Class FactionSetHomeEvent
@@ -26,7 +28,7 @@ class FactionSetHomeEvent extends FactionEvent
      * @param $player
      * @param $faction
      */
-    public function __construct(Plugin $plugin, $player, $faction)
+    public function __construct(Plugin $plugin, Player $player, Faction $faction)
     {
         parent::__construct($plugin, $player, $faction);
     }

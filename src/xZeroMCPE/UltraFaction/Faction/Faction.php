@@ -12,6 +12,8 @@ namespace xZeroMCPE\UltraFaction\Faction;
 use pocketmine\math\Vector3;
 use pocketmine\Player;
 use xZeroMCPE\UltraFaction\UltraFaction;
+use xZeroMCPE\UltraFaction\Utils\Role;
+use xZeroMCPE\UltraFaction\Utils\Utils;
 
 /**
  * Class Faction
@@ -31,6 +33,7 @@ class Faction
     public $warps;
     public $home;
     public $isOpen;
+    public $roles;
 
     /**
      * Faction constructor.
@@ -45,8 +48,9 @@ class Faction
      * @param array $warps
      * @param string $home
      * @param bool $isOpen
+     * @param array $roles
      */
-    public function __construct(string $leader, string $id, string $name, string $description, array $members, array $claims, int $power, int $bank, array $warps, string $home, bool $isOpen)
+    public function __construct(string $leader, string $id, string $name, string $description, array $members, array $claims, int $power, int $bank, array $warps, string $home, bool $isOpen, array $roles)
     {
         $this->leader = $leader;
         $this->id = $id;
@@ -59,6 +63,7 @@ class Faction
         $this->warps = $warps;
         $this->home = $home;
         $this->isOpen = $isOpen;
+        $this->roles = $roles;
     }
 
     /**
@@ -124,6 +129,28 @@ class Faction
     }
 
     /**
+     * @param Vector3 $vector3
+     */
+    /**
+     * @param Vector3 $vector3
+     */
+    public function addClaim(Vector3 $vector3) : void {
+        $this->claims[] = Utils::getStringFromVector($vector3);
+    }
+
+    /**
+     * @param int $claim
+     */
+    /**
+     * @param int $claim
+     */
+    public function removeClaim(int $claim) : void {
+        if(isset($this->claims[$claim])){
+            unset($this->claims[$claim]);
+        }
+    }
+
+    /**
      * @return int
      */
     public function getPower() : int {
@@ -155,15 +182,14 @@ class Faction
      * @param Vector3 $vector3
      */
     public function setHome(Vector3 $vector3) : void {
-        $this->home = $vector3->getX() . ":" . $vector3->getY() . ":" . $vector3->getZ();
+        $this->home = Utils::getStringFromVector($vector3);
     }
 
     /**
      * @param Player $player
      */
     public function teleportToHome(Player $player) : void {
-        $home = explode(":", $this->getHome());
-        $player->teleport(new Vector3((int) $home[0], (int) $home[1], (int) $home[2]));
+        $player->teleport(Utils::getVectorFromString($this->getHome()));
     }
 
     /**
@@ -179,6 +205,46 @@ class Faction
     public function setOpen() : bool {
         $this->isOpen = !$this->isOpen;
         return $this->isOpen();
+    }
+
+    /**
+     * @return array
+     */
+    /**
+     * @return array
+     */
+    public function getRoles() : array {
+        return $this->roles;
+    }
+
+    /**
+     * @param Player $player
+     * @return string
+     */
+    /**
+     * @param Player $player
+     * @return string
+     */
+    public function getRole(Player $player) : string {
+        if(isset($this->getRoles()[$player->getName()])){
+            return $this->getRoles()[$player->getName()];
+        } else {
+            return Role::MEMBER;
+        }
+    }
+
+    /**
+     * @param Player $player
+     */
+    /**
+     * @param Player $player
+     */
+    public function setRole(Player $player) : void {
+        if($this->getRole($player) == Role::MEMBER){
+            $this->roles[$player->getName()] = Role::OFFICER;
+        } else {
+            $this->roles[$player->getName()] = Role::MEMBER;
+        }
     }
 
     /**
@@ -234,7 +300,8 @@ class Faction
             "Bank" => $this->bank,
             "Warps" => $this->warps,
             "Home" => $this->home,
-            "isOpen" => $this->isOpen
+            "isOpen" => $this->isOpen,
+            "Roles" => $this->roles,
         ];
     }
 }

@@ -9,7 +9,9 @@
 namespace xZeroMCPE\UltraFaction\Faction\Event;
 
 
+use pocketmine\Player;
 use pocketmine\plugin\Plugin;
+use xZeroMCPE\UltraFaction\Faction\Faction;
 
 /**
  * Class FactionChatEvent
@@ -27,7 +29,7 @@ class FactionChatEvent extends FactionEvent
      * @param $faction
      * @param $message
      */
-    public function __construct(Plugin $plugin, $player, $faction, $message)
+    public function __construct(Plugin $plugin, Player $player, Faction $faction, string $message)
     {
         parent::__construct($plugin, $player, $faction);
         $this->message = $message;
