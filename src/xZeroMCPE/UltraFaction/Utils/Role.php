@@ -26,6 +26,7 @@ class Role
 
     const MEMBER = "MEMBER";
     const OFFICER = "OFFICER";
+    const LEADER = "LEADER";
 
     /**
      * @param Player $player

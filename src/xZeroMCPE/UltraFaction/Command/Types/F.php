@@ -183,10 +183,10 @@ class F extends Command
                         if(!isset($this->invites[$sender->getName()])){
                             $sender->sendMessage(str_replace("{PLAYER}", $sender->getName(), UltraFaction::getInstance()->getLanguage()->getLanguageValue("You don't have any faction invites!")));
                         } else {
+                            UltraFaction::getInstance()->getFactionManager()->addToFaction($sender, $this->invites[$sender->getName()]);
                             $sender->sendMessage(str_replace(["{PLAYER}", "{FACTION}"], [UltraFaction::getInstance()->getFactionManager()->getFaction($sender)->getLeader(),
                                 UltraFaction::getInstance()->getFactionManager()->getFaction($sender)->getName()], UltraFaction::getInstance()->getLanguage()->getLanguageValue('FACTION_INVITE_ACCEPT')));
                             UltraFaction::getInstance()->getFactionManager()->getFactionByID($this->invites[$sender->getName()])->broadcastMessage("MEMBER_JOIN", ['Extra' => $sender->getName()]);
-                            UltraFaction::getInstance()->getFactionManager()->addToFaction($sender, $this->invites[$sender->getName()]);
                             unset($this->invites[$sender->getName()]);
                         }
                         break;
@@ -277,7 +277,7 @@ class F extends Command
                             $message = str_replace("{MAX_POWER}", UltraFaction::getInstance()->getConfiguration()->getConfig()['Faction']['Max amount of power'], $message);
                             $message = str_replace("{DESCRIPTION}", UltraFaction::getInstance()->getFactionManager()->getFaction($sender)->getDescription(), $message);
                             $message = str_replace("{OPEN}", UltraFaction::getInstance()->getFactionManager()->getFaction($sender)->isOpen() ? "Yes" : "No", $message);
-                            $message = str_replace("{ROLE}", UltraFaction::getInstance()->getFactionManager()->getFaction($sender)->getRole($sender), $message);
+                            $message = str_replace("{ROLE}", UltraFaction::getInstance()->getFactionManager()->getFaction($sender)->getRole($sender, true), $message);
                             $sender->sendMessage($message);
                         }
                     }

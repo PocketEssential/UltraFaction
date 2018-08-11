@@ -225,11 +225,27 @@ class Faction
      * @param Player $player
      * @return string
      */
-    public function getRole(Player $player) : string {
+    public function getRole(Player $player, $includeLeader = false) : string {
         if(isset($this->getRoles()[$player->getName()])){
-            return $this->getRoles()[$player->getName()];
+            if($includeLeader){
+                if($this->isLeader($player)){
+                    return Role::LEADER;
+                } else {
+                    return $this->getRoles()[$player->getName()];
+                }
+            } else {
+                return $this->getRoles()[$player->getName()];
+            }
         } else {
-            return Role::MEMBER;
+            if($includeLeader){
+                if($this->isLeader($player)){
+                    return Role::LEADER;
+                } else {
+                    return Role::MEMBER;
+                }
+            } else {
+                return Role::MEMBER;
+            }
         }
     }
 
