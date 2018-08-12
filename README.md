@@ -46,11 +46,15 @@ UltraFaction::getInstance()->getFactionManager()->isInFaction($player);
 * You should check if they belong to a faction first!
 */
 
-UltraFaction::getInstance()->getFactionManager()->getFaction($player);
+$faction = UltraFaction::getInstance()->getFactionManager()->getFaction($player);
+
+// You can also retrieve their faction name using the following:
+$factionName = $faction->getName();
 ```
+Be sure to check [`\Faction\Faction`](https://github.com/PocketEssential/UltraFaction/blob/master/src/xZeroMCPE/UltraFaction/Faction/Faction.php) for a list of methods.
 
 #### Not quite yet
-We have a bunch of events you can tie to.
+We also have a bunch of events you can tie to.
 
 ```php
 // Listen to when someone creates a faction?
@@ -81,5 +85,7 @@ public function onCreate(FactionStatusChangeEvent $event){
 #### That's all you need to know for now.
 We have a ton of others, we'll try to update the readme, or alternatively, create a wiki
 
-# Builds
+# Builds & Support
+Create an issue if you're experiencing an issue!
+
 [![Poggit-CI](https://poggit.pmmp.io/ci.badge/PocketEssential/UltraFaction/UltraFaction)](https://poggit.pmmp.io/ci/PocketEssential/UltraFaction/UltraFaction)
