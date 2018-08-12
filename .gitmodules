@@ -1,0 +1,3 @@
+[submodule "APIUsage/APIUsage"]
+	path = APIUsage/APIUsage
+	url = https://github.com/xZeroMCPE/APIUsage.git
