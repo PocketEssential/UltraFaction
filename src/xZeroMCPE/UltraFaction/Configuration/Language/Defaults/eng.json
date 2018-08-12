@@ -93,5 +93,9 @@
   "FACTION_PROMOTE_PLAYER_NOT_IN_FACTION": "{PLAYER} is not in your faction",
   "FACTION_PROMOTE_PLAYER_NOT_IN_FACTION_ELSE": "{PLAYER} is not in a faction at all",
   "FACTION_PROMOTE_CANNOT_PROMOTE_LEADER": "You can't promote yourself...",
-  "FACTION_PROMOTE_SUCCESSFUL": "You promoted {PLAYER} to {ROLE}"
+  "FACTION_PROMOTE_SUCCESSFUL": "You promoted {PLAYER} to {ROLE}",
+  "ULTRA_FACTION": {
+    "DATA_PROVIDER_NOT_FOUND": "We can't any data providers by the name of {PROVIDER}, using the {DEFAULT_PROVIDER}",
+    "DATA_PROVIDER_DATA_FLUSHED": "Successfully flushed all data!"
+  }
 }

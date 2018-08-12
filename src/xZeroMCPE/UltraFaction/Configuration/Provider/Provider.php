@@ -46,7 +46,7 @@ class Provider
                 break;
 
             default:
-                UltraFaction::getInstance()->getLogger()->error("[PROVIDER] Unknown data provider detected [{$this->provider}], using the default one");
+                UltraFaction::getInstance()->getLogger()->error(str_replace(['{DATA_PROVIDER}', '{DEFAULT_PROVIDER}'], [$this->provider, 'json'], UltraFaction::getInstance()->getLanguage()->getLanguageValueArray('ULTRA_FACTION')['DATA_PROVIDER_NOT_FOUND']));
                 $this->provider = 'json';
                 $this->loadProvider();
                 break;

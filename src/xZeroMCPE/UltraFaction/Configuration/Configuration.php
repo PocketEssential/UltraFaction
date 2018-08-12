@@ -142,6 +142,6 @@ class Configuration
     public function handleShutdown(){
 
         $this->getProvider()->getProvider()->flushData();
-        UltraFaction::getInstance()->getLogger()->info(TextFormat::GREEN . "[DATA] Flushed and saved all data!");
+        UltraFaction::getInstance()->getLogger()->info(UltraFaction::getInstance()->getLanguage()->getLanguageValueArray('ULTRA_FACTION')['DATA_PROVIDER_DATA_FLUSHED']);
     }
 }
