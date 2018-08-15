@@ -10,6 +10,7 @@ namespace xZeroMCPE\UltraFaction\Configuration\Provider\Types;
 
 
 use xZeroMCPE\UltraFaction\Configuration\Configuration;
+use xZeroMCPE\UltraFaction\Configuration\Provider\Provider;
 use xZeroMCPE\UltraFaction\UltraFaction;
 
 /**
@@ -18,7 +19,7 @@ use xZeroMCPE\UltraFaction\UltraFaction;
  */
 class JsonProvider implements FactionsProvider
 {
-
+    
     /**
      * @return array
      */
@@ -27,14 +28,14 @@ class JsonProvider implements FactionsProvider
 
         $data = [];
 
-        if(file_exists(Configuration::getDataFolderPath() . "Factions.json")){
-           $data = json_decode(file_get_contents(Configuration::getDataFolderPath() . "Factions.json"), true);
+        if(file_exists(Provider::getProviderDataFolder()  . "Factions.json")){
+           $data = json_decode(file_get_contents(Provider::getProviderDataFolder() . "Factions.json"), true);
         } else {
-            file_put_contents(Configuration::getDataFolderPath() . "Factions.json", json_encode(
+            file_put_contents(Provider::getProviderDataFolder() . "Factions.json", json_encode(
                 [
                 ]
             ), JSON_PRETTY_PRINT|JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_UNICODE);
-            file_put_contents(Configuration::getDataFolderPath() . "FactionsID.json", json_encode(
+            file_put_contents(Provider::getProviderDataFolder() . "FactionsID.json", json_encode(
                 [
                 ]
             ), JSON_PRETTY_PRINT|JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_UNICODE);
@@ -50,14 +51,14 @@ class JsonProvider implements FactionsProvider
 
         $data = [];
 
-        if(file_exists(Configuration::getDataFolderPath() . "FactionsID.json")){
-            $data = json_decode(file_get_contents(Configuration::getDataFolderPath() . "FactionsID.json"), true);
+        if(file_exists(Provider::getProviderDataFolder() . "FactionsID.json")){
+            $data = json_decode(file_get_contents(Provider::getProviderDataFolder() . "FactionsID.json"), true);
         } else {
-            file_put_contents(Configuration::getDataFolderPath() . "FactionsID.json", json_encode(
+            file_put_contents(Provider::getProviderDataFolder() . "FactionsID.json", json_encode(
                 [
                 ]
             ), JSON_PRETTY_PRINT|JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_UNICODE);
-            file_put_contents(Configuration::getDataFolderPath() . "FactionsID.json", json_encode(
+            file_put_contents(Provider::getProviderDataFolder() . "FactionsID.json", json_encode(
                 [
                 ]
             ), JSON_PRETTY_PRINT|JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_UNICODE);
@@ -67,7 +68,7 @@ class JsonProvider implements FactionsProvider
 
     public function flushData() : void
     {
-        file_put_contents(Configuration::getDataFolderPath() . "Factions.json", json_encode(UltraFaction::getInstance()->getFactionManager()->getFactionsDump(), JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE));
-        file_put_contents(Configuration::getDataFolderPath() . "FactionsID.json", json_encode(UltraFaction::getInstance()->getConfiguration()->configurations[Configuration::FACTIONS_PLAYER], JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE));
+        file_put_contents(Provider::getProviderDataFolder() . "Factions.json", json_encode(UltraFaction::getInstance()->getFactionManager()->getFactionsDump(), JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE));
+        file_put_contents(Provider::getProviderDataFolder() . "FactionsID.json", json_encode(UltraFaction::getInstance()->getConfiguration()->configurations[Configuration::FACTIONS_PLAYER], JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE));
     }
 }

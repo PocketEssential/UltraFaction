@@ -12,6 +12,7 @@ namespace xZeroMCPE\UltraFaction\Command\Types;
 use pocketmine\command\CommandSender;
 use pocketmine\Player;
 use xZeroMCPE\UltraFaction\Command\Command;
+use xZeroMCPE\UltraFaction\Configuration\Configuration;
 use xZeroMCPE\UltraFaction\Faction\Event\FactionChatEvent;
 use xZeroMCPE\UltraFaction\Faction\Event\FactionClaimEvent;
 use xZeroMCPE\UltraFaction\Faction\Event\FactionCreateEvent;
@@ -55,6 +56,14 @@ class F extends Command
     {
 
         if($sender instanceof Player){
+
+            if(!empty(array_filter(UltraFaction::getInstance()->getConfiguration()->configurations[Configuration::CONFIG]['Faction']['Enabled Worlds']))){
+                if(!in_array($sender->getLevel()->getName(), UltraFaction::getInstance()->getConfiguration()->configurations[Configuration::CONFIG]['Faction']['Enabled Worlds'])){
+                    $sender->sendMessage(UltraFaction::getInstance()->getLanguage()->getLanguageValueArray('ULTRA_FACTION')['UF_NOT_AVAILABLE_HERE']);
+                    return false;
+                }
+            }
+
             if(!isset($args[0])){
                 $this->sendHelp($sender);
             } else {

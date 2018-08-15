@@ -35,6 +35,11 @@ class Provider
     }
 
     public function loadProvider() : void {
+
+        if(!file_exists(Provider::getProviderDataFolder())){
+            @mkdir(Provider::getProviderDataFolder());
+        }
+
         switch (strtolower($this->provider)){
 
             case "json":
@@ -65,5 +70,9 @@ class Provider
      */
     public function getProviderName() : string {
         return $this->provider;
+    }
+
+    public static function getProviderDataFolder() : string {
+        return UltraFaction::getInstance()->getServer()->getDataPath() . "UltraFaction/". "Data/";
     }
 }

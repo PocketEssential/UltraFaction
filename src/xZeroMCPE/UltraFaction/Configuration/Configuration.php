@@ -57,6 +57,8 @@ class Configuration
                 [
                     "### Please Read ###" => "Follow the format otherwise we won't be able to load this well!",
                     "Faction" => [
+                        "Enabled Worlds" => [
+                        ],
                         "Maximum faction name" => 16,
                         "Maximum number of warps" => 4,
                         "Faction creation cost" => 0,
@@ -99,14 +101,6 @@ class Configuration
                         "Hook" => "# Replace this with an Economy plugin name you'd like us to hook to #"
                     ]
             ], JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES));
-            file_put_contents($this->getDataFolder() . "Factions.json", json_encode(
-                [
-                ]
-            ), JSON_PRETTY_PRINT|JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_UNICODE);
-            file_put_contents($this->getDataFolder() . "FactionsID.json", json_encode(
-                [
-                ]
-            ), JSON_PRETTY_PRINT|JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_UNICODE);
         }
 
         $this->configurations[Configuration::CONFIG] = json_decode(file_get_contents($this->getDataFolder() . "Config.json"), true);
