@@ -82,6 +82,13 @@ class Faction
     }
 
     /**
+     * @return null|Player
+     */
+    public function returnTheLeader() : ? Player{
+        return UltraFaction::getInstance()->getServer()->getPlayer($this->getLeader());
+    }
+
+    /**
      * @return string
      */
     public function getID() : string {
@@ -223,6 +230,7 @@ class Faction
      */
     /**
      * @param Player $player
+     * @param bool $includeLeader
      * @return string
      */
     public function getRole(Player $player, $includeLeader = false) : string {
@@ -275,14 +283,22 @@ class Faction
                 foreach ($this->getMembers(true) as $m) {
                     if ($m != $extra['Extra']) {
                         $player = UltraFaction::getInstance()->getServer()->getPlayerExact($m);
-                        if($player != null){
-                           if($extra['isKicked']){
-                               $message = str_replace("{PLAYER}", $extra['Extra'], UltraFaction::getInstance()->getLanguage()->getLanguageValue("FACTION_KICKED_MEMBER_BROADCAST"));
-                           } else {
-                               $message = str_replace("{PLAYER}", $extra['Extra'], UltraFaction::getInstance()->getLanguage()->getLanguageValue("FACTION_LEAVE_SUCCESSFUL"));
-                           }
-                            $player->sendMessage($message);
-                        }
+                        if ($player == null) continue;
+                        $message = str_replace("{PLAYER}", $extra['Extra'], UltraFaction::getInstance()->getLanguage()->getLanguageValue("FACTION_KICKED_MEMBER_BROADCAST"));
+
+                        $player->sendMessage($message);
+                    }
+                }
+                break;
+
+            case "KICKED":
+                foreach ($this->getMembers(true) as $m) {
+                    if ($m != $extra['Extra']) {
+                        $player = UltraFaction::getInstance()->getServer()->getPlayerExact($m);
+                        if ($player == null) continue;
+
+                        $message = str_replace("{PLAYER}", $extra['Extra'], UltraFaction::getInstance()->getLanguage()->getLanguageValue("FACTION_LEAVE_MEMBER_BROADCAST_KICKED"));
+                        $player->sendMessage($message);
                     }
                 }
                 break;
@@ -291,10 +307,10 @@ class Faction
                 foreach ($this->getMembers(true) as $m) {
                     if ($m != $extra['Extra']) {
                         $player = UltraFaction::getInstance()->getServer()->getPlayerExact($m);
-                        if($player != null){
-                            $message = str_replace("{PLAYER}", $extra['Extra'], UltraFaction::getInstance()->getLanguage()->getLanguageValue("FACTION_INVITE_ACCEPT_BROADCAST"));
-                            $player->sendMessage($message);
-                        }
+                        if ($player == null) continue;
+
+                        $message = str_replace("{PLAYER}", $extra['Extra'], UltraFaction::getInstance()->getLanguage()->getLanguageValue("FACTION_INVITE_ACCEPT_BROADCAST"));
+                        $player->sendMessage($message);
                     }
                 }
                 break;

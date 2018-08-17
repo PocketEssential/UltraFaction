@@ -21,6 +21,13 @@ use xZeroMCPE\UltraFaction\UltraFaction;
 class YamlProvider implements FactionsProvider
 {
 
+    /**
+     * @return string
+     */
+    public function getName(): string
+    {
+        return "Yaml";
+    }
 
     /**
      * @return array

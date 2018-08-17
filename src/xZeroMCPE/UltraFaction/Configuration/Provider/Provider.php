@@ -68,10 +68,6 @@ class Provider
     /**
      * @return string
      */
-    public function getProviderName() : string {
-        return $this->provider;
-    }
-
     public static function getProviderDataFolder() : string {
         return UltraFaction::getInstance()->getServer()->getDataPath() . "UltraFaction/". "Data/";
     }

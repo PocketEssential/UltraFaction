@@ -98,6 +98,7 @@ class FactionManager
     public function addToFaction(Player $player, string $id){
 
         $this->getFactionByID($id)->members[] = $player->getName();
+        $this->getFactionByID($id)->broadcastMessage('MEMBER_JOIN', ['Extra' => $player->getName()]);
         UltraFaction::getInstance()->getConfiguration()->configurations[Configuration::FACTIONS_PLAYER][$player->getName()] = $id;
     }
 
@@ -107,7 +108,11 @@ class FactionManager
      */
     public function removeFromFaction(Player $player, $isKicked = false) {
 
-        $this->getFaction($player)->broadcastMessage('LEAVE', ['Extra' => $player->getName(), 'isKicked' => $isKicked]);
+        if($isKicked){
+            $this->getFaction($player)->broadcastMessage('LEAVE', ['Extra' => $player->getName()]);
+        } else {
+            $this->getFaction($player)->broadcastMessage('KICKED', ['Extra' => $player->getName()]);
+        }
         unset($this->getFaction($player)->members[array_search($player->getName(), $this->getFaction($player)->members)]);
         unset(UltraFaction::getInstance()->getConfiguration()->configurations[Configuration::FACTIONS_PLAYER][$player->getName()]);
     }

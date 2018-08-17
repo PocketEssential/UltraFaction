@@ -87,6 +87,7 @@ class Configuration
                             'Power loss per death' => 4,
                         ],
                         "Broadcast faction creation" => true,
+                        "Notify leader when someone tries to join a faction" => true,
                     ],
                     "Data" => [
                         "--------->" => "You can choose from: json, yaml",
@@ -114,7 +115,7 @@ class Configuration
         UltraFaction::getInstance()->getLogger()->info(TextFormat::YELLOW ."-  ");
         UltraFaction::getInstance()->getLogger()->info(TextFormat::YELLOW ."-  " .TextFormat::GOLD . "Language: " . $this->configurations[Configuration::CONFIG]['Data']['Language']);
         UltraFaction::getInstance()->getLogger()->info(TextFormat::YELLOW ."-  " .TextFormat::GOLD . "Loaded a total of: " . count($this->configurations[Configuration::FACTIONS]). " factions!");
-        UltraFaction::getInstance()->getLogger()->info(TextFormat::YELLOW ."-  " .TextFormat::GOLD . "Data Provider: " . $this->getProvider()->getProviderName());
+        UltraFaction::getInstance()->getLogger()->info(TextFormat::YELLOW ."-  " .TextFormat::GOLD . "Data Provider: " . $this->getProvider()->getProvider()->getName());
         UltraFaction::getInstance()->getLogger()->info(TextFormat::YELLOW ."-  " .TextFormat::GOLD . "Enjoy and stay flexing!");
         UltraFaction::getInstance()->getLogger()->info(TextFormat::YELLOW ."--------------------------------------");
     }

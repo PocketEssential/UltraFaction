@@ -27,4 +27,9 @@ interface FactionsProvider
     public function getAllFactionsID() : array;
 
     public function flushData() : void;
+
+    /**
+     * @return string
+     */
+    public function getName() : string;
 }

@@ -279,14 +279,30 @@ class F extends Command
                     } else {
                         $la = UltraFaction::getInstance()->getLanguage()->getLanguageValueArray("FACTION_INFORMATION");
 
+                        $mem = "";
+
+                        if(count(UltraFaction::getInstance()->getFactionManager()->getFaction($sender)->getMembers()) == 0){
+                            $mem = "It's only you!";
+                        } else {
+                            foreach (UltraFaction::getInstance()->getFactionManager()->getFaction($sender)->getMembers() as $member) {
+                                if (max(UltraFaction::getInstance()->getFactionManager()->getFaction($sender)->getMembers()) == $member) {
+                                    $mem .= $member;
+                                } else {
+                                    $mem .= $member . ",";
+                                }
+                            }
+                        }
+
                         foreach ($la as $i){
                             $message = str_replace("{LEADER}", UltraFaction::getInstance()->getFactionManager()->getFaction($sender)->getLeader(), $i);
                             $message = str_replace("{MEMBERS}", count(UltraFaction::getInstance()->getFactionManager()->getFaction($sender)->getMembers()) + 1, $message);
+                            $message = str_replace("{MEMBERS_LIST}", $mem, $message);
                             $message = str_replace("{POWER}", UltraFaction::getInstance()->getFactionManager()->getFaction($sender)->getPower(), $message);
                             $message = str_replace("{MAX_POWER}", UltraFaction::getInstance()->getConfiguration()->getConfig()['Faction']['Max amount of power'], $message);
                             $message = str_replace("{DESCRIPTION}", UltraFaction::getInstance()->getFactionManager()->getFaction($sender)->getDescription(), $message);
                             $message = str_replace("{OPEN}", UltraFaction::getInstance()->getFactionManager()->getFaction($sender)->isOpen() ? "Yes" : "No", $message);
                             $message = str_replace("{ROLE}", UltraFaction::getInstance()->getFactionManager()->getFaction($sender)->getRole($sender, true), $message);
+
                             $sender->sendMessage($message);
                         }
                     }
@@ -360,6 +376,12 @@ class F extends Command
                                     } else {
                                         if(!UltraFaction::getInstance()->getFactionManager()->getFaction($player)->isOpen()){
                                             $sender->sendMessage(UltraFaction::getInstance()->getLanguage()->getLanguageValue('FACTION_JOIN_NOT_OPEN'));
+
+                                            if (UltraFaction::getInstance()->getConfiguration()->configurations[Configuration::CONFIG]['Faction']['Notify leader when someone tries to join a faction']){
+                                                if(UltraFaction::getInstance()->getFactionManager()->getFaction($player)->returnTheLeader() != null){
+                                                    UltraFaction::getInstance()->getFactionManager()->getFaction($player)->returnTheLeader()->sendMessage(str_replace("{PLAYER}", $sender->getName(), UltraFaction::getInstance()->getLanguage()->getLanguageValue('FACTION_JOIN_NOT_OPEN_LEADER_NOTIFY')));
+                                                }
+                                            }
                                         } else {
                                             UltraFaction::getInstance()->getFactionManager()->addToFaction($sender, UltraFaction::getInstance()->getFactionManager()->getFaction($player)->getID());
                                             $sender->sendMessage(str_replace("{FACTION}", UltraFaction::getInstance()->getFactionManager()->getFaction($player)->getName(), UltraFaction::getInstance()->getLanguage()->getLanguageValue('FACTION_JOIN_SUCCESS')));

@@ -19,26 +19,34 @@ use xZeroMCPE\UltraFaction\UltraFaction;
  */
 class JsonProvider implements FactionsProvider
 {
-    
+
+    /**
+     * @return string
+     */
+    public function getName(): string
+    {
+        return "Json";
+    }
+
     /**
      * @return array
      */
-    public function getAllFactions() : array
+    public function getAllFactions(): array
     {
 
         $data = [];
 
-        if(file_exists(Provider::getProviderDataFolder()  . "Factions.json")){
-           $data = json_decode(file_get_contents(Provider::getProviderDataFolder() . "Factions.json"), true);
+        if (file_exists(Provider::getProviderDataFolder() . "Factions.json")) {
+            $data = json_decode(file_get_contents(Provider::getProviderDataFolder() . "Factions.json"), true);
         } else {
             file_put_contents(Provider::getProviderDataFolder() . "Factions.json", json_encode(
                 [
                 ]
-            ), JSON_PRETTY_PRINT|JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_UNICODE);
+            ), JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_UNICODE);
             file_put_contents(Provider::getProviderDataFolder() . "FactionsID.json", json_encode(
                 [
                 ]
-            ), JSON_PRETTY_PRINT|JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_UNICODE);
+            ), JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_UNICODE);
         }
         return $data;
     }
@@ -46,29 +54,29 @@ class JsonProvider implements FactionsProvider
     /**
      * @return array
      */
-    public function getAllFactionsID() : array
+    public function getAllFactionsID(): array
     {
 
         $data = [];
 
-        if(file_exists(Provider::getProviderDataFolder() . "FactionsID.json")){
+        if (file_exists(Provider::getProviderDataFolder() . "FactionsID.json")) {
             $data = json_decode(file_get_contents(Provider::getProviderDataFolder() . "FactionsID.json"), true);
         } else {
             file_put_contents(Provider::getProviderDataFolder() . "FactionsID.json", json_encode(
                 [
                 ]
-            ), JSON_PRETTY_PRINT|JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_UNICODE);
+            ), JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_UNICODE);
             file_put_contents(Provider::getProviderDataFolder() . "FactionsID.json", json_encode(
                 [
                 ]
-            ), JSON_PRETTY_PRINT|JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_UNICODE);
+            ), JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_UNICODE);
         }
         return $data;
     }
 
-    public function flushData() : void
+    public function flushData(): void
     {
-        file_put_contents(Provider::getProviderDataFolder() . "Factions.json", json_encode(UltraFaction::getInstance()->getFactionManager()->getFactionsDump(), JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE));
-        file_put_contents(Provider::getProviderDataFolder() . "FactionsID.json", json_encode(UltraFaction::getInstance()->getConfiguration()->configurations[Configuration::FACTIONS_PLAYER], JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE));
+        file_put_contents(Provider::getProviderDataFolder() . "Factions.json", json_encode(UltraFaction::getInstance()->getFactionManager()->getFactionsDump(), JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE));
+        file_put_contents(Provider::getProviderDataFolder() . "FactionsID.json", json_encode(UltraFaction::getInstance()->getConfiguration()->configurations[Configuration::FACTIONS_PLAYER], JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE));
     }
 }
