@@ -100,6 +100,9 @@ class Configuration
                     ],
                     "Economy" => [
                         "Hook" => "# Replace this with an Economy plugin name you'd like us to hook to #"
+                    ],
+                    "Nauseating" => [
+                        "Logging" => true
                     ]
             ], JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES));
         }

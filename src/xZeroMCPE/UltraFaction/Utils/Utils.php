@@ -23,30 +23,26 @@ use pocketmine\math\Vector3;
 class Utils
 {
 
+
     /**
      * @param string $vector
+     * @param string $key
      * @return Vector3
      */
-    /**
-     * @param string $vector
-     * @return Vector3
-     */
-    public static function getVectorFromString(string $vector): Vector3
+    public static function getVectorFromString(string $vector, string $key = ":"): Vector3
     {
-        $ex = explode(":", $vector);
+        $ex = explode($key, $vector);
         return new Vector3((int)$ex[0], (int)$ex[1], (int)$ex[2]);
     }
 
+
     /**
      * @param Vector3 $vector3
+     * @param string $key
      * @return string
      */
-    /**
-     * @param Vector3 $vector3
-     * @return string
-     */
-    public static function getStringFromVector(Vector3 $vector3): string
+    public static function getStringFromVector(Vector3 $vector3, $key = ":"): string
     {
-        return $vector3->getX() . ":" . $vector3->getY() . ":" . $vector3->getZ();
+        return $vector3->getX() . $key . $vector3->getY() . $key . $vector3->getZ();
     }
 }
