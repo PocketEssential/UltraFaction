@@ -29,20 +29,20 @@ class Language
     public function loadLanguage()
     {
 
-        if (!file_exists(UltraFaction::getInstance()->getConfiguration()->getDataFolder() . "Languages/")) {
+        if (!file_exists(UltraFaction::getInstance()->getConfiguration()->getDataFolder() . "Languages" . DIRECTORY_SEPARATOR)) {
             @mkdir(UltraFaction::getInstance()->getConfiguration()->getDataFolder() . "Languages");
-            foreach (glob(__DIR__ . "/Defaults/*") as $languages) {
-                file_put_contents(UltraFaction::getInstance()->getConfiguration()->getDataFolder() . "Languages/" . basename($languages), file_get_contents(__DIR__ . "/Defaults/" . basename($languages)));
+            foreach (glob(__DIR__  . DIRECTORY_SEPARATOR . "Defaults" . DIRECTORY_SEPARATOR . "*") as $languages) {
+                file_put_contents(UltraFaction::getInstance()->getConfiguration()->getDataFolder() . "Languages" . DIRECTORY_SEPARATOR . basename($languages), file_get_contents(__DIR__ . DIRECTORY_SEPARATOR . "Defaults" . DIRECTORY_SEPARATOR . basename($languages)));
             }
         }
 
 
         $language = UltraFaction::getInstance()->getConfiguration()->getConfig()['Data']['Language'];
 
-        if (!file_exists(UltraFaction::getInstance()->getConfiguration()->getDataFolder() . "Languages/" . $language . ".json")) {
+        if (!file_exists(UltraFaction::getInstance()->getConfiguration()->getDataFolder() . "Languages" . DIRECTORY_SEPARATOR . $language . ".json")) {
             UltraFaction::getInstance()->getLogger()->error("[LANGUAGE] We couldn't find the language file corresponding to " . $language . ". Please make sure {$language}.json exists");
         } else {
-            $this->language = json_decode(file_get_contents(UltraFaction::getInstance()->getConfiguration()->getDataFolder() . "Languages/" . $language . ".json"), true);
+            $this->language = json_decode(file_get_contents(UltraFaction::getInstance()->getConfiguration()->getDataFolder() . "Languages" . DIRECTORY_SEPARATOR . $language . ".json"), true);
             $this->workingLanguage = true;
         }
     }
@@ -71,5 +71,15 @@ class Language
         } else {
             return ["ERROR_LANGUAGE_NOT_FOUND [{$type}]_ARRAY"];
         }
+    }
+
+    /**
+     * @param array $variables
+     * @param array $replace
+     * @param string $context
+     * @return string
+     */
+    public static function prettyFY(array $variables, array $replace, string $context) : string {
+        return str_replace($variables, $replace, UltraFaction::getInstance()->getLanguage()->getLanguageValue($context));
     }
 }

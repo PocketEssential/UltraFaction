@@ -38,14 +38,14 @@ class Configuration
      * @return string
      */
     public function getDataFolder() : string {
-        return UltraFaction::getInstance()->getServer()->getDataPath() . "UltraFaction/";
+        return UltraFaction::getInstance()->getServer()->getDataPath() . "UltraFaction" . DIRECTORY_SEPARATOR;
     }
 
     /**
      * @return string
      */
     public static function getDataFolderPath() : string {
-        return UltraFaction::getInstance()->getServer()->getDataPath() . "UltraFaction/";
+        return UltraFaction::getInstance()->getServer()->getDataPath() . "UltraFaction" . DIRECTORY_SEPARATOR;
     }
 
     public function loadConfiguration(){
@@ -114,12 +114,13 @@ class Configuration
         $this->configurations[Configuration::FACTIONS_PLAYER] = $this->getProvider()->getProvider()->getAllFactionsID();
 
         UltraFaction::getInstance()->getLogger()->info(TextFormat::YELLOW ."--------------------------------------");
-        UltraFaction::getInstance()->getLogger()->info(TextFormat::DARK_AQUA . "-           ULTRA FACTION             ");
+        UltraFaction::getInstance()->getLogger()->info(TextFormat::YELLOW . "- " . TextFormat::DARK_AQUA . "           ULTRA FACTION             ");
         UltraFaction::getInstance()->getLogger()->info(TextFormat::YELLOW ."-  ");
         UltraFaction::getInstance()->getLogger()->info(TextFormat::YELLOW ."-  " .TextFormat::GOLD . "Language: " . $this->configurations[Configuration::CONFIG]['Data']['Language']);
         UltraFaction::getInstance()->getLogger()->info(TextFormat::YELLOW ."-  " .TextFormat::GOLD . "Loaded a total of: " . count($this->configurations[Configuration::FACTIONS]). " factions!");
+        UltraFaction::getInstance()->getLogger()->info(TextFormat::YELLOW ."-");
         UltraFaction::getInstance()->getLogger()->info(TextFormat::YELLOW ."-  " .TextFormat::GOLD . "Data Provider: " . $this->getProvider()->getProvider()->getName());
-        UltraFaction::getInstance()->getLogger()->info(TextFormat::YELLOW ."-  " .TextFormat::GOLD . "Enjoy and stay flexing!");
+        UltraFaction::getInstance()->getLogger()->info(TextFormat::YELLOW ."-  " .TextFormat::GOLD . "Developed by: @xZeroMCPE | Enjoy ;)");
         UltraFaction::getInstance()->getLogger()->info(TextFormat::YELLOW ."--------------------------------------");
     }
 

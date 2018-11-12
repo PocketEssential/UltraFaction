@@ -3,4 +3,4 @@ main: xZeroMCPE\UltraFaction\UltraFaction
 version: 1.0.3
 author: xZeroMCPE
 description: "Richy, rich, faction plugin lured with gold!"
-api: [3.0.0]
+api: [3.0.0, 4.0.0]
