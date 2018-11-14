@@ -31,8 +31,12 @@ class Language
 
         if (!file_exists(UltraFaction::getInstance()->getConfiguration()->getDataFolder() . "Languages" . DIRECTORY_SEPARATOR)) {
             @mkdir(UltraFaction::getInstance()->getConfiguration()->getDataFolder() . "Languages");
-            foreach (glob(__DIR__  . DIRECTORY_SEPARATOR . "Defaults" . DIRECTORY_SEPARATOR . "*") as $languages) {
-                file_put_contents(UltraFaction::getInstance()->getConfiguration()->getDataFolder() . "Languages" . DIRECTORY_SEPARATOR . basename($languages), file_get_contents(__DIR__ . DIRECTORY_SEPARATOR . "Defaults" . DIRECTORY_SEPARATOR . basename($languages)));
+
+            $directory = new \DirectoryIterator(__DIR__ . DIRECTORY_SEPARATOR . "Defaults" . DIRECTORY_SEPARATOR);
+            foreach ($directory as $info){;
+                if($info->getExtension() == "json"){
+                    file_put_contents(UltraFaction::getInstance()->getConfiguration()->getDataFolder() . "Languages" . DIRECTORY_SEPARATOR . $info->getFilename(), file_get_contents($info->getPath() . DIRECTORY_SEPARATOR . $info->getFilename()));
+                }
             }
         }
 

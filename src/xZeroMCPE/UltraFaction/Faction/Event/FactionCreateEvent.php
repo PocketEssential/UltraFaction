@@ -45,21 +45,29 @@ class FactionCreateEvent extends PluginEvent implements Cancellable
     /**
      * @return Player
      */
-    public function getPlayer() : Player {
+    public function getPlayer(): Player
+    {
         return $this->player;
     }
 
     /**
      * @return string
      */
-    public function getFactionName() : string {
+    public function getFactionName(): string
+    {
         return $this->name;
     }
 
     /**
      * @return string
      */
-    public function getFactionDescription() : string {
+    public function getFactionDescription(): string
+    {
         return $this->description;
+    }
+
+    public function call(): void
+    {
+        parent::call();
     }
 }
