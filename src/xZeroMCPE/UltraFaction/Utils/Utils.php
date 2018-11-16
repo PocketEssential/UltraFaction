@@ -45,4 +45,20 @@ class Utils
     {
         return $vector3->getX() . $key . $vector3->getY() . $key . $vector3->getZ();
     }
+
+    /**
+     * @param $url
+     * @return mixed
+     */
+    public static function getFile($url)
+    {
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        $output = curl_exec($ch);
+        curl_close($ch);
+        return $output;
+    }
 }

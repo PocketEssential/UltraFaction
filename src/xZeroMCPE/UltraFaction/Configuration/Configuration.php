@@ -102,7 +102,8 @@ class Configuration
                         "Hook" => "# Replace this with an Economy plugin name you'd like us to hook to #"
                     ],
                     "Nauseating" => [
-                        "Logging" => true
+                        "Logging" => true,
+                        "Legacy Language Download" => true
                     ]
             ], JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES));
         }
@@ -141,6 +142,6 @@ class Configuration
     public function handleShutdown(){
 
         $this->getProvider()->getProvider()->flushData();
-        UltraFaction::getInstance()->getLogger()->info(UltraFaction::getInstance()->getLanguage()->getLanguageValueArray('ULTRA_FACTION')['DATA_PROVIDER_DATA_FLUSHED']);
+        UltraFaction::getInstance()->getLogger()->info(UltraFaction::getInstance()->getLanguage()->getLanguageValueArray('ULTRA_FACTION')['DATA_PROVIDER_DATA_FLUSHED'] ?? "FLUSHED DATA!");
     }
 }
